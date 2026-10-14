@@ -30,6 +30,9 @@ import {
 } from '@fluentui/react-icons';
 import { zavaCapabilities } from '../catalog/capabilities';
 import { zavaPeople } from '../mockData/personas';
+import { zavaLearningAssignments } from '../mockData/learning';
+import { zavaNews } from '../mockData/news';
+import { dateOnlyAtDayOffset, EVERGREEN_NOW, formatDate } from '../utils/evergreenDates';
 import type { IZavaExperienceProps, IZavaModelContextSnapshot } from '../models/zavaOne';
 import { personalPortalColumnAssignments } from '../models/workspacePortalDefaults';
 import {
@@ -188,7 +191,7 @@ export function MyDayExperience(props: IZavaExperienceProps): React.ReactElement
         <>
           <div className={styles.greeting}>
             <span className={styles.tileIcon}><Clock24Regular /></span>
-            <div className={styles.greetingCopy}><span className={styles.overline}>Saturday, September 26</span><h2 className={styles.heroTitle}>Good afternoon, {firstName}.</h2><p className={styles.invertedSubtitle}>Your next customer review starts at 09:30. Three items deserve attention before then.</p></div>
+            <div className={styles.greetingCopy}><span className={styles.overline}>{formatDate(EVERGREEN_NOW, { weekday: 'long', month: 'long', day: 'numeric' })}</span><h2 className={styles.heroTitle}>Good afternoon, {firstName}.</h2><p className={styles.invertedSubtitle}>Your next customer review starts at 09:30. Three items deserve attention before then.</p></div>
             <Avatar name={props.currentUserName} image={{ src: zavaPeople.megan.photoUrl }} size={48} />
             {inline && <ResponsiveExpandButton onExpand={props.requestFullscreen} inverted />}
           </div>
@@ -197,8 +200,8 @@ export function MyDayExperience(props: IZavaExperienceProps): React.ReactElement
             {props.showAgenda !== false && <button className={styles.tile} type="button" onClick={() => setView('agenda')}><span className={styles.tileIcon}><Calendar24Regular /></span><span className={styles.tileCopy}><strong>Next meeting</strong><span>Customer experience review</span><span className={styles.secondary}>09:30-10:15 / Teams / Starts in 45 minutes</span></span><ChevronRight20Regular /></button>}
             {props.showTasks !== false && <button className={styles.tile} type="button" onClick={() => setView('tasks')}><span className={styles.tileIcon}><CheckmarkCircle24Filled /></span><span className={styles.tileCopy}><strong>Three priority tasks</strong><span>Review Aurora launch evidence</span><span className={styles.secondary}>Two due today / One due tomorrow</span></span><ChevronRight20Regular /></button>}
             {props.showMail !== false && <button className={styles.tile} type="button" onClick={() => setView('mail')}><span className={styles.tileIcon}><Mail24Regular /></span><span className={styles.tileCopy}><strong>Important mail</strong><span>Miriam: town hall narrative ready</span><span className={styles.secondary}>Three flagged messages</span></span><ChevronRight20Regular /></button>}
-            {props.showLearning !== false && <button className={styles.tile} type="button" onClick={() => setView('learning')}><span className={styles.tileIcon}><BookOpen24Regular /></span><span className={styles.tileCopy}><strong>Required learning</strong><span>Protecting customer information</span><span className={styles.secondary}>42% complete / Due October 2</span></span><ChevronRight20Regular /></button>}
-            {props.showCompanyHighlights !== false && <button className={styles.tile} type="button" onClick={() => setView('news')}><span className={styles.tileIcon}><News24Regular /></span><span className={styles.tileCopy}><strong>Across Zava</strong><span>One Zava, closer to every customer</span><span className={styles.secondary}>Leadership / Published September 24</span></span><ChevronRight20Regular /></button>}
+            {props.showLearning !== false && <button className={styles.tile} type="button" onClick={() => setView('learning')}><span className={styles.tileIcon}><BookOpen24Regular /></span><span className={styles.tileCopy}><strong>Required learning</strong><span>Protecting customer information</span><span className={styles.secondary}>42% complete / Due {formatDate(zavaLearningAssignments[0].dueDate || '')}</span></span><ChevronRight20Regular /></button>}
+            {props.showCompanyHighlights !== false && <button className={styles.tile} type="button" onClick={() => setView('news')}><span className={styles.tileIcon}><News24Regular /></span><span className={styles.tileCopy}><strong>Across Zava</strong><span>One Zava, closer to every customer</span><span className={styles.secondary}>Leadership / Published {formatDate(zavaNews[0].publishedAt)}</span></span><ChevronRight20Regular /></button>}
           </div>
         </>
       ) : view === 'agenda' ? (
@@ -252,7 +255,7 @@ const focusPlan: readonly IPersonalFocusItem[] = [
   { id: 'launch', title: 'Review Aurora launch evidence', reason: 'High priority · due today', source: 'task' },
   { id: 'decision', title: 'Resolve the accessibility launch decision', reason: 'Approval evidence is ready for review', source: 'task' },
   { id: 'mail', title: 'Reply to Miriam Graham', reason: 'Flagged · Town hall narrative ready', source: 'mail' },
-  { id: 'learning', title: 'Finish data-responsibility learning', reason: '42% complete · due October 2', time: '15:00', source: 'learning' }
+  { id: 'learning', title: 'Finish data-responsibility learning', reason: `42% complete · due ${formatDate(zavaLearningAssignments[0].dueDate || '')}`, time: '15:00', source: 'learning' }
 ];
 
 export interface IPersonalWorkspaceHomeProps extends IZavaExperienceProps {
@@ -347,7 +350,7 @@ export function PersonalWorkspaceHome(props: IPersonalWorkspaceHomeProps): React
     <div className={styles.personalShell} data-layout="personal-portal-dashboard">
       <main className={styles.personalMain}><section className={styles.personalHome}>
       <div className={styles.personalHero} data-personal-capability="myDay">
-        <div className={styles.personalIdentity}><Avatar name={props.currentUserName} image={{ src: zavaPeople.megan.photoUrl }} size={72} /><div className={styles.greetingCopy}><span className={styles.overline}>Saturday, September 26</span><h1 className={styles.heroTitle}>Good afternoon, {firstName}.</h1><p className={styles.invertedSubtitle}>One customer review and three priority tasks deserve your attention.</p></div></div>
+        <div className={styles.personalIdentity}><Avatar name={props.currentUserName} image={{ src: zavaPeople.megan.photoUrl }} size={72} /><div className={styles.greetingCopy}><span className={styles.overline}>{formatDate(EVERGREEN_NOW, { weekday: 'long', month: 'long', day: 'numeric' })}</span><h1 className={styles.heroTitle}>Good afternoon, {firstName}.</h1><p className={styles.invertedSubtitle}>One customer review and three priority tasks deserve your attention.</p></div></div>
       </div>
       {props.showPlanMyDay !== false && <div className={styles.planBanner}><span className={styles.planBannerLead}><span className={styles.planBannerIcon}><Sparkle24Regular /></span><span className={mergeClasses(styles.tileCopy, styles.planBannerCopy)}><Text size={500} weight="semibold" className={styles.planBannerText}>Start your day smart</Text><Text size={300} className={styles.planBannerText}>You have 4 meetings and 2 high-priority tasks ahead. Let me prioritize them for you.</Text></span></span><Button size="large" className={styles.planBannerButton} icon={<Sparkle24Regular />} onClick={openPlan}>Start planning</Button></div>}
       <PersonalPortalDnd panels={portalPanels} targetDocument={props.targetDocument} editMode={props.editMode} onHidePanel={(panelId) => togglePanel(panelId, false)} defaultColumnAssignments={personalPortalColumnAssignments} />
@@ -359,10 +362,10 @@ export function PersonalWorkspaceHome(props: IPersonalWorkspaceHomeProps): React
 }
 
 const glossaryTerms = [
-  { id: 'cxr', term: 'CXR', expansion: 'Customer Experience Review', domain: 'Customer experience', owner: 'Experience Operations', effective: 'September 2026', definition: 'A weekly evidence review that connects customer signals to owned product and service decisions.' },
-  { id: 'aurora', term: 'Aurora', expansion: 'Project Aurora', domain: 'Product', owner: 'Program Management', effective: 'July 2026', definition: 'Zava’s guided customer deployment program and the reusable practices produced by its delivery teams.' },
-  { id: 'one-zava', term: 'One Zava', expansion: 'One Zava operating model', domain: 'Company', owner: 'Corporate Strategy', effective: 'September 2026', definition: 'A company-wide model for connecting customer evidence, decisions, and accountable cross-team delivery.' },
-  { id: 'customer-signal', term: 'Customer signal', expansion: 'Customer evidence signal', domain: 'Customer experience', owner: 'Experience Operations', effective: 'August 2026', definition: 'A sourced observation from customer interactions that is reviewed before becoming a product decision.' }
+  { id: 'cxr', term: 'CXR', expansion: 'Customer Experience Review', domain: 'Customer experience', owner: 'Experience Operations', effective: formatDate(dateOnlyAtDayOffset(-30), { month: 'long', year: 'numeric' }), definition: 'A weekly evidence review that connects customer signals to owned product and service decisions.' },
+  { id: 'aurora', term: 'Aurora', expansion: 'Project Aurora', domain: 'Product', owner: 'Program Management', effective: formatDate(dateOnlyAtDayOffset(-90), { month: 'long', year: 'numeric' }), definition: 'Zava’s guided customer deployment program and the reusable practices produced by its delivery teams.' },
+  { id: 'one-zava', term: 'One Zava', expansion: 'One Zava operating model', domain: 'Company', owner: 'Corporate Strategy', effective: formatDate(dateOnlyAtDayOffset(-30), { month: 'long', year: 'numeric' }), definition: 'A company-wide model for connecting customer evidence, decisions, and accountable cross-team delivery.' },
+  { id: 'customer-signal', term: 'Customer signal', expansion: 'Customer evidence signal', domain: 'Customer experience', owner: 'Experience Operations', effective: formatDate(dateOnlyAtDayOffset(-60), { month: 'long', year: 'numeric' }), definition: 'A sourced observation from customer interactions that is reviewed before becoming a product decision.' }
 ] as const;
 
 export function GlossaryExperience(props: IZavaExperienceProps): React.ReactElement {

@@ -1,6 +1,7 @@
 import { zavaLearningAssignments } from './learning';
 import { zavaNews } from './news';
 import { getZavaPerson, zavaPeople } from './personas';
+import { EVERGREEN_NOW } from '../utils/evergreenDates';
 
 describe('Zava One fixture integrity', () => {
   test('ships eight authored offline news stories with valid people and media', () => {
@@ -11,6 +12,10 @@ describe('Zava One fixture integrity', () => {
       expect(story.imageAlt.length).toBeGreaterThan(20);
       expect(getZavaPerson(story.authorId).id).toBe(story.authorId);
       expect(story.summary.length).toBeGreaterThan(60);
+      const ageInDays = (EVERGREEN_NOW.getTime() - new Date(story.publishedAt).getTime()) / 86_400_000;
+      expect(ageInDays).toBeGreaterThan(0);
+      expect(ageInDays).toBeLessThan(9);
+      expect(new Date(story.expiresAt).getTime()).toBeGreaterThan(EVERGREEN_NOW.getTime());
     }
   });
 
@@ -25,5 +30,6 @@ describe('Zava One fixture integrity', () => {
     expect(zavaLearningAssignments[0].id).toBe('learn-data-care');
     expect(zavaLearningAssignments.every((assignment) => assignment.required)).toBe(true);
     expect(new Set(zavaLearningAssignments.map((assignment) => assignment.id)).size).toBe(3);
+    expect(zavaLearningAssignments.every((assignment) => new Date(`${assignment.dueDate}T23:59:59Z`) > EVERGREEN_NOW)).toBe(true);
   });
 });

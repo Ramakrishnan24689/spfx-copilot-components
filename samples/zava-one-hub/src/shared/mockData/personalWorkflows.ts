@@ -1,13 +1,21 @@
+import { businessDateRange, dateOnlyAtDayOffset, EVERGREEN_NOW, formatDate } from '../utils/evergreenDates';
+
+const currentYear = EVERGREEN_NOW.getUTCFullYear();
+const nextYear = currentYear + 1;
+const plannedLeave = businessDateRange(23, 5);
+const priorPersonalDay = businessDateRange(-15, 1);
+const priorVacation = businessDateRange(-80, 5);
+
 export const approvalFixtures = [
-  { id: 'APR-2841', personId: 'person-diego', type: 'budget', title: 'Project Aurora budget change', due: 'Due today', summary: 'Approve an additional €48,000 for accessibility validation and customer deployment support.', details: [['Amount', '€48,000'], ['Cost center', 'Aurora / EMEA'], ['Requested by', 'Diego Siciliani'], ['Effective', 'October 1, 2026']], risk: 'Budget remains within the approved Q1 program envelope.' },
-  { id: 'APR-2837', personId: 'person-miriam', type: 'publication', title: 'Customer story publication', due: 'Due tomorrow', summary: 'Approve the final customer story for the October town hall and intranet publication.', details: [['Channel', 'Town hall + intranet'], ['Audience', 'All employees'], ['Requested by', 'Miriam Graham'], ['Publish date', 'October 1, 2026']], risk: 'Customer approval and accessibility review are complete.' },
-  { id: 'APR-2829', personId: 'person-johanna', type: 'supplier', title: 'Accessibility lab supplier', due: 'Due Sep 30', summary: 'Approve the assistive-technology supplier for the Helsinki lab.', details: [['Value', '€21,800'], ['Term', '12 months'], ['Requested by', 'Johanna Lorenz'], ['Start date', 'October 5, 2026']], risk: 'Security review is complete; procurement terms are standard.' }
+  { id: 'APR-2841', personId: 'person-diego', type: 'budget', title: 'Project Aurora budget change', due: 'Due today', summary: 'Approve an additional €48,000 for accessibility validation and customer deployment support.', details: [['Amount', '€48,000'], ['Cost center', 'Aurora / EMEA'], ['Requested by', 'Diego Siciliani'], ['Effective', formatDate(dateOnlyAtDayOffset(7), { month: 'long', day: 'numeric', year: 'numeric' })]], risk: 'Budget remains within the approved quarterly program envelope.' },
+  { id: 'APR-2837', personId: 'person-miriam', type: 'publication', title: 'Customer story publication', due: 'Due tomorrow', summary: 'Approve the final customer story for the upcoming town hall and intranet publication.', details: [['Channel', 'Town hall + intranet'], ['Audience', 'All employees'], ['Requested by', 'Miriam Graham'], ['Publish date', formatDate(dateOnlyAtDayOffset(7), { month: 'long', day: 'numeric', year: 'numeric' })]], risk: 'Customer approval and accessibility review are complete.' },
+  { id: 'APR-2829', personId: 'person-johanna', type: 'supplier', title: 'Accessibility lab supplier', due: `Due ${formatDate(dateOnlyAtDayOffset(4))}`, summary: 'Approve the assistive-technology supplier for the Helsinki lab.', details: [['Value', '€21,800'], ['Term', '12 months'], ['Requested by', 'Johanna Lorenz'], ['Start date', formatDate(dateOnlyAtDayOffset(11), { month: 'long', day: 'numeric', year: 'numeric' })]], risk: 'Security review is complete; procurement terms are standard.' }
 ] as const;
 
 export const initialTimeOff = [
-  { id: 'PTO-2026-0831', leaveType: 'Vacation', dates: 'Oct 19-23, 2026', days: 5, status: 'Pending approval' },
-  { id: 'PTO-2026-0794', leaveType: 'Personal', dates: 'Sep 11, 2026', days: 1, status: 'Approved' },
-  { id: 'PTO-2026-0688', leaveType: 'Vacation', dates: 'Jul 6-10, 2026', days: 5, status: 'Approved' }
+  { id: `PTO-${currentYear}-0831`, leaveType: 'Vacation', dates: `${formatDate(plannedLeave.start)}-${formatDate(plannedLeave.end, { day: 'numeric', year: 'numeric' })}`, days: 5, status: 'Pending approval' },
+  { id: `PTO-${currentYear}-0794`, leaveType: 'Personal', dates: formatDate(priorPersonalDay.start, { month: 'short', day: 'numeric', year: 'numeric' }), days: 1, status: 'Approved' },
+  { id: `PTO-${currentYear}-0688`, leaveType: 'Vacation', dates: `${formatDate(priorVacation.start)}-${formatDate(priorVacation.end, { day: 'numeric', year: 'numeric' })}`, days: 5, status: 'Approved' }
 ] as const;
 
 export function businessDays(start: string, end: string): number {
@@ -23,11 +31,11 @@ export function businessDays(start: string, end: string): number {
 }
 
 export const equityData = [
-  { quarter: 'Q1 FY26', value: 12400, kind: 'Received' },
-  { quarter: 'Q2 FY26', value: 13100, kind: 'Received' },
-  { quarter: 'Q3 FY26', value: 11800, kind: 'Received' },
-  { quarter: 'Q4 FY26', value: 14200, kind: 'Received' },
-  { quarter: 'Q1 FY27', value: 15600, kind: 'Estimate' }
+  { quarter: `Q1 FY${String(currentYear).slice(-2)}`, value: 12400, kind: 'Received' },
+  { quarter: `Q2 FY${String(currentYear).slice(-2)}`, value: 13100, kind: 'Received' },
+  { quarter: `Q3 FY${String(currentYear).slice(-2)}`, value: 11800, kind: 'Received' },
+  { quarter: `Q4 FY${String(currentYear).slice(-2)}`, value: 14200, kind: 'Received' },
+  { quarter: `Q1 FY${String(nextYear).slice(-2)}`, value: 15600, kind: 'Estimate' }
 ] as const;
 
 export interface IRoomFixture {

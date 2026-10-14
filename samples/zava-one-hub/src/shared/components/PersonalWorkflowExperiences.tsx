@@ -33,6 +33,7 @@ import {
   roomsByOffice
 } from '../mockData/personalWorkflows';
 import { getZavaPerson } from '../mockData/personas';
+import { dateOnlyAtDayOffset, formatDate } from '../utils/evergreenDates';
 import type { IZavaExperienceProps, IZavaModelContextSnapshot } from '../models/zavaOne';
 import { ResponsiveExpandButton } from './ResponsiveExpandButton';
 import { SubmissionReceipt } from './SubmissionReceipt';
@@ -150,7 +151,7 @@ export function TimeOffExperience(props: IZavaExperienceProps): React.ReactEleme
 
 export function EquityExperience(props: IZavaExperienceProps): React.ReactElement {
   const styles = useStyles();
-  const [selectedQuarter, setSelectedQuarter] = React.useState('Q1 FY27');
+  const [selectedQuarter, setSelectedQuarter] = React.useState(equityData[equityData.length - 1].quarter);
   const selected = equityData.find((item) => item.quarter === selectedQuarter) || equityData[equityData.length - 1];
   const currency = typeof props.toolProperties?.currency === 'string' ? props.toolProperties.currency : 'EUR';
   const symbol = currency === 'USD' ? '$' : currency === 'GBP' ? '£' : '€';
@@ -160,7 +161,7 @@ export function EquityExperience(props: IZavaExperienceProps): React.ReactElemen
   const pastYear = equityData.slice(0, 4).reduce((sum, item) => sum + item.value, 0);
   usePublish(props, { intent: 'equity', surface: props.surface, route: `personal/equity/${selected.quarter}`, stage: 'valuation', summary: `${selected.quarter}: ${symbol}${selected.value.toLocaleString()} ${selected.kind.toLowerCase()}`, visibleIds: equityData.map((item) => item.quarter), selectedId: selected.quarter, nextActions: ['Select quarter', 'Review grant details', 'Expand'] });
   return <WorkflowFrame experience={props} layout="personal-equity-valuation" eyebrow="Equity / Estimated values" title="Equity and vesting" subtitle="Received value and forward estimates are separated clearly; values are not tax or investment advice." source="C19 / Fictional equity fixture / Estimate based on current share value">
-    <div className={styles.metricGrid}><span className={styles.metric}><span className={styles.secondary}>Current share value</span><strong className={styles.metricValue}>{symbol}65.00</strong><span>As of Sep 28, 2026</span></span><span className={styles.metric}><span className={styles.secondary}>Past year value received</span><strong className={styles.metricValue}>{symbol}{pastYear.toLocaleString()}</strong><span>960 vested units</span></span><span className={styles.metric}><span className={styles.secondary}>Next quarter estimate</span><strong className={styles.metricValue}>{symbol}15,600</strong><span>240 units / Dec 15</span></span></div>
+    <div className={styles.metricGrid}><span className={styles.metric}><span className={styles.secondary}>Current share value</span><strong className={styles.metricValue}>{symbol}65.00</strong><span>As of {formatDate(dateOnlyAtDayOffset(-1), { month: 'short', day: 'numeric', year: 'numeric' })}</span></span><span className={styles.metric}><span className={styles.secondary}>Past year value received</span><strong className={styles.metricValue}>{symbol}{pastYear.toLocaleString()}</strong><span>960 vested units</span></span><span className={styles.metric}><span className={styles.secondary}>Next quarter estimate</span><strong className={styles.metricValue}>{symbol}15,600</strong><span>240 units / {formatDate(dateOnlyAtDayOffset(75))}</span></span></div>
     <figure className={styles.chart} aria-label="Quarterly equity value"><svg className={styles.svg} viewBox={`0 0 ${width} ${height}`} role="img"><title>Quarterly received and estimated equity value</title>{equityData.map((item) => { const barX = x(item.quarter) || 0; const barY = y(item.value); return <g key={item.quarter} role="button" tabIndex={0} aria-label={`${item.quarter}: ${symbol}${item.value.toLocaleString()} ${item.kind}`} onClick={() => setSelectedQuarter(item.quarter)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') setSelectedQuarter(item.quarter); }}><rect className={item.kind === 'Estimate' ? styles.estimateBar : styles.actualBar} x={barX} y={barY} width={x.bandwidth()} height={height - margin.bottom - barY} rx={4} /><text className={styles.axisLabel} x={barX + x.bandwidth() / 2} y={height - 24} textAnchor="middle">{item.quarter}</text><text className={styles.axisLabel} x={barX + x.bandwidth() / 2} y={barY - 6} textAnchor="middle">{symbol}{Math.round(item.value / 1000)}k</text></g>; })}</svg><table className={styles.chartTable}><caption>Exact quarterly equity values</caption><thead><tr><th className={styles.cell}>Quarter</th><th className={styles.cell}>Type</th><th className={styles.cell}>Value</th></tr></thead><tbody>{equityData.map((item) => <tr key={item.quarter}><td className={styles.cell}>{item.quarter}</td><td className={styles.cell}>{item.kind}</td><td className={styles.cell}>{symbol}{item.value.toLocaleString()}</td></tr>)}</tbody></table></figure>
     <div className={styles.detail}><h3 className={styles.title}>{selected.quarter} details</h3><div className={styles.evidenceGrid}><span className={styles.evidence}><span className={styles.secondary}>Value</span><strong>{symbol}{selected.value.toLocaleString()}</strong></span><span className={styles.evidence}><span className={styles.secondary}>Status</span><strong>{selected.kind}</strong></span><span className={styles.evidence}><span className={styles.secondary}>Units</span><strong>240</strong></span><span className={styles.evidence}><span className={styles.secondary}>Reference price</span><strong>{symbol}65.00</strong></span></div><Button>Review grant details</Button></div>
   </WorkflowFrame>;
@@ -172,7 +173,7 @@ export function WorkplaceSpaceExperience(props: IZavaExperienceProps): React.Rea
   const styles = useStyles();
   const [stage, setStage] = React.useState<BookingStage>('criteria');
   const [office, setOffice] = React.useState(typeof props.toolProperties?.office === 'string' ? props.toolProperties.office : 'Helsinki');
-  const [date, setDate] = React.useState(typeof props.toolProperties?.date === 'string' ? props.toolProperties.date : '2026-10-01');
+  const [date, setDate] = React.useState(typeof props.toolProperties?.date === 'string' ? props.toolProperties.date : dateOnlyAtDayOffset(7));
   const [time, setTime] = React.useState(typeof props.toolProperties?.time === 'string' ? props.toolProperties.time : '14:00');
   const [duration, setDuration] = React.useState(String(typeof props.toolProperties?.durationMinutes === 'number' ? props.toolProperties.durationMinutes : 60));
   const [capacity, setCapacity] = React.useState(String(typeof props.toolProperties?.capacity === 'number' ? props.toolProperties.capacity : 4));

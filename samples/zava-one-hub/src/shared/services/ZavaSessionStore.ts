@@ -43,7 +43,7 @@ class ZavaSessionStore {
     const event: IVacationDecisionEvent = {
       id: `decision-${request.id}-${request.revision + 1}`,
       decision,
-      decidedAt: '2026-09-26T14:05:00Z',
+      decidedAt: new Date().toISOString(),
       decidedBy,
       rationale: rationale?.trim() || undefined,
       reference: `ZAVA-LEAVE-${request.id.replace('vac-', '')}`

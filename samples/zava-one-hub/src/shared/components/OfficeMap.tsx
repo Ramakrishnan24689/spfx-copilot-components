@@ -6,6 +6,7 @@ import worldTopologyJson from 'world-atlas/countries-110m.json';
 import { Button, makeStyles, tokens } from '@fluentui/react-components';
 import { Location24Filled } from '@fluentui/react-icons';
 import { formatOfficeTime, OFFICE_DEMO_INSTANT } from '../utils/officeTime';
+import { EVERGREEN_NOW, formatDate } from '../utils/evergreenDates';
 
 const offices = [
   { id: 'los-angeles', name: 'Los Angeles', region: 'North America', timeZone: 'America/Los_Angeles', coordinates: [-118.2437, 34.0522] as [number, number], detail: 'Customer studio / 555 Flower Street', people: 420, status: 'Open', amenities: 'Visitor center / Studio / Café' },
@@ -73,7 +74,7 @@ export function OfficeMap(props: { instant?: Date }): React.ReactElement {
         {offices.map((office) => <Button key={office.id} appearance={office.id === selectedId ? 'primary' : 'secondary'} icon={<Location24Filled />} onClick={() => setSelectedId(office.id)}>{office.name}</Button>)}
       </div>
       <div className={styles.detail} role="status">
-        <div className={styles.detailCopy}><strong>{selected.name}</strong><span>{selected.detail}</span><span>{selected.amenities}</span><span className={styles.detailMeta}><span>{selected.region}</span><span>{selected.people} employees</span><span>{selected.status}</span><span>Reviewed September 2026</span></span></div>
+        <div className={styles.detailCopy}><strong>{selected.name}</strong><span>{selected.detail}</span><span>{selected.amenities}</span><span className={styles.detailMeta}><span>{selected.region}</span><span>{selected.people} employees</span><span>{selected.status}</span><span>Reviewed {formatDate(EVERGREEN_NOW, { month: 'long', year: 'numeric' })}</span></span></div>
         <time className={styles.time} dateTime={instant.toISOString()}>{selectedTime}</time>
       </div>
     </div>
