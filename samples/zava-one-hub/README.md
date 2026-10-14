@@ -28,7 +28,7 @@ The same shared React capability powers:
 
 ![Explore Zava One capability explorer](./assets/preview.png)
 
-> **Current status:** the demo is locally validated with 42 passing tests, 4,080 responsive browser states, 39 recaptured engineering
+> **Current status:** the demo is locally validated with 46 passing tests, 4,080 responsive browser states, 39 recaptured engineering
 > screenshots, 15 reviewed publication images, and a committed production SPPKG. The sample author
 > confirmed all three Teams personal apps work and supplied authenticated screenshots.
 > Modern SharePoint host checks and complete host accessibility validation remain open.
@@ -190,6 +190,18 @@ states and all 35 focused experiences remain available in the engineering galler
   state changes and animations, so longer forms grow and returning to shorter summaries shrinks the canvas.
   Full-screen workspaces instead rely on the host's natural document sizing and scroll behavior.
 
+### Evergreen demo dates
+
+Demo fixtures calculate dates at runtime when the shared modules load, rather than when the package
+is built. News publication dates are one to eight days old with future expiry dates; mail and recent
+files have recent receipt and modification timestamps. Company events use the next calendar month,
+with a Monday-first calendar that handles month and year rollover. Learning deadlines, leave requests,
+approval dates, and room-booking defaults use future offsets; leave ranges preserve weekday counts.
+Publication, review, and effective-date labels format the generated dates rather than fixed 2026 text.
+Reload the experience to establish a fresh date baseline. Vacation decisions use the actual decision
+time, and existing session-stored decisions are preserved. The office-clock demonstration retains its
+intentional fixed instant.
+
 ## Publisher Configuration
 
 Every C01-C35 web part has a catalog-owned authoring profile with domain-specific defaults. High-use
@@ -232,12 +244,12 @@ embedded module so keynote rendering remains offline.
 | Copilot plugin | v2.4, 37 validated functions / 6 conversation starters |
 | Agent branding | Zava One / 192px color icon / 32px transparent outline icon |
 | SPFx bundles | 2 host-specific bundles with shared source |
-| Tests | 42 passed / 0 failed |
+| Tests | 46 passed / 0 failed |
 | Inline visual smoke | 35 rendered / 35 unique layouts / 0 runtime, overflow, or image failures |
 | Copilot Workbench | 37/37 Ready baseline; 8/8 changed Personal workflows revalidated |
 | Complete screenshot gallery | 39 PNGs |
 | Bundled media | 28 provenance-checked assets |
-| Production package | `1.0.0.15` / `6,205,670` bytes / 110 entries |
+| Production package | `1.0.0.16` / `6,208,176` bytes / 110 entries |
 | Responsive regression | 4,080 passing states; phone/tablet/desktop, narrow desktop columns, dark mode, and submission journeys |
 | Publication gallery | `assets/sample.json` / 15 reviewed PNGs, including three authenticated Teams views |
 
@@ -360,6 +372,7 @@ Open `http://127.0.0.1:4322`. Query parameters select an experience:
 
 | Version | Date | Comments |
 | --- | --- | --- |
+| 1.0.0.16 | October 14, 2026 | Evergreen relative demo dates for news, mail, recent files, events, learning, leave, approvals, and freshness metadata |
 | 1.0.0.15 | October 2, 2026 | Container-responsive layouts, 4,080 browser-state checks, polished shared submission receipts, and balanced workspace defaults |
 | 1.0.0.14 | October 1, 2026 | Separate Teams personal apps, host-aware workspace header, verified screenshot crops, and finalized demo evidence |
 | 1.0.0.13 | September 30, 2026 | Refactor workspaces to natural document flow with one host scrollbar |

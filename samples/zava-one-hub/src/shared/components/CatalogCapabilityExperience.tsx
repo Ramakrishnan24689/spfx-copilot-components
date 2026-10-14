@@ -33,6 +33,7 @@ import {
 import { getCapabilityByIntent } from '../catalog/capabilities';
 import { zavaPeople } from '../mockData/personas';
 import type { IZavaExperienceProps, IZavaModelContextSnapshot } from '../models/zavaOne';
+import { businessDateRange, dateOnlyAtDayOffset, EVERGREEN_NOW, formatDate } from '../utils/evergreenDates';
 import { DecisionBarChart } from './DecisionBarChart';
 import { OfficeMap } from './OfficeMap';
 import { ResponsiveExpandButton } from './ResponsiveExpandButton';
@@ -45,6 +46,12 @@ interface ICapabilityContent {
   detail: string;
 }
 
+const currentYear = EVERGREEN_NOW.getUTCFullYear();
+const upcomingLeave = businessDateRange(23, 5);
+const nextTownHall = dateOnlyAtDayOffset(10);
+const latestPayslip = dateOnlyAtDayOffset(-30);
+const nextVesting = dateOnlyAtDayOffset(75);
+
 const employeeServiceApps = [
   { name: 'Expenses and travel', category: 'Finance', owner: 'Travel Operations', detail: 'Create expense reports, attach receipts, and manage business travel bookings.', access: 'Available', icon: 'travel' },
   { name: 'IT support', category: 'Technology', owner: 'Zava IT', detail: 'Check service health, find guided fixes, or open and track an IT support request.', access: 'Available', icon: 'it' },
@@ -55,9 +62,9 @@ const employeeServiceApps = [
 ] as const;
 
 const knowledgeSources = [
-  { id: 'parental-leave', title: 'Finland parental leave policy', type: 'Policy', owner: 'People Operations', effective: 'January 1, 2026', source: 'People Hub / Finland policies', summary: 'Eligibility, leave periods, pay coordination, and employee notification steps for Finland.', detail: 'Applies to employees based in Finland. The policy explains statutory and Zava-provided leave, required notice, manager responsibilities, and the payroll handoff.', icon: 'policy' },
-  { id: 'manager-checklist', title: 'Manager parental leave checklist', type: 'Checklist', owner: 'People Partner team', effective: 'September 12, 2026', source: 'Manager Hub / Life events', summary: 'A practical sequence for planning coverage, communication, access, and return-to-work support.', detail: 'The checklist keeps employee privacy central while helping managers confirm coverage, workload transition, system access, and a supported return plan.', icon: 'checklist' },
-  { id: 'payroll-guidance', title: 'Payroll effective-date guidance', type: 'Payroll guidance', owner: 'Finland Payroll', effective: 'August 30, 2026', source: 'Payroll Hub / Finland', summary: 'Cutoff dates and payroll timing for approved family-leave changes in Finland.', detail: 'Payroll changes submitted by the monthly cutoff take effect in the next payroll cycle. Later changes are reconciled in the following cycle with an itemized adjustment.', icon: 'payroll' }
+  { id: 'parental-leave', title: 'Finland parental leave policy', type: 'Policy', owner: 'People Operations', effective: `January 1, ${currentYear}`, source: 'People Hub / Finland policies', summary: 'Eligibility, leave periods, pay coordination, and employee notification steps for Finland.', detail: 'Applies to employees based in Finland. The policy explains statutory and Zava-provided leave, required notice, manager responsibilities, and the payroll handoff.', icon: 'policy' },
+  { id: 'manager-checklist', title: 'Manager parental leave checklist', type: 'Checklist', owner: 'People Partner team', effective: formatDate(dateOnlyAtDayOffset(-14), { month: 'long', day: 'numeric', year: 'numeric' }), source: 'Manager Hub / Life events', summary: 'A practical sequence for planning coverage, communication, access, and return-to-work support.', detail: 'The checklist keeps employee privacy central while helping managers confirm coverage, workload transition, system access, and a supported return plan.', icon: 'checklist' },
+  { id: 'payroll-guidance', title: 'Payroll effective-date guidance', type: 'Payroll guidance', owner: 'Finland Payroll', effective: formatDate(dateOnlyAtDayOffset(-30), { month: 'long', day: 'numeric', year: 'numeric' }), source: 'Payroll Hub / Finland', summary: 'Cutoff dates and payroll timing for approved family-leave changes in Finland.', detail: 'Payroll changes submitted by the monthly cutoff take effect in the next payroll cycle. Later changes are reconciled in the following cycle with an itemized adjustment.', icon: 'payroll' }
 ] as const;
 
 const contentById: Readonly<Record<string, ICapabilityContent>> = {
@@ -66,17 +73,17 @@ const contentById: Readonly<Record<string, ICapabilityContent>> = {
   C03: { metric: '3', metricLabel: 'Flagged messages', items: ['Miriam: town hall narrative ready', 'Diego: Aurora handoff complete', 'Johanna: accessibility lab checklist'], detail: 'This message is included because it is flagged and tied to a meeting or project due this week.' },
   C04: { metric: '5', metricLabel: 'Tasks due today', items: ['Review launch brief', 'Prepare customer proposal', 'Book accessibility review'], detail: 'The task keeps its source, due time, and completion state. Completing it is an explicit local demo action.' },
   C05: { metric: '4', metricLabel: 'General approvals', items: ['Project Aurora budget change', 'Customer story publication', 'New supplier onboarding'], detail: 'This inbox excludes vacation requests, which route to the dedicated C35 decision experience.' },
-  C07: { metric: '1', metricLabel: 'Active notice', items: ['Helsinki lab elevator maintenance / Sep 28', 'No other active notices for your locations'], detail: 'The notice applies to Helsinki visitors and expires automatically after the maintenance window.' },
-  C08: { metric: '3', metricLabel: 'Verified sources', items: ['Finland parental leave policy', 'Manager checklist', 'Payroll effective-date guidance'], detail: 'The Finland policy is effective January 1, 2026 and owned by Zava People Operations.' },
+  C07: { metric: '1', metricLabel: 'Active notice', items: [`Helsinki lab elevator maintenance / ${formatDate(dateOnlyAtDayOffset(2))}`, 'No other active notices for your locations'], detail: 'The notice applies to Helsinki visitors and expires automatically after the maintenance window.' },
+  C08: { metric: '3', metricLabel: 'Verified sources', items: ['Finland parental leave policy', 'Manager checklist', 'Payroll effective-date guidance'], detail: `The Finland policy is effective January 1, ${currentYear} and owned by Zava People Operations.` },
   C09: { metric: '24', metricLabel: 'Employee services', items: employeeServiceApps.map((app) => app.name), detail: 'The service catalog shows purpose, owner, access status, and an allowlisted destination.' },
-  C10: { metric: 'Oct 1', metricLabel: 'Next global town hall', items: ['08:00 Los Angeles / 18:00 Helsinki', 'Live captions and recording', 'Customer stories and Q&A'], detail: 'Registration and adding the event to a calendar remain separate, explicit actions.' },
+  C10: { metric: formatDate(nextTownHall), metricLabel: 'Next global town hall', items: ['08:00 Los Angeles / 18:00 Helsinki', 'Live captions and recording', 'Customer stories and Q&A'], detail: 'Registration and adding the event to a calendar remain separate, explicit actions.' },
   C11: { metric: '3', metricLabel: 'Accessibility experts', items: ['Johanna Lorenz / Program lead', 'Grady Archie / Service design', 'Lee Gu / Product design'], detail: 'Johanna matches through published accessibility program ownership and lab facilitation experience.' },
   C12: { metric: '72%', metricLabel: 'Onboarding complete', items: ['Meet your customer experience partner', 'Complete required learning', 'Set up Helsinki lab access'], detail: 'The next step names its owner, deadline, dependency, and approved help route.' },
   C15: { metric: '68%', metricLabel: 'Participation today', items: ['Clear ownership', 'Faster decisions', 'Better meeting focus'], detail: 'The poll is identified, closes at 17:00 local time, and publishes results only above the cohort threshold.' },
-  C16: { metric: '18', metricLabel: 'Days available', items: ['Oct 19-23 / 5 workdays', 'Projected balance / 13 days', 'No team coverage conflict'], detail: 'Dates, leave type, workday calculation, and projected balance remain editable before review.' },
-  C17: { metric: 'Aug', metricLabel: 'Latest payslip available', items: ['August 2026 payslip', '2025 tax statement', 'Payroll help'], detail: 'Amounts stay masked. Opening a document uses a secure source handoff and may require step-up authentication.' },
+  C16: { metric: '18', metricLabel: 'Days available', items: [`${formatDate(upcomingLeave.start)}-${formatDate(upcomingLeave.end, { day: 'numeric' })} / 5 workdays`, 'Projected balance / 13 days', 'No team coverage conflict'], detail: 'Dates, leave type, workday calculation, and projected balance remain editable before review.' },
+  C17: { metric: formatDate(latestPayslip, { month: 'short' }), metricLabel: 'Latest payslip available', items: [`${formatDate(latestPayslip, { month: 'long', year: 'numeric' })} payslip`, `${currentYear - 1} tax statement`, 'Payroll help'], detail: 'Amounts stay masked. Opening a document uses a secure source handoff and may require step-up authentication.' },
   C18: { metric: '14 days', metricLabel: 'Life-event deadline', items: ['Confirm employment country', 'Review eligible plans', 'Prepare supporting documents'], detail: 'Eligibility and effective date come from the benefits provider; no medical or financial recommendation is inferred.' },
-  C19: { metric: '240', metricLabel: 'Units vest next quarter', items: ['Grant ZV-2024-18', 'Vesting date / Dec 15', 'Estimated value hidden'], detail: 'The view separates vested and unvested units and does not provide exercise, tax, or trading advice.' },
+  C19: { metric: '240', metricLabel: 'Units vest next quarter', items: [`Grant ZV-${currentYear - 2}-18`, `Vesting date / ${formatDate(nextVesting)}`, 'Estimated value hidden'], detail: 'The view separates vested and unvested units and does not provide exercise, tax, or trading advice.' },
   C20: { metric: '€482.60', metricLabel: 'Berlin claim draft', items: ['Hotel receipt verified', 'Taxi category needs review', 'Exchange-rate date confirmed'], detail: 'Receipt extraction is a suggestion. Currency, category, duplicate checks, and attachments remain reviewable.' },
   C21: { metric: '4', metricLabel: 'Vegetarian choices', items: ['Roasted tomato gnocchi / $12', 'Green curry bowl / $11', 'Miso mushroom ramen / $10'], detail: 'Menu data is valid for Redmond today. Allergen labels come from the caterer and are not guarantees.' },
   C22: { metric: '6', metricLabel: 'Rooms available at 14:00', items: ['Cedar / 4 people / Teams room', 'Orca / 6 people / Accessible', 'Rainier / 8 people / Whiteboard'], detail: 'Availability is current as of 13:40 and is rechecked before the explicit reservation step.' },
@@ -89,7 +96,7 @@ const contentById: Readonly<Record<string, ICapabilityContent>> = {
   C29: { metric: '3', metricLabel: 'Relevant launch files', items: ['Aurora launch brief.docx', 'Customer review notes.pptx', 'Accessibility checklist.xlsx'], detail: 'Each result retains its source location, modified time, and access state. Pinning does not copy or share it.' },
   C30: { metric: '7 of 9', metricLabel: 'Available Friday', items: ['Design coverage / Clear', 'Customer support / Attention', 'Manager actions / 2 due'], detail: 'Coverage omits private absence reasons and delegates vacation decisions to C35.' },
   C31: { metric: '$128.40', metricLabel: 'ZAVA / Demo market', items: ['+0.94% vs previous close', 'Market closed', 'Quote delayed 15 minutes'], detail: 'ZAVA is fictional and source-labeled. The view provides no investment recommendation.' },
-  C32: { metric: 'CXR', metricLabel: 'Customer Experience Review', items: ['Domain / Customer Experience', 'Owner / Experience Operations', 'Effective / Sep 2026'], detail: 'CXR is the weekly evidence review that connects customer signals to owned product decisions.' },
+  C32: { metric: 'CXR', metricLabel: 'Customer Experience Review', items: ['Domain / Customer Experience', 'Owner / Experience Operations', `Effective / ${formatDate(dateOnlyAtDayOffset(-30), { month: 'short', year: 'numeric' })}`], detail: 'CXR is the weekly evidence review that connects customer signals to owned product decisions.' },
   C33: { metric: 'Private', metricLabel: 'Security intake', items: ['Suspicious message', 'Lost device', 'Account concern'], detail: 'The flow minimizes sensitive data and never forwards a message or attachment automatically.' },
   C34: { metric: '17:40', metricLabel: 'Helsinki / EEST', items: ['Los Angeles / 07:40 PDT', 'Helsinki / 17:40 EEST', 'Singapore / 22:40 SGT'], detail: 'Office time uses IANA zones. The equivalent office list is always available without geolocation.' }
 };
@@ -237,7 +244,7 @@ export function CatalogCapabilityExperience(props: IZavaExperienceProps): React.
   const selectedServiceApp = selectedIndex === undefined ? undefined : employeeServiceApps[selectedIndex];
   const selectedItem = capability.id === 'C08' ? selectedKnowledgeSource?.title : capability.id === 'C09' ? selectedServiceApp?.name : selectedIndex === undefined ? undefined : visibleItems[selectedIndex];
   const operation = capability.operation;
-  const sourceText = `${capability.id} / Fictional ${capability.category} fixture / Updated September 26, 2026`;
+  const sourceText = `${capability.id} / Fictional ${capability.category} fixture / Updated ${formatDate(dateOnlyAtDayOffset(-1), { month: 'long', day: 'numeric', year: 'numeric' })}`;
 
   useContext(props, {
     intent: capability.intentKey,

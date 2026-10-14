@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T08:51:40.651Z",
+  "generatedAt": "2026-10-14T10:00:53.282Z",
   "profile": {
     "spfx": "1.24.0-beta.5",
     "react": "18.3.1",
@@ -9,7 +9,7 @@
     "griffel": "1.7.8"
   },
   "catalog": {
-    "solutionVersion": "1.0.0.15",
+    "solutionVersion": "1.0.0.16",
     "businessCapabilities": 35,
     "featureWebParts": 35,
     "workspaceWebParts": 3,
@@ -21,8 +21,8 @@
     "sharePointFullPageWebParts": 3
   },
   "validation": {
-    "jestSuites": 10,
-    "jestTests": 42,
+    "jestSuites": 11,
+    "jestTests": 46,
     "jestFailures": 0,
     "lintWarnings": 0,
     "inlineIntentsRendered": 35,
@@ -79,8 +79,8 @@
     "fullscreenM365DocumentScrollHeight": 8470,
     "fullscreenComponentViewportHeight": 8470,
     "fullscreenM365ScrollOwnerCount": 1,
-    "sppkgAppManifestVersion": "1.0.0.15",
-    "sppkgFeatureVersion": "1.0.0.15",
+    "sppkgAppManifestVersion": "1.0.0.16",
+    "sppkgFeatureVersion": "1.0.0.16",
     "chartScopeChangesGeometry": true,
     "officeMarkerCount": 5,
     "officeListCount": 5,
@@ -254,13 +254,13 @@
   "artifacts": [
     {
       "path": "sharepoint/solution/zava-one-hub.sppkg",
-      "bytes": 6205670,
-      "sha256": "61b8d5038ac39dc5ea4e469ba76c08e9c1a730e24a9b2dc186da5e76203671ac"
+      "bytes": 6208176,
+      "sha256": "aaf55ff5e13230ae6478b734e1780eca4130acd27ae74e4a0331ad193dd75c8b"
     },
     {
       "path": "teams/zava-one.zip",
       "bytes": 10263,
-      "sha256": "f8b30748581ceedacbf1ebb25827d4d5e17aac9abf5cfdef050ef1cd7f60a762"
+      "sha256": "bf1b0bf7605cbae55c0fd6f22701a0a382b026caa6ca0d54037f1821ab7ba4d9"
     },
     {
       "path": "teams/zavaOneWorkspace/TeamsSPFxApp.zip",

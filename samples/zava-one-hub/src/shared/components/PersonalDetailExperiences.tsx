@@ -28,6 +28,7 @@ import { zavaLearningAssignments } from '../mockData/learning';
 import { zavaNews } from '../mockData/news';
 import { getZavaPerson, zavaPeople } from '../mockData/personas';
 import type { IZavaExperienceProps, IZavaModelContextSnapshot } from '../models/zavaOne';
+import { formatRecentDateTime, isoAtDayOffset } from '../utils/evergreenDates';
 import { ResponsiveExpandButton } from './ResponsiveExpandButton';
 import { SubmissionReceipt } from './SubmissionReceipt';
 
@@ -143,9 +144,9 @@ export function TasksExperience(props: IZavaExperienceProps): React.ReactElement
 }
 
 const mailFixtures = [
-  { id: 'town-hall', person: zavaPeople.miriam, subject: 'Town hall narrative ready', preview: 'The final leadership narrative and captions checklist are ready for review.', time: '08:12', flagged: true, unread: true },
-  { id: 'aurora-handoff', person: zavaPeople.diego, subject: 'Aurora handoff complete', preview: 'Customer deployment evidence and accessibility follow-ups are attached.', time: 'Yesterday', flagged: false, unread: true },
-  { id: 'lab-checklist', person: zavaPeople.johanna, subject: 'Accessibility lab checklist', preview: 'Three remaining actions need owners before Thursday’s opening.', time: 'Friday', flagged: true, unread: false }
+  { id: 'town-hall', person: zavaPeople.miriam, subject: 'Town hall narrative ready', preview: 'The final leadership narrative and captions checklist are ready for review.', receivedAt: isoAtDayOffset(0, 8, 12), flagged: true, unread: true },
+  { id: 'aurora-handoff', person: zavaPeople.diego, subject: 'Aurora handoff complete', preview: 'Customer deployment evidence and accessibility follow-ups are attached.', receivedAt: isoAtDayOffset(-1, 16, 35), flagged: false, unread: true },
+  { id: 'lab-checklist', person: zavaPeople.johanna, subject: 'Accessibility lab checklist', preview: 'Three remaining actions need owners before the opening.', receivedAt: isoAtDayOffset(-3, 10, 20), flagged: true, unread: false }
 ] as const;
 
 export function ImportantMailList(): React.ReactElement {
@@ -154,7 +155,7 @@ export function ImportantMailList(): React.ReactElement {
   const selected = mailFixtures.find((mail) => mail.id === selectedId) || mailFixtures[0];
   return (
     <>
-      <div className={styles.list}>{mailFixtures.map((mail) => <button key={mail.id} type="button" className={mergeClasses(styles.mailRow, mail.id === selectedId && styles.selected)} onClick={() => setSelectedId(mail.id)}><span className={styles.avatarWrap}><Avatar size={40} name={mail.person.displayName} image={{ src: mail.person.photoUrl }} />{mail.unread && <span className={styles.unreadDot} />}</span><span className={styles.itemCopy}><span className={styles.mailTop}><strong className={styles.sender}>{mail.person.displayName}</strong><span className={styles.secondary}>{mail.time}</span></span><span className={styles.mailSubject}>{mail.flagged && <Flag16Filled className={styles.flag} />}<strong>{mail.subject}</strong></span><span className={styles.secondary}>{mail.preview}</span></span></button>)}</div>
+      <div className={styles.list}>{mailFixtures.map((mail) => <button key={mail.id} type="button" className={mergeClasses(styles.mailRow, mail.id === selectedId && styles.selected)} onClick={() => setSelectedId(mail.id)}><span className={styles.avatarWrap}><Avatar size={40} name={mail.person.displayName} image={{ src: mail.person.photoUrl }} />{mail.unread && <span className={styles.unreadDot} />}</span><span className={styles.itemCopy}><span className={styles.mailTop}><strong className={styles.sender}>{mail.person.displayName}</strong><span className={styles.secondary}>{formatRecentDateTime(mail.receivedAt)}</span></span><span className={styles.mailSubject}>{mail.flagged && <Flag16Filled className={styles.flag} />}<strong>{mail.subject}</strong></span><span className={styles.secondary}>{mail.preview}</span></span></button>)}</div>
       <div className={styles.detail}><div className={styles.mailTop}><Avatar size={32} name={selected.person.displayName} image={{ src: selected.person.photoUrl }} /><strong>{selected.subject}</strong></div><p className={styles.subtitle}>{selected.preview}</p><Button appearance="primary">Review in Outlook</Button></div>
     </>
   );
@@ -235,10 +236,10 @@ export function ShiftsExperience(props: IZavaExperienceProps): React.ReactElemen
 }
 
 const fileFixtures = [
-  { id: 'brief', name: 'Aurora launch brief.docx', meta: 'Word / Modified today / Project Aurora' },
-  { id: 'notes', name: 'Customer review notes.pptx', meta: 'PowerPoint / Modified yesterday / Customer team' },
-  { id: 'checklist', name: 'Accessibility checklist.xlsx', meta: 'Excel / Modified Sep 24 / Helsinki lab' },
-  { id: 'policy', name: 'Deployment policy.pdf', meta: 'PDF / Published Sep 20 / Operations' }
+  { id: 'brief', name: 'Aurora launch brief.docx', type: 'Word', changedAt: isoAtDayOffset(0, 9, 20), change: 'Modified', location: 'Project Aurora' },
+  { id: 'notes', name: 'Customer review notes.pptx', type: 'PowerPoint', changedAt: isoAtDayOffset(-1, 15, 10), change: 'Modified', location: 'Customer team' },
+  { id: 'checklist', name: 'Accessibility checklist.xlsx', type: 'Excel', changedAt: isoAtDayOffset(-2, 11, 45), change: 'Modified', location: 'Helsinki lab' },
+  { id: 'policy', name: 'Deployment policy.pdf', type: 'PDF', changedAt: isoAtDayOffset(-5, 13), change: 'Published', location: 'Operations' }
 ] as const;
 
 function fileIcon(name: string, styles: ReturnType<typeof useStyles>): React.ReactElement {
@@ -252,7 +253,7 @@ export function WorkFilesExperience(props: IZavaExperienceProps): React.ReactEle
   const styles = useStyles();
   const initialQuery = typeof props.toolProperties?.query === 'string' ? props.toolProperties.query : '';
   const [query, setQuery] = React.useState(initialQuery);
-  const matches = fileFixtures.filter((file) => `${file.name} ${file.meta}`.toLowerCase().includes(query.toLowerCase()));
+  const matches = fileFixtures.filter((file) => `${file.name} ${file.type} ${file.location}`.toLowerCase().includes(query.toLowerCase()));
   usePublish(props, { intent: 'workFiles', surface: props.surface, route: 'personal/files', stage: query ? 'search' : 'recent', summary: `${matches.length} matching work files`, visibleIds: matches.map((file) => file.id), filters: { query }, nextActions: ['Search files', 'Open file', 'Review in Microsoft 365', 'Expand'] });
-  return <PersonalFrame experience={props} layout="personal-work-files" eyebrow="Microsoft 365 / Private to you" title="Recent files" subtitle="Search your accessible recent files with type, location, and modified time preserved." source="C29 / SharePoint + OneDrive-shaped fixture / Access preserved"><Field label="Search recent files"><Input value={query} onChange={(_, data) => setQuery(data.value)} placeholder="Search by file name, project, or type" /></Field><div className={styles.fileList}>{matches.map((file) => <div key={file.id} className={styles.fileRow}>{fileIcon(file.name, styles)}<span className={styles.itemCopy}><strong>{file.name}</strong><span className={styles.secondary}>{file.meta}</span></span><Button appearance="subtle">Open</Button></div>)}</div>{!matches.length && <div className={styles.empty}>No recent files match “{query}”.</div>}<Button>Review in Microsoft 365</Button></PersonalFrame>;
+  return <PersonalFrame experience={props} layout="personal-work-files" eyebrow="Microsoft 365 / Private to you" title="Recent files" subtitle="Search your accessible recent files with type, location, and modified time preserved." source="C29 / SharePoint + OneDrive-shaped fixture / Access preserved"><Field label="Search recent files"><Input value={query} onChange={(_, data) => setQuery(data.value)} placeholder="Search by file name, project, or type" /></Field><div className={styles.fileList}>{matches.map((file) => <div key={file.id} className={styles.fileRow}>{fileIcon(file.name, styles)}<span className={styles.itemCopy}><strong>{file.name}</strong><span className={styles.secondary}>{file.type} / {file.change} {formatRecentDateTime(file.changedAt).toLowerCase()} / {file.location}</span></span><Button appearance="subtle">Open</Button></div>)}</div>{!matches.length && <div className={styles.empty}>No recent files match “{query}”.</div>}<Button>Review in Microsoft 365</Button></PersonalFrame>;
 }

@@ -81,6 +81,7 @@ import type {
 import { useVacationRequests, zavaSessionStore } from '../services/ZavaSessionStore';
 import { ResponsiveExpandButton } from './ResponsiveExpandButton';
 import { SubmissionReceipt } from './SubmissionReceipt';
+import { formatDate } from '../utils/evergreenDates';
 
 function settle(action: Promise<void> | undefined): void {
   action?.catch(() => undefined);
@@ -711,7 +712,7 @@ export function CompanyNewsExperience(props: IZavaExperienceProps): React.ReactE
           <p className={styles.subtitle}>{selected.detail}</p>
           <div className={styles.personLine}>
             <Avatar size={32} name={author.displayName} image={{ src: author.photoUrl }} />
-            <span>{author.displayName} / Published September {new Date(selected.publishedAt).getUTCDate()}, 2026</span>
+            <span>{author.displayName} / Published {formatDate(selected.publishedAt, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
           </div>
         </div>
         <div className={styles.actions}>
@@ -803,7 +804,7 @@ export function LearningExperience(props: IZavaExperienceProps): React.ReactElem
       {stage === 'overview' && (
         <div className={styles.stagePanel}>
           <div className={styles.prominentPanel}>
-            <Badge appearance="filled" color="warning">Due October 2</Badge>
+            <Badge appearance="filled" color="warning">Due {formatDate(zavaLearningAssignments[0].dueDate || '')}</Badge>
             <h3 className={styles.storyTitle}>{zavaLearningAssignments[0].title}</h3>
             <p className={styles.prominentPanelText}>{zavaLearningAssignments[0].description}</p>
             <div className={styles.statusRow}><Clock24Regular /><span>18 minutes</span><span>42% complete</span></div>

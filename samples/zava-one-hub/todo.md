@@ -16,10 +16,10 @@ by [agentic-creation-rules.md](agentic-creation-rules.md).
 > two Copilot infrastructure entries bring the solution to 75 unique SPFx component GUIDs and 37
 > generated plugin functions in two host-specific bundles. The local harness has 35 unique inline
 > layouts, zero runtime/overflow/image failures, 39 recaptured engineering screenshots, and 15 reviewed
-> publication images referenced by `assets/sample.json`. Forty-two Jest tests, 4,080 responsive browser
+> publication images referenced by `assets/sample.json`. Forty-six Jest tests, 4,080 responsive browser
 > states, 28-media provenance,
 > six conversation starters with Capability Explorer last, plugin validation, and the final
-> version `1.0.0.15`, 6,205,670-byte `.sppkg` audit pass. Evidence is in
+> version `1.0.0.16`, 6,208,176-byte `.sppkg` audit pass. Evidence is in
 > `ux-review/evidence/phase-6-matrix.json`. All 37
 > Workbench components reached Ready in the earlier host baseline. The sample author confirmed all
 > three separately packaged Teams personal apps work and supplied authenticated screenshots with no
@@ -490,7 +490,7 @@ or authenticated-host evidence does not yet exist; they are not silently treated
 - [x] Add focused data-integrity tests for persona IDs, portrait references, news authors/media,
   learning IDs, catalog uniqueness, C35 decision/reset behavior, and Personal workflow fixture rules
   for business days, approval identity, equity estimates, room capacity, and IT issue scope (covered by
-  the initial 29-test suite; the final demo now has 42 passing tests).
+  the initial 29-test suite; the final demo now has 46 passing tests).
 - [ ] Extend integrity tests to C16/C30 cross-capability vacation projections and every specialist
   source contract before those deep acceptance gates close.
 
@@ -788,7 +788,7 @@ or authenticated-host evidence does not yet exist; they are not silently treated
   pin the package directly, rerender immediately on changes, and open the property pane from Advanced
   settings. Fixed Company/Personal workspaces do not expose a start-tab switch.
 - [x] Assert all 35 profiles are complete and reject page-author properties in the packaged 37-function
-  Copilot plugin; the current 42 tests pass and the generated plugin validator confirms the boundary.
+  Copilot plugin; the current 46 tests pass and the generated plugin validator confirms the boundary.
 - [x] Brand the agent as Zava One with deterministic manifest-safe icons: 192x192 white Z on Zava blue
   for `color.png`, and a padded white Z on a transparent 32x32 canvas for `outline.png`. Validate exact
   source-to-ZIP bytes, icon paths, display names, and `#075FCE` accent color during every build.

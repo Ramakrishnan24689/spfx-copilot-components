@@ -4,6 +4,7 @@ import { Alert24Regular, Megaphone24Regular, Settings24Regular } from '@fluentui
 import { zavaCapabilities } from '../catalog/capabilities';
 import type { IZavaExperienceProps } from '../models/zavaOne';
 import { companyPortalColumnAssignments } from '../models/workspacePortalDefaults';
+import { dateOnlyAtDayOffset, formatDate } from '../utils/evergreenDates';
 import { PersonalPortalDnd } from './PersonalPortalDnd';
 import { PersonalRightPanel } from './PersonalRightPanel';
 
@@ -75,9 +76,9 @@ export function CompanyWorkspaceHome(props: ICompanyWorkspaceHomeProps): React.R
   return <div className={styles.shell} data-layout="company-portal-dashboard">
     <main className={styles.main}><section className={styles.home}>
       <section className={styles.hero} aria-label="Company-wide updates">
-        <div className={styles.heroLead}><span className={styles.heroIcon}><Megaphone24Regular /></span><span className={styles.heroCopy}><span className={styles.overline}>Company-wide / Monday, September 29</span><h1 className={styles.title}>Here’s what’s happening across Zava.</h1><p className={styles.subtitle}>The latest announcements, events, and operational updates for every employee.</p><span><Badge appearance="filled" color="informative">3 active updates</Badge></span></span></div>
+        <div className={styles.heroLead}><span className={styles.heroIcon}><Megaphone24Regular /></span><span className={styles.heroCopy}><span className={styles.overline}>Company-wide / {formatDate(dateOnlyAtDayOffset(0), { weekday: 'long', month: 'long', day: 'numeric' })}</span><h1 className={styles.title}>Here’s what’s happening across Zava.</h1><p className={styles.subtitle}>The latest announcements, events, and operational updates for every employee.</p><span><Badge appearance="filled" color="informative">3 active updates</Badge></span></span></div>
         <div className={styles.updates}>
-          <span className={styles.update}><Alert24Regular /><span className={styles.updateCopy}><strong>Global town hall / October 1</strong><span>Live captions and recording available worldwide.</span></span></span>
+          <span className={styles.update}><Alert24Regular /><span className={styles.updateCopy}><strong>Global town hall / {formatDate(dateOnlyAtDayOffset(10))}</strong><span>Live captions and recording available worldwide.</span></span></span>
           <span className={styles.update}><Alert24Regular /><span className={styles.updateCopy}><strong>Customer information policy updated</strong><span>Effective today / Acknowledgement requested by Friday.</span></span></span>
           <span className={styles.update}><Alert24Regular /><span className={styles.updateCopy}><strong>Helsinki accessibility lab opens</strong><span>Employee tours begin Thursday at 10:00 EEST.</span></span></span>
         </div>
