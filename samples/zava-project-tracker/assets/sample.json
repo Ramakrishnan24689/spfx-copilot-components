@@ -9,10 +9,10 @@
     "longDescription": [
       "Zava demonstrates dynamic UX resolution inside Microsoft Copilot. Thirty operational SPFx Copilot Components independently route natural-language intents to purpose-built information, comparison, submission, and decision experiences. A thirty-first capability explorer helps users discover the complete scenario catalog through business outcomes and safe previews.",
       "Operational components expand into one responsive full-screen application with My Work, Project, Portfolio, and Decisions dashboards. Project selection coordinates delivery, budget, AI spend, milestones, risk, team load, and benefits. Portfolio views show company investment, run-rate, value, capacity, and systemic exposure. Decisions uses one evidence-first inbox backed by the same records as the inline review components.",
-      "The sample is deterministic, offline, and safe for worldwide demonstrations. Prompt values prefill or filter UX but never submit or decide automatically. Confirmed sample actions create browser-session receipts and never write to an external system. The production package uses one optimized shared bundle, bundled personas, Fluent UI v9, React 17, Griffel owner-document styling, focused D3 visualizations, and automated plugin/package-output validation."
+      "The sample is deterministic, offline, and safe for worldwide demonstrations. Prompt values prefill or filter UX but never submit or decide automatically. Confirmed sample actions create browser-session receipts and never write to an external system. The production package uses one optimized shared bundle, bundled personas, Fluent UI v9, React 18, Griffel owner-document styling, focused D3 visualizations, and automated plugin/package-output validation."
     ],
     "creationDateTime": "2026-08-21",
-    "updateDateTime": "2026-08-21",
+    "updateDateTime": "2026-10-19",
     "products": [
       "SharePoint",
       "Copilot"
@@ -28,7 +28,7 @@
       },
       {
         "key": "SPFX-VERSION",
-        "value": "1.24.0-beta.2"
+        "value": "1.24.0-rc.0"
       }
     ],
     "thumbnails": [

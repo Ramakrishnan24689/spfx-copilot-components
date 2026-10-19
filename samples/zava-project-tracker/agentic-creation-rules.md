@@ -138,7 +138,7 @@ approved sample values, but keep the actions and gates.
    and tool descriptions. The validator MUST fail on duplicate GUID/tool/description, wrong counts,
   placeholder descriptions/properties, missing registrations, missing generated files, duplicate bundle
   membership, or a manifest absent from the approved bundle strategy.
-4. **Install and pin the shared stack once.** React 17, Fluent v9, Griffel, focused D3 modules/types,
+4. **Install and pin the shared stack once.** React 18, Fluent v9, Griffel, focused D3 modules/types,
    Jest, and only approved optional libraries. Run a clean compile before feature implementation.
 5. **Build the shared host before 30 bodies.** Implement current-user resolution, `ownerDocument`
    Griffel rendering, theme provider, consistent top-right full-screen action, operation dispatcher,
@@ -182,7 +182,7 @@ approved sample values, but keep the actions and gates.
 ```text
 scripts/configure-intent-components.mjs   # catalog -> adapters/schemas/manifests/registrations
 scripts/validate-intent-components.mjs    # fail-fast identity/schema/registration audit
-scripts/validate-generated-ai-plugin.mjs  # shipped ZIP -> plugin v2.4/functions/MCP/length audit
+scripts/validate-generated-ai-plugin.mjs  # shipped ZIP -> plugin v2.4/dynamic MCP/length audit
 scripts/validate-package-output.mjs        # .sppkg -> JS/media/icon/stale-output/size audit
 scripts/validate-gallery-assets.mjs        # sample.json -> metadata/PNG/order/URL coverage audit
 scripts/generate-embedded-faces.mjs       # deterministic bundled-media generator/check
@@ -212,13 +212,13 @@ Recommended scripts for future samples:
 ### 0.3 Dependencies - install before the owning implementation
 
 The generator scaffolds `@microsoft/sp-copilot-component`, `zod`, and `zod-to-json-schema`. Before the
-first React implementation, the agent adds the **React 17 + Fluent UI v9 + Griffel** baseline (pin to
-React 17 - do not take React 18), then verifies the build:
+first React implementation, the agent adds the **React 18 + Fluent UI v9 + Griffel** baseline (pin to
+React 18.3.1 for SPFx 1.24), then verifies the build:
 
 ```bash
-# React 17 runtime + types (UX rendering)
-npm install react@17.0.1 react-dom@17.0.1 --save
-npm install @types/react@17.0.45 @types/react-dom@17.0.17 --save-dev
+# React 18 runtime + types (UX rendering)
+npm install react@18.3.1 react-dom@18.3.1 --save-exact
+npm install @types/react@18.3.31 @types/react-dom@18.3.7 --save-dev --save-exact
 
 # Fluent UI v9 (components + icons) - the required UI stack (G4)
 npm install @fluentui/react-components@9.54.0 @fluentui/react-icons@2.0.270 --save
@@ -243,7 +243,7 @@ npm install @pnp/spfx-controls-react --save --save-exact
 npm install @pnp/sp @pnp/graph @pnp/logging --save
 ```
 
-> Keep versions aligned across samples for consistency (React 17.0.1, Fluent `@fluentui/react-components`
+> Keep versions aligned with the target SPFx release (React 18.3.1, Fluent `@fluentui/react-components`
 > 9.x, `@fluentui/react-icons` 2.x). Confirm the exact `@microsoft/sp-copilot-component` /
 > `@microsoft/spfx-*` dev-preview versions from what the generator produced for the target SPFx build.
 
@@ -266,7 +266,7 @@ Context:
 Please:
 1. Read the README objectives and the attached design, then generate todo.md with Markdown checkboxes
   for me to review. Do NOT start coding until I approve the plan.
-2. After approval, follow its phase order. Add React 17, Fluent v9, and Griffel before React work and
+2. After approval, follow its phase order. Add React 18, Fluent v9, and Griffel before React work and
   confirm the build (`heft test --clean`). Pure mock-data modeling may happen first.
 3. After I confirm, implement phase by phase against mock data - fully offline, source-appropriate data,
    Fluent v9, the signature "wow" feature, and the polish defined in the rules.
@@ -287,9 +287,9 @@ phased implementation. If only planning is requested, stop before dependency or 
 - **G1 - Copilot Component, not a web part.** No `BaseClientSideWebPart`, **no property pane**, no
   `getPropertyPaneConfiguration`, no `.module.scss` theme tokens, no `@pnp/spfx-property-controls`.
 - **G2 - Heft, not Gulp.** Configs extend the rig. Never add `gulpfile.js`.
-- **G3 - React 17 only.** Functional components. `import * as React from 'react'`. Classic JSX
-  (`jsx: "react"`). Use `ReactDOM.render` / `ReactDOM.unmountComponentAtNode`. **No** `createRoot`,
-  no concurrent APIs, no React 18+ features.
+- **G3 - React 18.3.1.** Functional components. `import * as React from 'react'`. Classic JSX
+  (`jsx: "react"`). Use `createRoot` from `react-dom/client`, retain one root per container for
+  subsequent `root.render` calls, and call `root.unmount` during teardown. Declare children props explicitly.
 - **G4 - Fluent UI v9 always** (`@fluentui/react-components`, `@fluentui/react-icons`). **Tokens only**
   - never hard-code colors. Style with `makeStyles`. (See §8, §17 for Griffel/lint gotchas.)
 - **G5 - Mock data first, source-shaped where useful.** All data flows through typed service
@@ -656,11 +656,12 @@ export default zodToJsonSchema(schema);
 - Every field MUST have `.describe()` - the text drives how Copilot populates the tool.
 - All prompt fields SHOULD be optional so `{}` produces a useful default and extraction can be partial.
   This sample's catalog validator makes `.optional()` mandatory.
-- The authored Copilot Component schema is JSON Schema draft-07, but SPFx packaging translates it into
-  API plugin v2.4 `functions[].parameters` and mirrored MCP `tools[].inputSchema`. Validate generated
-  `ai-plugin.json` from the agent ZIP embedded under `sharepoint/solution/debug/ClientSideAssets/`, not
-  only the Zod source or the seed `copilot/ai-plugin.json`.
-- The packaged API plugin parameter subset supports top-level `type: object`, `properties`, and optional
+- The authored Copilot Component schema is JSON Schema draft-07. SPFx 1.24 RC0 uses dynamic MCP tool
+  discovery, so the generated API plugin has an empty `functions` array and wildcard runtime routing,
+  rather than embedded functions and mirrored tool schemas. Validate generated `ai-plugin.json` from
+  the agent ZIP embedded under `sharepoint/solution/debug/ClientSideAssets/`, and continue validating
+  every component schema and registration with the source catalog audit.
+- This sample's validated parameter subset supports top-level `type: object`, `properties`, and optional
   `required`; each parameter supports `type`, `items`, string `enum`, `description`, and `default`.
   Supported types are `string`, `array`, `boolean`, `integer`, and `number`; array items are simple
   parameters. Property names match `^[A-Za-z0-9_]+$`.
@@ -675,8 +676,9 @@ export default zodToJsonSchema(schema);
   property value. Enforce business-safe runtime value lengths in normalization/UI validation without
   emitting unsupported `maxLength` into the tool schema.
 - Accept only SPFx's deployment-time `{{TENANT_MCP_URL}}` and `{{TENANT_ORIGIN}}` placeholders in the
-  generated Remote MCP runtime. Validate every other string, parameter keyword/type, function/MCP tool
-  mirror, read-only annotation, output template, and CSP shape at build time.
+  generated Remote MCP runtime. Validate plugin metadata, its MCP URL, and wildcard discovery routing
+  at build time. Validate dynamically discovered tools, annotations, output templates, and host CSP
+  in an authenticated tenant; those are no longer embedded in this generated plugin.
 - Use `z.object({})` when prompt extraction cannot improve the initial experience. Do not add ceremonial
   placeholder inputs. Finalize useful optional parameters with the initial component implementation.
 
@@ -1430,7 +1432,7 @@ samples/<name>/
   documented internal routes or candidates rather than speculative component bundles.
 - [ ] Catalog-driven configure/validate scripts pass: unique GUIDs/tools/descriptions, expected bundles,
   schemas, resources, registrations, and no scaffold placeholders.
-- [ ] Copilot Component (no web part / no property pane); Heft; React 17; Fluent v9.
+- [ ] Copilot Component (no web part / no property pane); Heft; React 18; Fluent v9.
 - [ ] Focused inline root + approved shared/isolated/hybrid full-screen topology;
   `requestDisplayModeAsync` for the consistent top-right View in full screen control.
 - [ ] Every primary workspace has a useful default dashboard; navigation orientation is justified by
@@ -1478,7 +1480,7 @@ samples/<name>/
 - [ ] Tenant-authenticated Workbench smoke passes CSP, display-mode request, iframe focus, and screen-reader
   output, or the missing tenant/auth prerequisite is explicitly recorded.
 - [ ] Catalog/media audits and `heft test --clean` green (zero warnings); current agent ZIP and committed
-  `.sppkg` inspected and regenerated; generated plugin v2.4 metadata/functions/MCP tools and length
+  `.sppkg` inspected and regenerated; generated plugin v2.4 metadata/dynamic MCP discovery and length
   limits pass against the actual SharePoint-embedded ZIP; no stale package artifacts.
 - [ ] Bundle strategy is measured: shared component entries deduplicate common runtime/media/icons or
   intentional split bundles document their lazy-loading benefit; production icon output contains only
