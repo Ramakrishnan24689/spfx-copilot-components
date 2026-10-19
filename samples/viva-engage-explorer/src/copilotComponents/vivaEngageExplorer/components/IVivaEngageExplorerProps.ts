@@ -7,6 +7,7 @@ export interface IVivaEngageExplorerProps {
   service: IVivaEngageService;
   hostContext: ICopilotComponentHostContext;
   onRequestDisplayMode: (mode: SPCopilotDisplayMode) => Promise<void>;
+  onContentResize: (width: number, height: number) => Promise<void>;
   targetDocument: Document;
   strings: IVivaEngageExplorerCopilotComponentStrings;
 }

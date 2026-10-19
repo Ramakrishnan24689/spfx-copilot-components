@@ -53,6 +53,7 @@ export default class VivaEngageCommunityExplorer extends BaseCopilotComponent<IV
       hostContext: this.hostContext,
       targetDocument: this.context.domElement.ownerDocument,
       strings,
+      onContentResize: this._handleContentResize,
       onRequestDisplayMode: async mode => {
         const result = await this.requestDisplayModeAsync(mode);
         if (result.mode !== mode) throw new Error('Display mode request declined');
@@ -63,6 +64,10 @@ export default class VivaEngageCommunityExplorer extends BaseCopilotComponent<IV
       this._root!.render(React.createElement(ExplorerErrorBoundary, undefined, explorer));
     });
   }
+
+  private _handleContentResize = async (width: number, height: number): Promise<void> => {
+    await this.requestSizeChangeAsync(width, height);
+  };
 
   protected async onTeardown(): Promise<void> {
     this._root?.unmount();

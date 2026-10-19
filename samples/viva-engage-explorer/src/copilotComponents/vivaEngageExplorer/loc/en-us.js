@@ -54,6 +54,7 @@ define([], function() {
     NotFoundError: "This community could not be found or is not available to your account.",
     InvalidResponseError: "Microsoft Graph returned an unexpected response. Retry; if this continues, contact your administrator.",
     HostError: "Copilot could not change display mode. Try the host's expand or collapse control.",
+    ResizeError: "Copilot could not resize the inline explorer. Expand the component to view all results.",
     RenderError: "The explorer could not render. Retry or reload the workbench. If this continues, share the diagnostic below with the sample maintainer.",
     InvalidQuery: "The Copilot tool arguments are invalid. Ask Copilot to explore Viva Engage communities again using the supported filters.",
     AmbiguousDetails: "Select View details on a matching community. A name match is not assumed when several communities are returned.",

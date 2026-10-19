@@ -29,6 +29,7 @@ function ExplorerContent(props: IVivaEngageExplorerProps): React.ReactElement {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<CommunityServiceError>();
   const [hostError, setHostError] = React.useState(false);
+  const [resizeError, setResizeError] = React.useState(false);
   const [switchingMode, setSwitchingMode] = React.useState(false);
   const [selectedId, setSelectedId] = React.useState<string>();
   const [community, setCommunity] = React.useState<ICommunity>();
@@ -38,6 +39,30 @@ function ExplorerContent(props: IVivaEngageExplorerProps): React.ReactElement {
   const [limit, setLimit] = React.useState(24);
   const forceRefresh = React.useRef(false);
   const selectionApplied = React.useRef(false);
+  const contentRef = React.useRef<HTMLElement>(null);
+
+  React.useEffect(() => {
+    const content = contentRef.current;
+    if (fullscreen || !content) return;
+    let active = true;
+    let lastWidth = 0;
+    let lastHeight = 0;
+    const observer = new ResizeObserver(() => {
+      const width = content.ownerDocument.documentElement.clientWidth;
+      const height = Math.ceil(content.getBoundingClientRect().height);
+      if (width <= 0 || height <= 0 || (width === lastWidth && height === lastHeight)) return;
+      lastWidth = width;
+      lastHeight = height;
+      props.onContentResize(width, height).catch(() => {
+        if (active) setResizeError(true);
+      });
+    });
+    observer.observe(content, { box: 'border-box' });
+    return () => {
+      active = false;
+      observer.disconnect();
+    };
+  }, [fullscreen, props.onContentResize, !!props.query]);
 
   React.useEffect(() => {
     setQuery(initialQuery);
@@ -77,7 +102,7 @@ function ExplorerContent(props: IVivaEngageExplorerProps): React.ReactElement {
   }, [service, loadAttempt, !!props.query, query.communityId]);
 
   React.useEffect(() => {
-    if (loading || selectionApplied.current || initialQuery.action !== 'details' ||
+    if (loading || !snapshot.complete || selectionApplied.current || initialQuery.action !== 'details' ||
       initialQuery.communityId || !initialQuery.searchText?.trim()) return;
     const matches = filterCommunities(snapshot.communities, initialQuery);
     const exact = matches.filter(item =>
@@ -143,7 +168,7 @@ function ExplorerContent(props: IVivaEngageExplorerProps): React.ReactElement {
   if (!props.query) return <MessageBar intent="error"><MessageBarBody>{strings.InvalidQuery}</MessageBarBody></MessageBar>;
 
   return (
-    <main className={styles.root} aria-label={strings.Title}>
+    <main ref={contentRef} className={styles.root} aria-label={strings.Title}>
       <header className={styles.hero}>
         <span className={styles.eyebrow}>{strings.Eyebrow}</span>
         {fullscreen ? <Title1 as="h1">{strings.Title}</Title1> : <Title3 as="h1">{strings.Title}</Title3>}
@@ -163,6 +188,7 @@ function ExplorerContent(props: IVivaEngageExplorerProps): React.ReactElement {
       </header>
  
       {hostError && <MessageBar intent="error"><MessageBarBody>{strings.HostError}</MessageBarBody></MessageBar>}
+      {resizeError && <MessageBar intent="error"><MessageBarBody>{strings.ResizeError}</MessageBarBody></MessageBar>}
       {error && <ServiceError error={error} strings={strings} onRetry={retryList} />}
 
       <section aria-label={strings.Retrieved} className={styles.summaries}>

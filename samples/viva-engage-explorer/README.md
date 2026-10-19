@@ -9,13 +9,13 @@ A read-only **SPFx Copilot UX Component** for discovering real Viva Engage commu
 > SharePoint Copilot Apps and SPFx 1.24.0-rc.0 are preview technology. Microsoft currently advises against production use. A production build is provided for evaluation, not a claim of production support.
 
 The inline view shows the community explorer embedded in the Copilot Component Workbench.
-![Inline community explorer in the Copilot Component Workbench](Assets/01.png)
+![Inline community explorer in the Copilot Component Workbench](assets/01.png)
 
 In fullscreen, the directory expands to make browsing and filtering easier.
-![Fullscreen community explorer in the Copilot Component Workbench](Assets/02.png)
+![Fullscreen community explorer in the Copilot Component Workbench](assets/02.png)
 
 This architecture illustration summarizes how the component connects Copilot to Microsoft Graph.
-![Architecture illustration, not a screenshot of a live tenant](Assets/architecture.svg)
+![Architecture illustration, not a screenshot of a live tenant](assets/architecture.svg)
 
 The workbench captures illustrate the inline and fullscreen experiences; they do not verify live tenant execution. Before sharing screenshots of tenant data, capture them from a consented tenant with permission to share its community information. Keep the architecture illustration clearly labeled as an illustration, not a tenant screenshot.
 
@@ -73,6 +73,8 @@ The service validates response shapes with Zod, follows `@odata.nextLink`, rejec
 React effect cleanup ignores obsolete/unmounted request results. Teardown disposes the service and aborts pending retry delays; an already-dispatched SPFx HTTP request may finish, but cannot update an unmounted UI.
 
 The React root is committed synchronously with `flushSync` before the SPFx render hook returns. A plain React error boundary, independent of Fluent UI, shows a diagnostic and retry action if a child fails to render instead of leaving a blank component frame.
+
+In inline mode, a `ResizeObserver` reports content size changes to the Copilot host after data loads or filters change. It disconnects on unmount; rejected resize requests display a notice recommending fullscreen mode.
 
 The Fluent UI ID prefix removes colons from React's `useId()` value. Fluent uses the prefix in its theme CSS selector; passing the raw React ID causes a browser `CSSStyleSheet.insertRule` syntax error and prevents the UI from rendering.
 
@@ -222,6 +224,8 @@ To show all accessible communities, the minimal properties are:
 
 For details by name, an exact unique match or a single search result is selected. Multiple matches remain visible for user selection. An exact ID is used only if it is known; IDs are never inferred from names.
 
+Automatic name-based selection waits for a complete collection, including after Retry, so partial results cannot incorrectly imply a unique match.
+
 ## Authors
 
 - [Nanddeep Nachan](https://github.com/nanddeepn)
@@ -231,6 +235,7 @@ For details by name, an exact unique match or a single search result is selected
 
 | Version | Date             | Comments        |
 | ------- | ---------------- | --------------- |
+| 1.0.0.0 | October 19, 2026 | Pre-merge review: report inline content resizing, defer automatic details until the collection is complete, and correct README links |
 | 1.0.0.0 | October 15, 2026 | Initial release |
 
 ## Help
@@ -246,7 +251,7 @@ This community sample is supplied as-is. For sample-specific issues, use the [re
 - [Microsoft Graph permissions reference](https://learn.microsoft.com/graph/permissions-reference#communityreadall)
 - [Connect to Microsoft Entra-secured APIs in SPFx](https://learn.microsoft.com/sharepoint/dev/spfx/use-aadhttpclient)
 - [Microsoft Graph throttling guidance](https://learn.microsoft.com/graph/throttling)
-- [Repository contribution guidance](../../CONTRIBUTING.md)
+- [Repository contribution guidance](https://github.com/pnp/spfx-copilot-components/blob/main/CONTRIBUTING.md)
 
 ## Disclaimer
 

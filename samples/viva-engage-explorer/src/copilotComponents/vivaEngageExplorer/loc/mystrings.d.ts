@@ -53,6 +53,7 @@ declare interface IVivaEngageExplorerCopilotComponentStrings {
   NotFoundError: string;
   InvalidResponseError: string;
   HostError: string;
+  ResizeError: string;
   RenderError: string;
   InvalidQuery: string;
   AmbiguousDetails: string;

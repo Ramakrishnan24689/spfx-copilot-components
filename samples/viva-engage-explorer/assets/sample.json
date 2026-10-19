@@ -12,7 +12,7 @@
       "Uses live Graph data only, with pagination, session caching, explicit refresh and actionable authentication and API error states."
     ],
     "creationDateTime": "2026-10-16",
-    "updateDateTime": "2026-10-16",
+    "updateDateTime": "2026-10-19",
     "products": ["SharePoint", "Microsoft Copilot"],
     "metadata": [
       { "key": "SAMPLE-TYPE", "value": "SPFx-CopilotComponent" },
