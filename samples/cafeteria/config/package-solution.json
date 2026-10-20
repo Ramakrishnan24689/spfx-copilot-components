@@ -3,7 +3,7 @@
   "solution": {
     "name": "cafeteria-client-side-solution",
     "id": "3b2d0516-a4c3-427a-8977-be66661a0f4f",
-    "version": "1.0.0.0",
+    "version": "1.0.0.1",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "developer": {
@@ -11,7 +11,7 @@
       "websiteUrl": "",
       "privacyUrl": "",
       "termsOfUseUrl": "",
-      "mpnId": "Undefined-1.24.0-beta.3"
+      "mpnId": "Undefined-1.24.0-beta.5"
     },
     "metadata": {
       "shortDescription": {
@@ -29,7 +29,7 @@
         "title": "cafeteria Feature",
         "description": "The feature that activates elements of the cafeteria solution.",
         "id": "3847873a-c931-4cc9-a754-39adbf86bfad",
-        "version": "1.0.0.0"
+        "version": "1.0.0.1"
       }
     ]
   },

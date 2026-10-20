@@ -1,77 +1,133 @@
-# cafeteria
+# Cafeteria - Browse Cafeterias and Menus in Copilot
 
 ## Summary
 
-Short summary on functionality and used technologies.
+**Cafeteria** is an SPFx 1.24 Copilot Component sample that brings cafeteria listings, daily menus, dish search, and cafeteria details into Microsoft 365 Copilot. The Cafeteria Agent selects the matching tool from a natural-language request and renders an interactive result in the Copilot canvas.
 
-[picture of the solution in action, if possible]
+The sample includes four tools:
 
-## Used SharePoint Framework Version
+- **Browse cafeterias** by building or whether they are open now
+- **Show a menu** for a cafeteria and date, grouped by meal period
+- **Search menu items** by dish name, dietary requirements, price, cafeteria, or date
+- **Show cafeteria details**, including hours, floor, contact, payment methods, and closure notices
 
-![version](https://img.shields.io/badge/version-1.24.0--beta.3-yellow.svg)
+All tools use bundled synthetic data. No SharePoint lists, Microsoft Graph permissions, or other live data source are required.
+
+## Screenshots
+
+### Full screen
+
+![Cafeteria full-screen home view](./assets/Screenshot-fullscreen-main.png)
+
+![Cafeteria full-screen menu](./assets/Screenshot-fullscreen-menu.png)
+
+![Cafeteria full-screen menu search results](./assets/Screenshot-fullscreen-search.png)
+
+### Inline
+
+![Cafeteria inline menu search results](./assets/Screenshot-inline-search.png)
+
+## Compatibility
+
+![SPFx 1.24.0-beta.5](https://img.shields.io/badge/SPFx-1.24.0--beta.5-yellow.svg)
+![Node.js 22](https://img.shields.io/badge/Node.js-22.x-339933.svg)
+![React 18](https://img.shields.io/badge/React-18-61DAFB.svg)
+
+> SPFx Copilot Components are in preview. APIs and packaging behavior may change.
 
 ## Applies to
 
-- [SharePoint Framework](https://aka.ms/spfx)
-- [Microsoft 365 tenant](https://docs.microsoft.com/sharepoint/dev/spfx/set-up-your-developer-tenant)
+- [SharePoint Framework](https://learn.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview) 1.24+ (Copilot Component)
+- [Microsoft Copilot extensibility](https://learn.microsoft.com/microsoft-365-copilot/extensibility/)
+- [Microsoft 365 tenant](https://learn.microsoft.com/sharepoint/dev/spfx/set-up-your-development-environment) with a SharePoint App Catalog
 
-> Get your own free development tenant by subscribing to [Microsoft 365 developer program](http://aka.ms/o365devprogram)
+> Get your own free development tenant by subscribing to the [Microsoft 365 developer program](https://aka.ms/m365/devprogram).
 
 ## Prerequisites
 
-> Any special pre-requisites?
+- Node.js **>=22.14.0 and <23.0.0**
+- A Microsoft 365 tenant with the SPFx Copilot Components preview enabled
+- Access to the tenant's SharePoint App Catalog to deploy the solution
+- [Heft](https://heft.rushstack.io/) (`npm install -g @rushstack/heft`), or run it with `npx heft`
+
+The sample uses local synthetic data and does not request additional Microsoft Graph or SharePoint API permissions.
 
 ## Solution
 
-| Solution    | Author(s)                                               |
-| ----------- | ------------------------------------------------------- |
-| folder name | Author details (name, company, twitter alias with link) |
+- **Solution:** `cafeteria`
+- **Agent:** Cafeteria Agent
+- **Component type:** SPFx Copilot Component UX (`copilotType: "Ux"`)
 
 ## Version history
 
-| Version | Date             | Comments        |
-| ------- | ---------------- | --------------- |
-| 1.1     | March 10, 2021   | Update comment  |
-| 1.0     | January 29, 2021 | Initial release |
+| Version | Date          | Comments        |
+| ------- | ------------- | --------------- |
+| 1.0.0 | October 19, 2026 | Initial release |
+
+## Minimal path to awesome
+
+### Run from source
+
+1. Clone this repository and change to `samples/cafeteria`.
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the hosted Copilot workbench:
+
+   ```bash
+   npm run start
+   ```
+
+   The development server is configured to open the tenant's Copilot workbench. SPFx Copilot Components cannot be tested in the local SharePoint workbench.
+
+4. To create a production package, run:
+
+   ```bash
+   npm run build
+   ```
+
+   This runs the production test/build and packages the solution as `sharepoint/solution/cafeteria.sppkg`.
+
+### Deploy
+
+1. Upload the generated `sharepoint/solution/cafeteria.sppkg` to the tenant **App Catalog**.
+2. Select **Enable this app and add it to all sites**, then select **Enable app** to deploy the solution tenant-wide. This is required for Copilot integration.
+3. In the App Catalog, select the app and choose **Add to Teams**. This provisions the Cafeteria Agent in Copilot.
+4. In Microsoft Copilot, add or select **Cafeteria Agent** and start a new conversation to try its four tools.
+
+## Features
+
+- **Copilot agent tool routing** — the Cafeteria Agent routes requests to the narrowest matching tool: `getListCafeteria`, `getMenu`, `searchMenuItems`, or `getCafeteriaDetails`.
+- **Cafeteria discovery** — list active cafeterias, optionally filtered by building or open status.
+- **Menu browsing** — display a cafeteria's menu grouped by breakfast, lunch, and snacks.
+- **Dish search** — filter today's menu by dish name, dietary tags, maximum price, or cafeteria.
+- **Cafeteria details** — display location, hours, contact, payment options, and closure notices.
+- **Inline and full-screen rendering** — each component supports both display modes and follows the Copilot host's theme.
+- **Synthetic data service** — bundled sample data allows offline demos without tenant data connections. The sample menu data represents today's menus only; dates without seeded menus return an unpublished-menu state.
+
+### Suggested prompts
+
+- Which cafeterias are open now?
+- What is for lunch at the cafeteria in Building 4?
+- Find vegan dishes under 150.
+- Show me the hours and payment options for the cafeteria in Building 4.
+
+## References
+
+- [Getting started with SharePoint Framework](https://learn.microsoft.com/sharepoint/dev/spfx/set-up-your-development-environment)
+- [Microsoft 365 Copilot extensibility](https://learn.microsoft.com/microsoft-365-copilot/extensibility/)
+- [Heft documentation](https://heft.rushstack.io/)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) — guidance, tooling, samples, and open-source controls for Microsoft 365 development
+
+## Help
+
+We do not provide support for individual samples, but the community is always willing to help improve them. Check [issues related to this sample](https://github.com/pnp/spfx-copilot-components/issues) or [create a new issue](https://github.com/pnp/spfx-copilot-components/issues/new).
 
 ## Disclaimer
 
 **THIS CODE IS PROVIDED _AS IS_ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
 
----
-
-## Minimal Path to Awesome
-
-- Clone this repository
-- Ensure that you are at the solution folder
-- in the command-line run:
-  - `npm install -g @rushstack/heft`
-  - `npm install`
-  - `heft start`
-
-> Include any additional steps as needed.
-
-Other build commands can be listed using `heft --help`.
-
-## Features
-
-Description of the extension that expands upon high-level summary above.
-
-This extension illustrates the following concepts:
-
-- topic 1
-- topic 2
-- topic 3
-
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
-
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
-
-## References
-
-- [Getting started with SharePoint Framework](https://docs.microsoft.com/sharepoint/dev/spfx/set-up-your-developer-tenant)
-- [Building for Microsoft teams](https://docs.microsoft.com/sharepoint/dev/spfx/build-for-teams-overview)
-- [Use Microsoft Graph in your solution](https://docs.microsoft.com/sharepoint/dev/spfx/web-parts/get-started/using-microsoft-graph-apis)
-- [Publish SharePoint Framework applications to the Marketplace](https://docs.microsoft.com/sharepoint/dev/spfx/publish-to-marketplace-overview)
-- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) - Guidance, tooling, samples and open-source controls for your Microsoft 365 development
-- [Heft Documentation](https://heft.rushstack.io/)
+<img src="https://m365-visitor-stats.azurewebsites.net/spfx-copilot-components/samples/cafeteria" />

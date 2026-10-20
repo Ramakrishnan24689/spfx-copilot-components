@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.29/MicrosoftTeams.schema.json",
   "manifestVersion": "1.29",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "id": "f6985507-7002-4220-b718-fa7c776c48b1",
   "developer": {
     "name": "Contoso",
@@ -18,8 +18,8 @@
     "full": "Cafeteria Agent"
   },
   "description": {
-    "short": "Cafeteria description",
-    "full": "Cafeteria description"
+    "short": "Find open cafeterias, browse daily menus, and search dishes by diet or price.",
+    "full": "Explore workplace cafeterias in Microsoft Copilot. Find locations by building or open status, browse daily menus, search dishes by name, dietary requirements, or price, and check cafeteria hours, contact details, and payment methods. This sample uses bundled synthetic data."
   },
   "accentColor": "#FFFFFF",
   "copilotAgents": {
