@@ -20,7 +20,7 @@ export default class SearchMenuItemsCopilotComponent extends CafeteriaCopilotCom
       searchFilter: {
         query: properties.query,
         dietaryTags: properties.dietaryTags ? [...properties.dietaryTags] : undefined,
-        maxPrice: properties.maxPrice || undefined,
+        maxPrice: properties.maxPrice,
         cafeteriaId: properties.cafeteriaId,
         date: properties.date,
       },
