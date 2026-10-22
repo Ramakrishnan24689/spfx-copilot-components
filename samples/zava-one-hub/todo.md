@@ -1,5 +1,13 @@
 # Zava One - Build Plan and TODO
 
+## RC0 update - October 20, 2026
+
+The current application baseline is SPFx 1.24.0-rc.0, React/ReactDOM 18.3.1, React types 18.3.31/18.3.7, and Heft 1.3.2. Current validation, exact packages, starter targets, findings, and external release gates are recorded in the [repository RC0 readiness report](../../RC0-updates.md). The local creation guide is synchronized byte-for-byte with the assets golden guide.
+
+Existing mixed-host exception: retain the 35 feature web parts, three workspace web parts, and 37 Copilot Components. The application uses React 18; the audited framework-owned React 17 copies must not be overridden. Historical authenticated Teams screenshots are retained as historical evidence, not recertified for RC0.
+
+Earlier entries below retain their implementation history. Old framework versions, test totals, byte counts, and hashes in that history are not current RC0 release evidence.
+
 This is the implementation source of truth for [Zava One](README.md). It translates the
 [concept plan](design/Zava-One-Concept-Plan.md),
 [component blueprints](design/Zava-One-Component-Blueprints.md),
@@ -19,7 +27,7 @@ by [agentic-creation-rules.md](agentic-creation-rules.md).
 > publication images referenced by `assets/sample.json`. Forty-six Jest tests, 4,080 responsive browser
 > states, 28-media provenance,
 > six conversation starters with Capability Explorer last, plugin validation, and the final
-> version `1.0.0.16`, 6,208,176-byte `.sppkg` audit pass. Evidence is in
+> version `1.0.0.18`, 6,205,975-byte `.sppkg` audit pass. Evidence is in
 > `ux-review/evidence/phase-6-matrix.json`. All 37
 > Workbench components reached Ready in the earlier host baseline. The sample author confirmed all
 > three separately packaged Teams personal apps work and supplied authenticated screenshots with no
@@ -60,8 +68,8 @@ working Teams baseline or this submission.
 2. **Delivery strategy:** build fixture-first in bounded gates. Prove cross-host reuse with C06 Company
   news, C13 Learning, C14 Praise, and C35 Vacation request approvals. C35 is the representative review
   operation and keynote status-update story; then scale the catalog by approved waves.
-3. **Preview baseline:** use the playbook-aligned, already scaffolded SPFx `1.24.0-beta.5` profile:
-  React/ReactDOM `18.3.1`, React types `18.2.79`, ReactDOM types `18.2.25`, Node
+3. **Preview baseline:** use the playbook-aligned, already scaffolded SPFx `1.24.0-rc.0` profile:
+  React/ReactDOM `18.3.1`, React types `18.3.31`, ReactDOM types `18.3.7`, Node
   `>=22.14.0 <23.0.0`, Fluent UI React Components `9.74.9`, Fluent icons `2.0.314`, and Griffel
   `1.7.8`. G0 must verify and pin the complete coherent dependency set from clean beta.5 generator
   output. No `next`, `latest`, downgrade, mixed preview line, forced peer resolution, or guessed React
@@ -89,7 +97,7 @@ working Teams baseline or this submission.
 7. **Visual reference:** adapt My Day's human greeting, consistent inline-to-full-screen portal transition,
    dynamic responsive composition, session-visible settings impact, deterministic narrative, subtle
    motion, dark mode, and offline media reliability. Do not copy its personal-dashboard information
-   architecture, generic equal-card grid, React 17 lifecycle, session-only sync claims, minimal ARIA,
+   architecture, generic equal-card grid, React 18 lifecycle, session-only sync claims, minimal ARIA,
    or illustrative settings as Zava One product behavior.
 8. **Signature keynote moment:** one prompt opens a useful focused capability, expands into the exact
    Company or Personal route with selection/draft intact, and continues through the shared Card Stage.
@@ -386,12 +394,12 @@ or authenticated-host evidence does not yet exist; they are not silently treated
 
 ### Reproducible beta.5 bootstrap
 
-- [x] Resolve `@microsoft/generator-sharepoint@1.24.0-beta.5` metadata and integrity with normal TLS;
+- [x] Resolve `@microsoft/generator-sharepoint@1.24.0-rc.0` metadata and integrity with normal TLS;
   record Node, npm, Yeoman, generator, Heft, TypeScript, React/runtime/types, and all SPFx versions.
 - [x] Generate isolated beta.5 React Copilot Component and React web-part references; compare their
   package manifests, schemas, lifecycle, and bundling with this scaffold.
 - [x] Pin the complete beta.5-compatible stack exactly: React/ReactDOM `18.3.1`, React types
-  `18.2.79`, ReactDOM types `18.2.25`, Fluent UI React Components `9.74.9`, Fluent icons `2.0.314`,
+  `18.3.31`, ReactDOM types `18.3.7`, Fluent UI React Components `9.74.9`, Fluent icons `2.0.314`,
   Griffel `1.7.8`, and only approved focused D3 modules/types.
 - [x] Remove direct Fluent v8 only after proving generated/runtime code does not require or import it;
   keep any framework-owned isolated dependency untouched.

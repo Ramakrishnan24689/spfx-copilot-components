@@ -9,6 +9,7 @@ import { loadScreenshotEvidence } from './screenshot-evidence.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const output = resolve(root, 'ux-review/evidence/phase-6-matrix.json');
 const evidence = JSON.parse(readFileSync(output, 'utf8'));
+const previousPackageBytes = evidence.artifacts.find(artifact => artifact.path.endsWith('.sppkg')).bytes;
 const solution = JSON.parse(readFileSync(resolve(root, 'config/package-solution.json'), 'utf8')).solution;
 const screenshots = loadScreenshotEvidence(root);
 const responsive = JSON.parse(readFileSync(resolve(root, 'ux-review/evidence/responsive-matrix.json'), 'utf8'));
@@ -64,6 +65,16 @@ evidence.artifacts = [
   'teams/zavaOneCompanyWorkspace/TeamsSPFxApp.zip',
   'teams/zavaOnePersonalWorkspace/TeamsSPFxApp.zip'
 ].map(artifact);
+const currentPackageBytes = evidence.artifacts.find(item => item.path.endsWith('.sppkg')).bytes;
+if (currentPackageBytes !== previousPackageBytes) {
+  for (const document of ['README.md', 'todo.md']) {
+    const documentPath = resolve(root, document);
+    const content = readFileSync(documentPath, 'utf8');
+    const previous = previousPackageBytes.toLocaleString('en-US');
+    assert.ok(content.includes(previous), `${document} is missing the previous package size`);
+    writeFileSync(documentPath, content.replaceAll(previous, currentPackageBytes.toLocaleString('en-US')));
+  }
+}
 evidence.historicalHostEvidence = 'Workbench, host-resize, and non-gallery screenshot measurements retain their earlier baseline; they are not a new accessibility or host certification.';
 evidence.externalGate = 'The sample author confirmed the three Teams personal apps work and supplied authenticated viewport screenshots. Modern SharePoint Top Actions, host CSP/focus, screen-reader, forced-color, and complete accessibility checks remain open.';
 writeFileSync(output, `${JSON.stringify(evidence, null, 2)}\n`);

@@ -1,5 +1,7 @@
 # Zava One - Coding-agent readiness and handoff
 
+> **Historical design record; RC0 supersedes the earlier toolchain selection.** September Beta 5 decisions and verified source dates below are retained as history. The approved current baseline is SPFx 1.24.0-rc.0 / React 18.3.1. Follow the [current README](../README.md), [synchronized creation guide](../agentic-creation-rules.md), and [RC0 report](../../../RC0-updates.md), not an old instruction to stop on RC adoption.
+
 **Specification v0.5 | 28 September 2026 | SPFx 1.24 beta.5 + React 18 | Preview development only**
 
 ## 1. Decision and honest readiness

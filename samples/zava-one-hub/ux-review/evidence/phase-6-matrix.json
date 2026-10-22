@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-14T10:00:53.282Z",
+  "generatedAt": "2026-10-20T17:26:13.003Z",
   "profile": {
     "spfx": "1.24.0-beta.5",
     "react": "18.3.1",
@@ -9,7 +9,7 @@
     "griffel": "1.7.8"
   },
   "catalog": {
-    "solutionVersion": "1.0.0.16",
+    "solutionVersion": "1.0.0.18",
     "businessCapabilities": 35,
     "featureWebParts": 35,
     "workspaceWebParts": 3,
@@ -21,8 +21,8 @@
     "sharePointFullPageWebParts": 3
   },
   "validation": {
-    "jestSuites": 11,
-    "jestTests": 46,
+    "jestSuites": 12,
+    "jestTests": 50,
     "jestFailures": 0,
     "lintWarnings": 0,
     "inlineIntentsRendered": 35,
@@ -79,8 +79,8 @@
     "fullscreenM365DocumentScrollHeight": 8470,
     "fullscreenComponentViewportHeight": 8470,
     "fullscreenM365ScrollOwnerCount": 1,
-    "sppkgAppManifestVersion": "1.0.0.16",
-    "sppkgFeatureVersion": "1.0.0.16",
+    "sppkgAppManifestVersion": "1.0.0.18",
+    "sppkgFeatureVersion": "1.0.0.18",
     "chartScopeChangesGeometry": true,
     "officeMarkerCount": 5,
     "officeListCount": 5,
@@ -156,22 +156,22 @@
       "path": "assets/screenshot-company-workspace.png",
       "width": 1600,
       "height": 5479,
-      "bytes": 2355621,
-      "sha256": "3cda85c4bae96a75fc9611e95a47cb144d5bcf3061fb57bea9ac4fc0811a62cd"
+      "bytes": 2357179,
+      "sha256": "c1a21a27bde1ceea3ee6c42b429c7b0e7beadb8ed68db29acbc2a2c1d6f113ae"
     },
     {
       "path": "assets/screenshot-personal.png",
       "width": 1600,
       "height": 3722,
-      "bytes": 620414,
-      "sha256": "851e352920185e09ee289974e2ea22e31c922284516079177c96acd20c11442c"
+      "bytes": 621264,
+      "sha256": "d7781db0b9c65436b5388e9cabf13c2db9f4220196a6bf491411525561393037"
     },
     {
       "path": "assets/screenshot-company-news.png",
       "width": 1600,
       "height": 1289,
-      "bytes": 1224859,
-      "sha256": "43ba9371509209bc33bfbe3b8bcf7924d905f971b2318c2458202025943e42b3"
+      "bytes": 1224706,
+      "sha256": "b2f783a096c3ebf16e79a8251993af807b1209ac38233c73be9da760cdf4cd29"
     },
     {
       "path": "assets/screenshot-recognition-compose.png",
@@ -191,43 +191,43 @@
       "path": "assets/screenshot-office-map.png",
       "width": 720,
       "height": 716,
-      "bytes": 120328,
-      "sha256": "591c03c4e33d047d4876f9f3e75c4b74fcfc550efbce6518cda225ceb337224e"
+      "bytes": 120236,
+      "sha256": "9b62aafbc55dd1963019bf4af7c5c03000e2f9f46b7eb0daea764a676622bd4a"
     },
     {
       "path": "assets/screenshot-vacation-approvals.png",
       "width": 720,
       "height": 660,
-      "bytes": 55064,
-      "sha256": "3aa8d7958cf0a307db541f58cce7aa12fca0ba6287d4cc0d0fb62ff0081a97f6"
+      "bytes": 55095,
+      "sha256": "efa8a9e3fdf86051ce80e3586a129781f86194da2bd39bc9b81dfd5d83e5a0ff"
     },
     {
       "path": "assets/screenshot-vacation-detail.png",
       "width": 720,
       "height": 632,
-      "bytes": 45869,
-      "sha256": "e21c03e8c6e72cef65abab5d0f8c924bff1f3d4e4c992e41006cd593d15d9f0f"
+      "bytes": 45887,
+      "sha256": "cb8d12971a2dc411b4fd451d0590285724a17a88d457de3845132589ca5b5688"
     },
     {
       "path": "assets/screenshot-vacation-decision.png",
       "width": 720,
       "height": 490,
-      "bytes": 27341,
-      "sha256": "bd27a370fced6ec1073601e2321c91052ad41e4b35b2fc5ca1822524fa18ef6a"
+      "bytes": 27342,
+      "sha256": "c50f13b374a6bbf495fe1c16eb778b7fb28a5c673af2f15f063d7c9014fbf70c"
     },
     {
       "path": "assets/screenshot-vacation-receipt.png",
       "width": 720,
       "height": 590,
-      "bytes": 34348,
-      "sha256": "972abb7f9bf73759bdc855fc26e91699489542a86fee6f6ae6815df35c23810e"
+      "bytes": 34399,
+      "sha256": "35ed469ff6736a0935b2579d8787845eaa649d242a9fbf2a4f45934ebb9e0de8"
     },
     {
       "path": "assets/screenshot-vacation-updated-list.png",
       "width": 720,
       "height": 586,
-      "bytes": 46424,
-      "sha256": "952ba565110b56681c3489c3afedcbb4e208c23dcbe9493f9395d36fd73f15e4"
+      "bytes": 46476,
+      "sha256": "e3b956ce816859bc5cd9a7c52269e30e5bd17682b9d9cf8f55ad730ee5e09c9a"
     },
     {
       "path": "assets/screenshot-teams-combined.png",
@@ -254,13 +254,13 @@
   "artifacts": [
     {
       "path": "sharepoint/solution/zava-one-hub.sppkg",
-      "bytes": 6208176,
-      "sha256": "aaf55ff5e13230ae6478b734e1780eca4130acd27ae74e4a0331ad193dd75c8b"
+      "bytes": 6205975,
+      "sha256": "01f01087eceb24e4152458ace15dcd7af12b6b6f237a539817589a7701f4ebec"
     },
     {
       "path": "teams/zava-one.zip",
-      "bytes": 10263,
-      "sha256": "bf1b0bf7605cbae55c0fd6f22701a0a382b026caa6ca0d54037f1821ab7ba4d9"
+      "bytes": 5260,
+      "sha256": "5f3964a186cad28ceabf8197fcf7edac2124ffd03e6f9d021ba05b88a938aeeb"
     },
     {
       "path": "teams/zavaOneWorkspace/TeamsSPFxApp.zip",

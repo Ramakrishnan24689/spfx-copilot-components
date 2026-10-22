@@ -13,7 +13,7 @@ For Microsoft customers, partners, sellers, and product leaders. The promise is 
 
 ## 0:00-0:35 - Ask for an outcome, not a screen
 
-Prompt: **Help me get Contoso's global expansion deal to signature this quarter.**
+Prompt: **Show the risks threatening Contoso's global expansion deal this quarter.**
 
 Expected component: `GetDealRisk`.
 
@@ -39,7 +39,9 @@ Prompt: **Model a three-year ramped offer that protects 68% margin.**
 
 Expected component: `SimulateCommercialOffer`.
 
-Change licensed users and discount. Show contract value, gross margin, approval authority, weighted forecast, and the commercial contour move together. Explain that simulation can reveal an approval path but cannot approve an exception.
+Use the annual 60/80/100% licensing ramp, then change licensed users or discount. Show actual TCV,
+margin, required authority and weighted forecast move together. Required authority is not approval;
+the contour's adoption index is explicitly illustrative rather than sourced customer savings.
 
 ## 2:55-3:35 - Defend the commit with evidence
 
@@ -47,7 +49,9 @@ Prompt: **Should Contoso remain in commit for Q4?**
 
 Expected component: `InspectForecastCommit`.
 
-Show buyer proof beside contrary and stale evidence, then expand to Revenue Command. Make the close: a forecast category is a human judgment grounded in visible evidence, not an opaque AI score.
+Show missing buyer proof and the blocked retain-commit choice. Choose best case or remove from the
+period, review actual values, then explicitly confirm a session-only recommendation. Expand to the
+labeled Revenue Command reference workspace. A forecast decision is not an opaque AI score or CRM write.
 
 ## 3:35-4:00 - Close on the architecture of trust
 

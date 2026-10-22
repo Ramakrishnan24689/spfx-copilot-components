@@ -4,27 +4,27 @@ import path from 'node:path';
 const root = path.resolve(import.meta.dirname, '..');
 const componentsRoot = path.join(root, 'src', 'copilotComponents');
 const definitions = [
-  ['BuildAccountBrief', ['accountId', 'period', 'focus', 'selectedId']],
-  ['QualifyOpportunity', ['opportunityId', 'focus', 'selectedId']],
-  ['MapBuyingCommittee', ['opportunityId', 'focus', 'selectedId']],
-  ['GetDealRisk', ['opportunityId', 'period', 'focus', 'selectedId']],
-  ['PrepareCustomerMeeting', ['meetingId', 'opportunityId', 'focus', 'selectedId']],
-  ['BuildMutualActionPlan', ['opportunityId', 'period', 'focus', 'selectedId']],
-  ['ReviewMeetingCommitments', ['meetingId', 'opportunityId', 'focus', 'selectedId']],
-  ['ShapeSolutionProposal', ['opportunityId', 'proposalId', 'focus', 'selectedId']],
-  ['SimulateCommercialOffer', ['opportunityId', 'quantity', 'termMonths', 'discount', 'services', 'probability']],
-  ['ReviewDealException', ['exceptionId', 'opportunityId', 'focus', 'selectedId']],
-  ['InspectForecastCommit', ['opportunityId', 'period', 'focus', 'selectedId']],
-  ['ExplorePipelineQuality', ['period', 'region', 'focus', 'selectedId']],
-  ['DiscoverAccountOpportunity', ['accountId', 'period', 'region', 'focus', 'selectedId']],
-  ['ResearchCompetitivePosition', ['opportunityId', 'period', 'focus', 'selectedId']],
-  ['CoachDealStrategy', ['opportunityId', 'period', 'focus', 'selectedId']],
-  ['CreateExecutiveEngagementPlan', ['opportunityId', 'focus', 'selectedId']],
-  ['TrackMeetingFollowUp', ['opportunityId', 'meetingId', 'focus', 'selectedId']],
-  ['BuildValueCase', ['opportunityId', 'period', 'focus', 'selectedId']],
-  ['ReviewProposalReadiness', ['opportunityId', 'proposalId', 'focus', 'selectedId']],
-  ['PlanCustomerSuccessHandoff', ['opportunityId', 'period', 'focus', 'selectedId']],
-  ['ExploreAgentCapabilities', ['query', 'focus']]
+  ['BuildAccountBrief', ['accountId', 'selectedId']],
+  ['QualifyOpportunity', ['opportunityId']],
+  ['MapBuyingCommittee', ['opportunityId', 'selectedId']],
+  ['GetDealRisk', ['opportunityId', 'selectedId']],
+  ['PrepareCustomerMeeting', ['meetingId', 'opportunityId', 'selectedId']],
+  ['BuildMutualActionPlan', ['opportunityId']],
+  ['ReviewMeetingCommitments', ['meetingId', 'opportunityId']],
+  ['ShapeSolutionProposal', ['opportunityId', 'proposalId']],
+  ['SimulateCommercialOffer', ['opportunityId', 'quantity', 'termMonths', 'discount', 'services', 'probability', 'ramp']],
+  ['ReviewDealException', ['exceptionId', 'opportunityId']],
+  ['InspectForecastCommit', ['opportunityId']],
+  ['ExplorePipelineQuality', ['period', 'region', 'selectedId']],
+  ['DiscoverAccountOpportunity', ['accountId', 'period', 'region', 'selectedId']],
+  ['ResearchCompetitivePosition', ['opportunityId', 'selectedId']],
+  ['CoachDealStrategy', ['opportunityId', 'selectedId']],
+  ['CreateExecutiveEngagementPlan', ['opportunityId']],
+  ['TrackMeetingFollowUp', ['opportunityId', 'meetingId', 'selectedId']],
+  ['BuildValueCase', ['opportunityId']],
+  ['ReviewProposalReadiness', ['opportunityId', 'proposalId']],
+  ['PlanCustomerSuccessHandoff', ['opportunityId']],
+  ['ExploreAgentCapabilities', ['query']]
 ];
 const boundaries = new Map([
   ['BuildAccountBrief', 'Use for sourced account context and whitespace. Do not use for one meeting.'],
@@ -50,6 +50,23 @@ const boundaries = new Map([
   ['ExploreAgentCapabilities', 'Use for discovering revenue scenarios. Do not use for a specific request.']
 ]);
 const numericFields = new Set(['quantity', 'termMonths', 'discount', 'services', 'probability']);
+const descriptions = {
+  accountId: 'Exact account record ID, for example CONTOSO or ACC-002. Unknown IDs show no-match.',
+  opportunityId: 'Exact opportunity ID, for example ZDR-2042. Must agree with any related record scope.',
+  meetingId: 'Exact meeting ID: MTG-2042 or MTG-2043. Unknown or conflicting records show no-match.',
+  proposalId: 'Exact proposal ID: PROP-2042 or PROP-2043. Does not grant readiness.',
+  exceptionId: 'Exact exception ID: EX-2042 or EX-2043. Does not grant approval.',
+  selectedId: 'Exact visible source or opportunity ID to inspect. Unknown or filtered selections remain visible as no-match.',
+  period: 'Quarter offset filter: current is 0, next is 1, all includes every seeded quarter. Defaults to current.',
+  region: 'Filter actual account region. Defaults to all.',
+  query: 'Search capability titles and outcomes; selecting a preview never executes a tool.',
+  quantity: 'Whole licensed-user count, 1 to 100000. Defaults to 860; validated at runtime.',
+  termMonths: 'Whole contract months, 1 to 120. Defaults to 36; recurring delivery cost scales with term.',
+  discount: 'Discount percentage, 0 to 100. Defaults to 14. Authority requirements are not approvals.',
+  services: 'One-time services revenue in USD, 0 to 100000000. Defaults to 420000.',
+  probability: 'Scenario win probability, 0 to 1 (not a percentage). Defaults to 0.72. Weights contract value.',
+  ramp: 'Annual licensed percentages, one number per contract year including a partial final year, each 0 to 100. Example [60,80,100] for 36 months. Omit for full licensing every year. Validated at runtime.'
+};
 const componentEntries = [];
 const componentIds = [];
 
@@ -61,7 +78,10 @@ for (const [key, fields] of definitions) {
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
   componentIds.push(manifest.id);
   fs.writeFileSync(path.join(folderPath, `${key}CopilotComponent.tsx`), `import RevenueCopilotComponentBase from '../../shared/RevenueCopilotComponentBase';\nimport type { IRevenueProperties, RevenueIntentKey } from '../../shared/catalog';\n\nexport default class ${key}CopilotComponent extends RevenueCopilotComponentBase<IRevenueProperties> {\n  protected intentKey: RevenueIntentKey = '${key}';\n}\n`);
-  const schemaFields = fields.map((field) => `  ${field}: z.${numericFields.has(field) ? 'number' : 'string'}().optional().describe('${field} extracted from the user request when provided.')`);
+  const schemaFields = fields.map((field) => {
+    const type = field === 'ramp' ? 'array(z.number())' : field === 'period' ? "enum(['current', 'next', 'all'])" : field === 'region' ? "enum(['all', 'North America', 'EMEA', 'Asia Pacific', 'Latin America'])" : `${numericFields.has(field) ? 'number' : 'string'}()`;
+    return `  ${field}: z.${type}.optional().describe(${JSON.stringify(descriptions[field])})`;
+  });
   fs.writeFileSync(path.join(folderPath, `${key}CopilotComponentProperties.ts`), `import { z } from 'zod';\nimport zodToJsonSchema from 'zod-to-json-schema';\n\nconst schema = z.object({\n${schemaFields.join(',\n')}\n});\nexport type I${key}CopilotComponentProperties = z.infer<typeof schema>;\nexport default zodToJsonSchema(schema);\n`);
   manifest.alias = `${key}CopilotComponent`;
   manifest.tools[0].name = key;

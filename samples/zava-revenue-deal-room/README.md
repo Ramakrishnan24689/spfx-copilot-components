@@ -1,5 +1,10 @@
 # Zava Revenue Deal Room
 
+This release targets **SPFx 1.24.0-rc.0 and React 18.3.1**. Current validation and package hashes are
+recorded in the [RC0 readiness report](../../RC0-updates.md) and generated
+[release evidence](assets/release-evidence.json). Starter ownership is defined in
+[conversation-starters.json](config/conversation-starters.json).
+
 > [!IMPORTANT]
 > **Ready-made package:** deploy
 > [zava-revenue-deal-room.sppkg](sharepoint/solution/zava-revenue-deal-room.sppkg) without building the
@@ -40,10 +45,10 @@ different throughout the journey.
 
 ## Applies to
 
-- SharePoint Framework `1.24.0-beta.3`
+- SharePoint Framework `1.24.0-rc.0`
 - Microsoft Copilot declarative agents and Copilot Components preview
 - React `18.3.1`, Fluent UI v9 `9.74.6`, and Griffel `1.7.7`
-- Node.js `>=22.14.0 <23.0.0`
+- Node.js 22 (22.14 or later), 24, or 26
 
 ## Minimal Path to Awesome
 
@@ -51,7 +56,7 @@ different throughout the journey.
    to the tenant app catalog.
 2. Approve deployment for all sites when prompted.
 3. Add the packaged **Zava Revenue Deal Room** agent in Microsoft Copilot.
-4. Start with “Help me get Contoso's global expansion deal to signature this quarter.”
+4. Start with “Show the risks threatening Contoso's global expansion deal this quarter.”
 
 To build locally:
 
@@ -61,6 +66,64 @@ npm run build
 ```
 
 Use `npm run capture:visual` to regenerate tenant-free publication screenshots and evidence.
+Use `npm run capture:matrix` for the supplementary all-intent/business-state matrix, and
+`npx tsc --project scripts/visual-harness/tsconfig.json` to typecheck the persistent-root harness.
+
+## Current specialist experiences
+
+All 21 intents now have business-specific content: **10 read-only analyses, 5 draft submissions,
+5 governed reviews and 1 capability explorer**. There is no generic analysis/operation fallback.
+Only the following optional arguments are advertised; decisions and approvals are never prompt fields.
+
+| Tool | Consumed optional arguments | Working business UX |
+| --- | --- | --- |
+| `BuildAccountBrief` | `accountId`, `selectedId` | Account changes, sourced freshness and whitespace hypotheses. |
+| `QualifyOpportunity` | `opportunityId` | Evidence-based pursuit gate, discovery owner and missing criteria; return/decline remain available. |
+| `MapBuyingCommittee` | `opportunityId`, `selectedId` | Portrait orbit, authoritative buyer roles, stance, influence and inspectable access gaps. |
+| `GetDealRisk` | `opportunityId`, `selectedId` | Ranked contrary/stale/inferred threats, source age, mitigation and accountable owner. |
+| `PrepareCustomerMeeting` | `meetingId`, `opportunityId`, `selectedId` | Actual meeting attendees, timed agenda, buyer-proof questions and supporting evidence. |
+| `BuildMutualActionPlan` | `opportunityId` | Buyer/seller owners, milestone, dependency and signature target; 21-day minimum and calculated slack. |
+| `ReviewMeetingCommitments` | `meetingId`, `opportunityId` | Accept only the supported customer commitment; reject/return unsupported funding or security claims. |
+| `ShapeSolutionProposal` | `opportunityId`, `proposalId` | Editable outcome, requirement-to-proof traceability, adoption, exclusions and solution owner. |
+| `SimulateCommercialOffer` | `opportunityId`, `quantity`, `termMonths`, `discount`, `services`, `probability`, `ramp` | Five numeric inputs and annual licensing ramp recalculate TCV, full-run-rate ARR, margin, authority and weighted forecast. |
+| `ReviewDealException` | `exceptionId`, `opportunityId` | Net-30 policy versus requested terms, receivables exposure, mitigation and finance owner; approval blocked without independent authority. |
+| `InspectForecastCommit` | `opportunityId` | Buyer-proof category gate, probability scenario, period contribution, re-entry condition and manager. |
+| `ExplorePipelineQuality` | `period`, `region`, `selectedId` | Actual filtered portfolio counts/value, verified-proof coverage chart and inspectable opportunity rows. |
+| `DiscoverAccountOpportunity` | `accountId`, `period`, `region`, `selectedId` | Scoped account opportunities, filtered exact-value map and seller-derived uncertainty; no lead creation. |
+| `ResearchCompetitivePosition` | `opportunityId`, `selectedId` | Customer criteria, explicitly missing competitor proof and a scored-workshop proof plan. |
+| `CoachDealStrategy` | `opportunityId`, `selectedId` | Explainable access/proof plays, success criteria and discounting counterplay; no forecast decision. |
+| `CreateExecutiveEngagementPlan` | `opportunityId` | Internal sponsor, buyer executive, objective, warm introduction path and sensitivities; no customer contact. |
+| `TrackMeetingFollowUp` | `opportunityId`, `meetingId`, `selectedId` | Source-backed commitments, owner, due offset, dependency consequence and material status filtering. |
+| `BuildValueCase` | `opportunityId` | Editable hours, hourly cost, adoption, investment, onboarding and owner; annual benefit, sensitivity and payback. |
+| `ReviewProposalReadiness` | `opportunityId`, `proposalId` | Claim/security/terms findings, correction owner and return/decline; customer release remains gated. |
+| `PlanCustomerSuccessHandoff` | `opportunityId` | Sold outcome, success metric, success owner, checkpoint and signed-scope prerequisites. |
+| `ExploreAgentCapabilities` | `query` | Search all 20 operational scenarios and inspect safe prompts/outcomes/routing boundaries without executing them. |
+
+Known example scopes: `CONTOSO` / `ZDR-2042`, `ACC-002` / `ZDR-2043`,
+`MTG-2042` / `MTG-2043`, `PROP-2042` / `PROP-2043`, `EX-2042` / `EX-2043`.
+Omitting scope intentionally opens the Contoso showcase. Explicit unknown, empty or conflicting IDs
+produce visible no-match and publish no substituted hero facts. Known alternate accounts never inherit
+Contoso evidence. Missing source records remain evidence gaps, not positive findings. Unknown or
+filtered `selectedId` values remain visible until cleared. `period` is `current` (quarter offset 0),
+`next` (1), or `all`; `region` is `all` or an actual account region.
+
+Every submission/review has domain fields, runtime validation, a read-only review of actual chosen
+values, an initially unchecked explicit confirmation, a scope/value-bearing session receipt, Edit and
+Reset. Unsupported positive qualification/commit/exception/readiness decisions are blocked; valid
+return/decline paths remain usable. Prompt values cannot grant authority. Receipt and draft state
+survives passive rerenders, inline/full-screen continuation and theme changes. Changed invocation
+arguments or a new mounted tool instance reset the draft; Reset restores invocation defaults.
+State is **mounted-session only**: receipts are not propagated to other tool instances, persisted across
+reloads, or written to CRM. Bridge failures are visible, not silently acknowledged.
+
+Commercial math charges recurring delivery cost for **every licensed year**, prorates partial years
+and annual licensed ramps, and charges services cost once. An omitted ramp means 100% licensing each
+year; `[60,80,100]` models a three-year ramp. Full-run-rate ARR is distinct from ramped subscription
+revenue. Weighted forecast is TCV × probability. The 68% floor and 10%/18% discount thresholds route
+authority; they never approve an offer. Adoption-index curves and value-case savings are explicitly
+deterministic assumptions, not sourced customer benefits.
+The four rich role dashboards remain clearly labeled fixed illustrative reference workspaces, separate
+from the editable specialist experience and its live calculations.
 
 ## Features
 
@@ -93,7 +156,20 @@ Use `npm run capture:visual` to regenerate tenant-free publication screenshots a
 
 ## Validation status
 
-The 31 August 2026 clean production gate completed with zero TypeScript or lint warnings:
+The RC0 production gate validates source tools, compiled schemas, React root lifecycle, current
+visuals, and both deployment archives. See generated [release evidence](assets/release-evidence.json)
+for the current test total, sizes, and hashes.
+
+Current completion evidence: **87 Jest tests**, **13 curated publication captures**, and
+**105 supplementary captures** in [business-matrix evidence](assets/business-matrix-evidence.json):
+all 21 inline tools at standard/narrow/dark widths/themes (63), four dashboards, ten reviews, ten
+receipts, and eighteen changed/filtered/no-match/gated states. All pass with zero test, runtime,
+console, broken-image or horizontal-overflow failures. Both visual sets are SHA-256-bound to current
+runtime sources; `npm run build` rejects stale screenshots. The DOM suite uses React 18 `act`, persistent
+roots and `IS_REACT_ACT_ENVIRONMENT`, and tests content, parameters, calculations, gates and lifecycle
+rather than layout labels alone.
+
+Historical baseline (31 August 2026, before RC0):
 
 - 21 components, 21 unique GUIDs, 21 unique tools, and one shared bundle.
 - 6 deterministic domain/D3 geometry tests passed; 0 failed.
@@ -165,8 +241,8 @@ mode; never use inferred sentiment or relationship strength as employee-performa
 
 - Tenant-authenticated model routing, Workbench CSP, iframe focus, forced colors, and screen-reader host
   output require a Microsoft 365 test tenant and remain external validation gates.
-- Secondary catalog tools share the polished operation host, but complete purpose-specific lifecycle
-  depth for every one of the 20 operational intents remains tracked in [todo.md](todo.md).
+- Cross-tool session propagation and live CRM/CPQ/approval integrations are deliberately absent;
+  each tool instance owns its own session-only state.
 - Persona redistribution is pending final media-rights review as recorded in
   [assets/asset-provenance.json](assets/asset-provenance.json).
 - For sample issues, use the repository issue tracker and include the component name, prompt, host mode,
@@ -176,9 +252,17 @@ mode; never use inferred sentiment or relationship strength as employee-performa
 
 | Version | Date | Notes |
 | --- | --- | --- |
+| 1.0.0.1 / agent 1.0.1 | 2026-10-20 | RC0 specialist completion: 21 scoped experiences, 10 guarded workflows, 87 tests, 118 current visual captures. The SDK may append a fourth agent hotfix segment. |
 | 1.0.0 | 2026-08-31 | Initial GitHub candidate with 21 tools, four visualization-led workspaces, D3 charts/map, persona media, demo scripts, publication evidence, and audited `.sppkg`. |
 
-## Business story
+## Historical design exploration (not the shipping contract)
+
+The remaining original product brief records broader design aspirations (including fields, comparisons,
+cross-tool overlays and integrations that are **not advertised or implemented** in this offline release).
+The current specialist table, runtime schemas, validation evidence and limitations above are
+authoritative; do not present the historical interaction matrix below as current behavior.
+
+### Business story
 
 **A seller names the account and desired outcome. The agent turns scattered relationship evidence into
 an inspectable deal strategy; the revenue team commits to actions, tests commercial choices, and closes
@@ -391,7 +475,7 @@ blue CRM dashboard and not the Innovation Hub recolored.
 
 ### Hero 1 - Rescue the Contoso expansion deal
 
-**Prompt:** “Help me get Contoso's global expansion deal to signature this quarter.”
+**Prompt:** “Show the risks threatening Contoso's global expansion deal this quarter.”
 
 `GetDealRisk` identifies strong champion support but no economic-buyer access, an unowned security
 milestone, and a stale launch assumption. `MapBuyingCommittee` reveals the influence gap and assigns an
@@ -430,7 +514,7 @@ leadership rollup without a generic dashboard.
 
 | # | Title | Starter | Expected component |
 | ---: | --- | --- | --- |
-| 1 | Advance a deal | Help me get Contoso's global expansion deal to signature this quarter. | `GetDealRisk` |
+| 1 | Advance a deal | Show the risks threatening Contoso's global expansion deal this quarter. | `GetDealRisk` |
 | 2 | Buying committee | Map the buying committee for the Contoso expansion. | `MapBuyingCommittee` |
 | 3 | Commercial scenario | Model a three-year ramped offer that protects 68% margin. | `SimulateCommercialOffer` |
 | 4 | Meeting preparation | Prepare me for tomorrow's Contoso steering meeting. | `PrepareCustomerMeeting` |
@@ -507,7 +591,8 @@ commercial and forecast math is inspectable; consequential actions use human rev
 receipt; exact continuation preserves context; accessible/global evidence passes; and an audited offline
 package deploys without runtime data dependencies.
 
-The local implementation and audited package are complete. Tenant-host checks remain explicitly
-separate because they require an authenticated Microsoft 365 environment.
+The locally scoped specialist implementation is validated against the current contract above, not every
+aspiration in this historical brief. Tenant-host checks remain explicitly separate because they require
+an authenticated Microsoft 365 environment.
 
 <img src="https://m365-visitor-stats.azurewebsites.net/spfx-copilot-components/samples/zava-revenue-deal-room" />
