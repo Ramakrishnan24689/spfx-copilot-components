@@ -92,7 +92,7 @@ export class SyntheticCafeteriaDataService implements ICafeteriaDataService {
         if (
           filter.dietaryTags &&
           filter.dietaryTags.length > 0 &&
-          !filter.dietaryTags.some((tag) => menuItem.dietaryTags.includes(tag))
+          !filter.dietaryTags.every((tag) => menuItem.dietaryTags.includes(tag))
         ) {
           return false
         }

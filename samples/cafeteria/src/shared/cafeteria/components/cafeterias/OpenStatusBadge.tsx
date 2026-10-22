@@ -31,7 +31,7 @@ export default function OpenStatusBadge(props: IOpenStatusBadgeProps): React.Rea
 
   return (
     <Badge appearance="tint" color="informative">
-      Closed{status.todayHours ? ` · opens ${status.todayHours[0]}` : ""}
+      Closed{status.todayHours ? ` · today's hours ${status.todayHours[0]}–${status.todayHours[1]}` : ""}
     </Badge>
   )
 }

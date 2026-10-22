@@ -4,13 +4,13 @@
     "source": "pnp",
     "title": "Copilot Star Match Game",
     "shortDescription": "A SharePoint Copilot app that enables teams to play the Star Match game.",
-    "url": "https://github.com/pnp/spfx-copilot-apps/tree/main/samples/copilot-star-match-game",
-    "downloadUrl": "https://pnp.github.io/download-partial/?url=https://github.com/pnp/spfx-copilot-apps/tree/main/samples/copilot-star-match-game",
+    "url": "https://github.com/pnp/spfx-copilot-components/tree/main/samples/copilot-star-match-game",
+    "downloadUrl": "https://pnp.github.io/download-partial/?url=https://github.com/pnp/spfx-copilot-components/tree/main/samples/copilot-star-match-game",
     "longDescription": [
       "Copilot Star Match Game demonstrates a SharePoint Framework-based Copilot Agent that helps teams play the Star Match game. This solution leverages interactive game mechanics, enabling engaging and fun experiences within Microsoft Teams, SharePoint, and other Microsoft 365 applications."
     ],
     "creationDateTime": "2026-09-20",
-    "updateDateTime": "2026-09-20",
+    "updateDateTime": "2026-10-22",
     "products": [
       "SharePoint",
       "Copilot"
@@ -30,9 +30,9 @@
       }
     ],
     "thumbnails": [
-      { "name": "inline-star-match-game01.png", "type": "image", "order": 100, "url": "https://github.com/pnp/spfx-copilot-apps/raw/main/samples/copilot-star-match-game/assets/inline-star-match-game01.png", "alt": "Star Match Game inline" },
-      { "name": "inline-star-match-game02.png", "type": "image", "order": 101, "url": "https://github.com/pnp/spfx-copilot-apps/raw/main/samples/copilot-star-match-game/assets/inline-star-match-game02.png", "alt": "Star Match Game inline" },
-      { "name": "fullscreen-star-match-game.png", "type": "image", "order": 101, "url": "https://github.com/pnp/spfx-copilot-apps/raw/main/samples/copilot-star-match-game/assets/fullscreen-star-match-game.png", "alt": "Star Match Game full-screen" }
+      { "name": "inline-star-match-game01.png", "type": "image", "order": 100, "url": "https://github.com/pnp/spfx-copilot-components/raw/main/samples/copilot-star-match-game/assets/inline-star-match-game01.png", "alt": "Star Match Game inline" },
+      { "name": "inline-star-match-game02.png", "type": "image", "order": 101, "url": "https://github.com/pnp/spfx-copilot-components/raw/main/samples/copilot-star-match-game/assets/inline-star-match-game02.png", "alt": "Star Match Game inline" },
+      { "name": "fullscreen-star-match-game.png", "type": "image", "order": 102, "url": "https://github.com/pnp/spfx-copilot-components/raw/main/samples/copilot-star-match-game/assets/fullscreen-star-match-game.png", "alt": "Star Match Game full-screen" }
     ],
     "authors": [
       {

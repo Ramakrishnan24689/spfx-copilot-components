@@ -36,7 +36,7 @@ export default function CafeteriaContent(props: ICafeteriaContentProps): React.R
         <MenuView
           cafeteriaId={view.cafeteriaId}
           date={view.date}
-          onCafeteriaChange={(cafeteriaId) => nav.goToMenu(cafeteriaId)}
+          onCafeteriaChange={(cafeteriaId) => nav.goToMenu(cafeteriaId, view.date)}
           onDateChange={(date) => nav.goToMenu(view.cafeteriaId, date)}
           onViewDetails={nav.goToDetails}
         />

@@ -89,9 +89,10 @@ export default function FilterRail(props: IFilterRailProps): React.ReactElement 
           value={cafeterias.find((c) => c.id === filter.cafeteriaId)?.title ?? ""}
           selectedOptions={filter.cafeteriaId ? [filter.cafeteriaId] : []}
           onOptionSelect={(_, data) =>
-            onChange({ ...filter, cafeteriaId: (data.optionValue as string) || undefined })
+            onChange({ ...filter, cafeteriaId: data.optionValue || undefined })
           }
         >
+          <Option value="">All cafeterias</Option>
           {cafeterias.map((c) => (
             <Option key={c.id} value={c.id}>
               {c.title}
@@ -101,8 +102,9 @@ export default function FilterRail(props: IFilterRailProps): React.ReactElement 
       </div>
 
       <div className={styles.control}>
-        <Label>Dietary needs</Label>
+        <Label htmlFor="search-dietary-needs">Dietary needs</Label>
         <Dropdown
+          id="search-dietary-needs"
           multiselect
           placeholder="Any"
           selectedOptions={filter.dietaryTags ?? []}

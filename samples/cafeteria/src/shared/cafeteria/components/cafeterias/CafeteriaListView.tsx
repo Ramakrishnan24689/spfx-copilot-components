@@ -81,16 +81,18 @@ export default function CafeteriaListView(props: ICafeteriaListViewProps): React
           onChange={(_, data) => onFilterChange({ ...filter, openNow: data.checked || undefined })}
         />
         <Dropdown
+          aria-label="Building"
           placeholder="All buildings"
           value={filter.building ?? ""}
           selectedOptions={filter.building ? [filter.building] : []}
           onOptionSelect={(_, data) =>
-            onFilterChange({ ...filter, building: (data.optionValue as string) || undefined })
+            onFilterChange({ ...filter, building: data.optionValue || undefined })
           }
         >
+          <Option value="">All buildings</Option>
           {buildingOptions.map((building) => (
-            <Option key={building} value={building} text={`Building ${building}`}>
-              Building {building}
+            <Option key={building} value={building}>
+              {building}
             </Option>
           ))}
         </Dropdown>

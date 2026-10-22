@@ -21,7 +21,9 @@ A SharePoint Copilot app that enables teams to play the Star Match game.
 
 ## Prerequisites
 
-> Any special pre-requisites?
+- Node.js 22 (>=22.14.0 and <23.0.0).
+- A Microsoft 365 tenant with the SPFx Copilot Components preview enabled and access to its SharePoint App Catalog.
+- A host compatible with this sample's pinned SPFx 1.24.0-beta.2 and React 17 dependencies. This sample has not been upgraded to RC0.
 
 ## Solution
 
@@ -33,6 +35,7 @@ A SharePoint Copilot app that enables teams to play the Star Match game.
 
 | Version | Date             | Comments        |
 | ------- | ---------------- | --------------- |
+| 1.0.1   | October 22, 2026 | Complete setup, gameplay, deployment, and preview limitations; refresh catalog links. |
 | 1.0     | September 20, 2026 | Initial release |
 
 ## Disclaimer
@@ -43,30 +46,30 @@ A SharePoint Copilot app that enables teams to play the Star Match game.
 
 ## Minimal Path to Awesome
 
-- Clone this repository
-- Ensure that you are at the solution folder
-- in the command-line run:
-  - `npm install -g @rushstack/heft`
-  - `npm install`
-  - `heft start`
+1. Clone this repository and change to `samples/copilot-star-match-game`.
+2. Run `npm ci` to install the pinned dependencies.
+3. Configure your tenant for the hosted Copilot Workbench referenced in `config/serve.json`, then run `npm start`. Copilot Components cannot run in the local SharePoint workbench.
+4. Run `npm run build` to compile, lint, and package the solution.
+5. Upload `sharepoint/solution/copilot-star-match-game.sppkg` to the tenant App Catalog and enable it tenant-wide.
+6. Select **Add to Teams** for the deployed app to provision the agent. In Microsoft 365 Copilot, select **StarMatch Agent** and use its **Get started** prompt.
 
-> Include any additional steps as needed.
-
-Other build commands can be listed using `heft --help`.
+The local Heft CLI is available through `npx heft --help`; a global installation is not required.
 
 ## Features
 
-Description of the extension that expands upon high-level summary above.
+- Match the displayed stars by selecting one or more numbers from 1 to 9 whose sum equals the target.
+- Matched numbers are used once. Use all nine numbers before the timer expires to win; each new target is solvable with the remaining numbers.
+- Rounds default to 60 seconds. The tool accepts `durationSeconds` from 10 to 300.
+- Restart the game, request a full-screen view, or share the round result back into the Copilot conversation.
+- Fluent UI follows the host's light or dark theme. The component reads the current user's display name through Microsoft Graph and site information through SharePoint REST.
 
-This extension illustrates the following concepts:
+## Limitations and support
 
-- topic 1
-- topic 2
-- topic 3
+Game state is held in the current component instance; there is no shared multiplayer session, persistent score, or leaderboard. Sharing a result sends a follow-up message, not a saved score.
 
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
+Copilot Components are in preview. Tenant deployment, natural-language routing, and host integration require validation in a compatible Microsoft 365 environment.
 
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
+This is a community sample provided as-is, not a supported production game. Report problems through the [repository issue list](https://github.com/pnp/spfx-copilot-components/issues).
 
 ## References
 

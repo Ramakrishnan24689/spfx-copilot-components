@@ -4,7 +4,7 @@ import { Search24Regular } from "@fluentui/react-icons"
 import { Fade, Stagger } from "@fluentui/react-motion-components-preview"
 
 import type { ISearchMenuItemsFilter } from "../../models"
-import { getDataService } from "../../services"
+import { getDataService, todayIsoDateInZone } from "../../services"
 import { useDataQuery } from "../../hooks/useDataQuery"
 import ErrorState from "../common/ErrorState"
 import CardSkeleton from "../common/CardSkeleton"
@@ -12,6 +12,7 @@ import IconChip from "../common/IconChip"
 import FilterRail from "./FilterRail"
 import SearchResultsGroup from "./SearchResultsGroup"
 import ZeroResultsState from "./ZeroResultsState"
+import NotPublishedEmptyState from "../menu/NotPublishedEmptyState"
 
 const useStyles = makeStyles({
   root: {
@@ -66,6 +67,8 @@ export default function SearchView(props: ISearchViewProps): React.ReactElement 
   )
 
   const groupsWithItems = (resultsQuery.data ?? []).filter((group) => group.items.length > 0)
+  const unpublishedGroups = (resultsQuery.data ?? []).filter((group) => !group.menuPublished)
+  const hasPublishedMenu = (resultsQuery.data ?? []).some((group) => group.menuPublished)
 
   return (
     <div className={styles.root}>
@@ -88,7 +91,15 @@ export default function SearchView(props: ISearchViewProps): React.ReactElement 
             </Skeleton>
           )}
           {resultsQuery.error && <ErrorState message="We couldn't search the menus right now." />}
-          {!resultsQuery.loading && !resultsQuery.error && groupsWithItems.length === 0 && <ZeroResultsState />}
+          {!resultsQuery.loading && !resultsQuery.error && groupsWithItems.length === 0 &&
+            (hasPublishedMenu || unpublishedGroups.length === 0) && <ZeroResultsState />}
+          {!resultsQuery.loading && !resultsQuery.error && unpublishedGroups.map((group) => (
+            <NotPublishedEmptyState
+              key={group.cafeteria.id}
+              cafeteriaTitle={group.cafeteria.title}
+              date={filter.date ?? todayIsoDateInZone(group.cafeteria.timeZone)}
+            />
+          ))}
           {!resultsQuery.loading && !resultsQuery.error && groupsWithItems.length > 0 && (
             <Stagger visible itemDelay={60}>
               {groupsWithItems.map((group) => (

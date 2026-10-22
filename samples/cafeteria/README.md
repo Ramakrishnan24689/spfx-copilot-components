@@ -62,6 +62,7 @@ The sample uses local synthetic data and does not request additional Microsoft G
 
 | Version | Date          | Comments        |
 | ------- | ------------- | --------------- |
+| 1.0.1 | October 22, 2026 | Correct dietary matching, filter accessibility/reset, unpublished-menu messages, date retention, agent IDs, debugger host, and SPFx gallery metadata; regenerate the dependency lockfile and add nine regression tests. |
 | 1.0.0 | October 19, 2026 | Initial release |
 
 ## Minimal path to awesome
