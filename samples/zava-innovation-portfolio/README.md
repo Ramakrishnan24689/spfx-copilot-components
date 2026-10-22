@@ -199,3 +199,12 @@ and full accessibility rehearsal remain external release gates. Previous Workben
 be presented as fresh RC0 proof. Production identity/permissions, live data, finance, notifications,
 durable workflow, independent evidence verification, and media rights are intentionally outside this
 offline sample.
+
+## Version history
+
+| Version | Date | Comments |
+| --- | --- | --- |
+| 1.0.1 | October 22, 2026 | Restore the sample-specific README view tracker required by gallery validation. |
+| 1.0 | October 20, 2026 | SPFx 1.24 RC0 showcase and validation update. |
+
+<img src="https://m365-visitor-stats.azurewebsites.net/spfx-copilot-components/samples/zava-innovation-portfolio" />
