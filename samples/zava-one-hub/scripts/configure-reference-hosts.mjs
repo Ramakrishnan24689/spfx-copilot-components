@@ -250,7 +250,7 @@ const packageJson = JSON.parse(readFileSync(resolve(root, packagePath), 'utf8'))
 packageJson.dependencies['@fluentui/react-components'] = '9.74.9';
 packageJson.dependencies['@fluentui/react-icons'] = '2.0.314';
 packageJson.dependencies['@griffel/react'] = '1.7.8';
-packageJson.dependencies['@microsoft/sp-top-actions'] = '1.24.0-beta.5';
+packageJson.dependencies['@microsoft/sp-top-actions'] = '1.24.0-rc.0';
 delete packageJson.dependencies['@fluentui/react'];
 outputs.push({ path: packagePath, content: `${JSON.stringify(packageJson, null, 2)}${EOL}` });
 

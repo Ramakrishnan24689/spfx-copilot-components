@@ -61,7 +61,7 @@ if (readme.includes('YOUR-SOLUTION-NAME') || readme.includes('YOUR-GITHUB-ACCOUN
 const sample = JSON.parse(readFileSync(resolve(root, 'assets/sample.json'), 'utf8'))[0];
 const thumbnails = sample?.thumbnails || [];
 if (sample?.name !== 'pnp-sp-dev-spfx-copilot-apps-zava-one-hub') errors.push('Sample metadata name is invalid.');
-if (sample?.updateDateTime !== '2026-10-02') errors.push('Sample metadata updateDateTime is stale.');
+if (sample?.updateDateTime !== '2026-10-20') errors.push('Sample metadata updateDateTime is stale.');
 if (!sample?.products?.includes('Teams')) errors.push('Sample metadata must include Teams.');
 if (thumbnails.length !== 15) errors.push(`Expected 15 publication thumbnails, found ${thumbnails.length}.`);
 if (new Set(thumbnails.map((thumbnail) => thumbnail.name)).size !== thumbnails.length) errors.push('Thumbnail names must be unique.');

@@ -46,7 +46,10 @@ The sample should feel like a high-stakes pursuit workspace inside Copilot, not 
 
 ## Publication acceptance
 
-- No runtime errors, broken images, or horizontal overflow in all 13 publication captures.
+- No runtime errors, broken images, or horizontal overflow in all 13 curated publication captures.
+- Supplementary current matrix: 105 captures covering every inline intent at standard/narrow/dark,
+  four dashboards, all ten reviews/receipts and eighteen property/no-match/gate states; zero console
+  warnings/errors as well as runtime/image/overflow failures. Both sets are bound to runtime source hashes.
 - No text, badge, map label, or navigation item clipped by hidden overflow.
 - No repeated focused chart in the same full-screen composition.
 - No unexplained AI score or customer/CRM write claim.

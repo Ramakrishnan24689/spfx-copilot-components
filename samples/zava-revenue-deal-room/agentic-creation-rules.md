@@ -1,7 +1,7 @@
 # Agentic Creation Rules - SPFx Copilot Component Samples
 
 > **Purpose.** This is the official golden engineering and automation playbook validated by the
-> **Zava AI Project Portfolio Agent** and cross-checked against the **Zava Employee Agent**. Copy it
+> **Zava AI Project Portfolio Agent** and cross-checked against the **Zava Employee Agent** and **Zava Customer Resolution Center** samples in this repo. Copy it
 > into future samples, replace solution-specific names and counts, and preserve every mandatory
 > action/gate unless `todo.md` records an approved exception.
 > It covers independently routed Copilot Components, shared full-screen experiences, coherent mock
@@ -79,7 +79,7 @@ component scaffold by hand.
   solution has and their final names. The user or coding agent may run the generator. Example:
 
   ```bash
-  npm install -g yo @microsoft/generator-sharepoint@1.24.0-beta.3
+  npm install -g yo @microsoft/generator-sharepoint@1.24.0-rc.0
   yo @microsoft/sharepoint      # choose "Copilot Component"; repeat / re-run to add more components
   npm install                    # if scaffolded with --skip-install
   ```
@@ -160,7 +160,9 @@ approved sample values, but keep the actions and gates.
    configure and validate manifests, adapters, schemas, bundles, localized resources, registrations,
    and tool descriptions. The validator MUST fail on duplicate GUID/tool/description, wrong counts,
   placeholder descriptions/properties, missing registrations, missing generated files, duplicate bundle
-  membership, or a manifest absent from the approved bundle strategy.
+  membership, or a manifest absent from the approved bundle strategy. Every description MUST include a
+  positive `Use when` trigger and a nearest-sibling `Do not use` boundary; generate collision tests for
+  prompts that could plausibly route to either sibling.
 4. **Install and pin the shared stack once.** React 18, Fluent v9, Griffel, focused D3 modules/types,
    Jest, and only approved optional libraries. Run a clean compile before feature implementation.
 5. **Build and visually approve the premium shared host before 30 bodies.** Implement current-user
@@ -179,7 +181,10 @@ approved sample values, but keep the actions and gates.
 7. **Classify every intent by operation.** Information/status, Review/decision, or Request/submit.
    Implement one complete vertical slice of each operation before scaling siblings.
 8. **Give every intent a purpose-designed body.** Shared framing/workflow mechanics are allowed;
-   shared generic evidence/review bodies are not. Every root/stage gets a unique `data-layout` identity.
+  shared generic evidence/review bodies are not. Every root/stage gets a unique `data-layout` identity.
+  Inline answers one conversational question with one dominant visual/list/form. Split independent
+  chart questions into separately generated components; reserve coordinated multi-chart dashboards for
+  full screen.
 9. **Audit every visible control.** A retained filter/toggle/select/button MUST change records,
    grouping, chart marks, calculations, selected evidence, or workflow stage. Remove unsupported
    decorative affordances. Do not ship controls that only change a caption.
@@ -195,7 +200,8 @@ approved sample values, but keep the actions and gates.
   decorative coordinate plot is not a map.
 12. **Add focused test matrices while implementing.** Assert catalog/layout uniqueness, all information
   defaults, retained control effects, selected detail, no-match/error fallback, all review safeguards,
-  and every form's prefill/validation/Edit/review/confirm/receipt/reset lifecycle.
+  and every form's prefill/validation/Edit/review/confirm/receipt/reset lifecycle. Assert every tool
+  publishes one activation snapshot plus updated snapshots for material visible-state changes.
 13. **Create a local visual harness before Workbench review.** It MUST render every intent, width, and
   theme without a tenant. Automate screenshots plus runtime, overflow, image, control-label, chart,
   keyboard-focus, reduced-motion, and 200% browser-zoom checks. Save a machine-readable evidence file.
@@ -220,7 +226,7 @@ approved sample values, but keep the actions and gates.
 scripts/configure-intent-components.mjs   # catalog -> adapters/schemas/manifests/registrations
 scripts/validate-intent-components.mjs    # fail-fast identity/schema/registration audit
 scripts/validate-react-baseline.mjs       # target profile/root lifecycle/dependency/import audit
-scripts/validate-generated-ai-plugin.mjs  # shipped ZIP -> plugin v2.4/functions/MCP/length audit
+scripts/validate-generated-ai-plugin.mjs  # shipped ZIP -> plugin v2.4/dynamic MCP/length audit
 scripts/validate-package-output.mjs        # .sppkg -> JS/media/icon/stale-output/size audit
 scripts/validate-gallery-assets.mjs        # sample.json -> metadata/PNG/order/URL coverage audit
 scripts/validate-media-provenance.mjs      # source/runtime media -> rights/hash/catalog audit
@@ -259,20 +265,21 @@ Recommended scripts for future samples:
 
 ### 0.3 Dependencies - install before the owning implementation
 
-The SPFx 1.24 Beta 3 React template scaffolds `@microsoft/sp-copilot-component`, React 18, `zod`, and
+The SPFx 1.24 RC0 React template scaffolds `@microsoft/sp-copilot-component`, React 18, `zod`, and
 `zod-to-json-schema`. For every new sample, preserve the generator's exact SPFx preview build and pin
 the **React 18 + Fluent UI v9 + Griffel** baseline before the first React implementation, then verify
-the build. The versions below are the validated public Beta 3 baseline from
-`1.24.0-beta.3`; when a newer preview is intentionally adopted, regenerate a clean reference
+the build. The versions below are the RC0 baseline validated with Zava Project Tracker from
+`1.24.0-rc.0`; when a newer release is intentionally adopted, regenerate a clean reference
 component and update the complete version set together rather than mixing release lines:
 
-| Target | SPFx 1.24 Beta 3 validated value |
+| Target | SPFx 1.24 RC0 validated value |
 | --- | --- |
-| Generator and `@microsoft/sp-*` packages | `1.24.0-beta.3` |
-| Node.js | `>=22.14.0 <23.0.0` |
+| Generator and direct SPFx runtime/build/lint packages | `1.24.0-rc.0` |
+| Node.js | `>=22.14.0 <23.0.0` or `>=24.0.0 <25.0.0` or `>=26.0.0 <27.0.0` |
+| Heft (including any existing override) | `1.3.2` |
 | TypeScript | `~5.8.0` (`5.8.3` resolved) |
 | React / ReactDOM | `18.3.1` / `18.3.1` |
-| React types / ReactDOM types | `18.2.79` / `18.2.25` |
+| React types / ReactDOM types | `18.3.31` / `18.3.7` |
 | Fluent UI React Components | `9.74.6` |
 | Fluent UI React Icons | `2.0.314` |
 | Griffel React | `1.7.7` |
@@ -285,7 +292,7 @@ reviewed change. Preview APIs and manifests may change before general availabili
 ```bash
 # React 18 runtime + compatible types (UX rendering)
 npm install react@18.3.1 react-dom@18.3.1 --save-exact
-npm install @types/react@18.2.79 @types/react-dom@18.2.25 --save-dev --save-exact
+npm install @types/react@18.3.31 @types/react-dom@18.3.7 --save-dev --save-exact
 
 # Fluent UI v9 (components + icons) - the required UI stack (G4)
 npm install @fluentui/react-components@9.74.6 @fluentui/react-icons@2.0.314 --save-exact
@@ -295,8 +302,10 @@ npm install @griffel/react@1.7.7 --save-exact
 ```
 
 Keep `react`, `react-dom`, `@types/react`, and `@types/react-dom` single-versioned across the dependency
-graph **owned by the application**. Beta 3 intentionally contains an isolated React 17/ReactDOM 17 copy
-under `@microsoft/sp-loader`; preserve the generator's framework dependency and do not override it to
+graph **owned by the application**. SPFx intentionally contains an isolated React 17/ReactDOM 17 copy
+under `@microsoft/sp-loader`; mixed-host solutions can also have generator-owned isolated copies under
+`@microsoft/sp-property-pane` and `@microsoft/sp-webpart-base`, as audited by Zava One. Preserve these
+framework dependencies and do not override them to
 React 18. Fail on additional or unexpected application copies, mixed application majors, invalid peers,
 or a root other than React 18.3.1. Pin direct packages exactly, use `overrides` / `resolutions` only for
 compatible application type packages, and keep `npm ls` free of dependency problems. Do not upgrade
@@ -305,7 +314,7 @@ generator template. Remove the legacy `@fluentui/react` v8 package after confirm
 imports; do not ship Fluent v8 and v9 together solely because an older scaffold added it.
 
 `validate-react-baseline.mjs` MUST inspect `package.json`, the lockfile, and source imports. It verifies
-the target-profile pins, allows only the known generator-owned `@microsoft/sp-loader` React 17 copy,
+the target-profile pins, allows only the audited generator-owned SPFx React 17 paths for that host mix,
 rejects legacy `react-dom` render APIs and React 19-only APIs, requires one persistent `createRoot` per
 Copilot Component entrypoint, and rejects a direct Fluent v8 dependency or imports. Run `npm ci` plus
 the validator in the clean-clone rehearsal; do not validate only a developer's existing `node_modules`.
@@ -327,7 +336,7 @@ npm install @pnp/sp @pnp/graph @pnp/logging --save
 ```
 
 > Keep versions aligned across samples for consistency (React 18.3.1 and the compatible type pins above
-> for SPFx 1.24 Beta 3). Confirm the exact `@microsoft/sp-copilot-component`, `@microsoft/spfx-*`, React,
+> for SPFx 1.24 RC0). Confirm the exact `@microsoft/sp-copilot-component`, `@microsoft/spfx-*`, React,
 > Fluent, and TypeScript versions from a freshly generated project for the target SPFx build.
 
 ### 0.4 Example human kickoff prompt (design pic + high-level README)
@@ -377,9 +386,12 @@ phased implementation. If only planning is requested, stop before dependency or 
 
 - **G1 - Copilot Component, not a web part.** No `BaseClientSideWebPart`, **no property pane**, no
   `getPropertyPaneConfiguration`, no `.module.scss` theme tokens, no `@pnp/spfx-property-controls`.
+  This is the new Copilot-only creation baseline. Preserve the approved generated SharePoint/Teams
+  hosts in an existing mixed-host sample such as Zava One; document that architecture exception rather
+  than deleting working hosts during a framework upgrade.
 - **G2 - Heft, not Gulp.** Configs extend the rig. Never add `gulpfile.js`.
 - **G3 - React 18 for all new samples.** Pin the runtime and types to the target SPFx generator
-  baseline; for SPFx 1.24 Beta 3 use React/ReactDOM 18.3.1 and types 18.2.79/18.2.25. Functional
+  baseline; for SPFx 1.24 RC0 use React/ReactDOM 18.3.1 and types 18.3.31/18.3.7. Functional
   components, `import * as React from 'react'`, and classic JSX (`jsx: "react"`) remain the baseline;
   a minimal shared class error boundary is the allowed exception because React 18 core error boundaries
   are class-based. Create one persistent `Root` with `createRoot`, reuse it for framework rerenders, and
@@ -477,6 +489,25 @@ phased implementation. If only planning is requested, stop before dependency or 
   release-evidence automation before scale-out. The final build regenerates and validates package hashes,
   bundle/media counts, screenshots, routing matrix, and README/demo links from current artifacts. Never
   hand-copy remembered counts or hashes into release claims.
+- **G29 - Every tool owns one unique LLM routing boundary.** Each generated tool description MUST state
+  both a positive trigger (`Use when ...`) and the nearest negative boundary (`Do not use ...`). The
+  catalog also owns one realistic prompt, decision question, outcome, excluded sibling intents, and
+  normalized properties. Validators fail duplicate or placeholder descriptions, missing positive/
+  negative boundaries, route collisions, and untested collision pairs. A different component name over
+  the same routing semantics is not a new intent.
+- **G30 - One conversational question, one focused inline answer.** Inline is not a dashboard canvas.
+  Give one immediate question one dominant visual/list/form and only the supporting context required to
+  interpret or act on it. If independent user questions need different charts (for example trend, map,
+  and driver Pareto), promote them to separately routed, final-named Yeoman components when each earns
+  intent status. Coordinate those charts together only in full screen, where multi-view analysis is the
+  explicit job. Do not stack several independently meaningful charts into one inline component merely
+  to show breadth.
+- **G31 - Every rendered state tells Copilot what the user can see.** Every inline and full-screen
+  activation MUST publish one complete, bounded, purpose-specific semantic snapshot after the useful
+  view commits. Update it after material list/detail, selection, filter, chart, workflow, receipt, or
+  route changes. Include intent, route/view, display mode, visible entity IDs/labels, active filters,
+  workflow stage, visible summary, and safe next actions. Deduplicate equal snapshots. Generic catalog
+  outcome text alone is insufficient; the summary must identify the actual visual/data currently shown.
 
 ---
 
@@ -613,6 +644,16 @@ Each Copilot Component lives under `src/copilotComponents/<name>/`:
   but transitions never wrap confirmation, persistence, bridge, or receipt state. Do not use React
   19-only APIs in a React 18 sample.
 
+  React 18 types do not implicitly add `children` to function-component props. Declare
+  `children?: React.ReactNode` explicitly on providers, layouts, and other wrappers that accept it.
+  Tests and local review harnesses also use persistent `createRoot` roots and `act` from `react`.
+  Set `IS_REACT_ACT_ENVIRONMENT` in the Jest configuration, render/dispatch/unmount inside `act`,
+  and test root reuse, independent instances, teardown before first render, and unmount-before-base
+  cleanup. Do not retain legacy test APIs merely because runtime code compiles.
+  Assert DOM semantics rather than serialized attribute order, which can change between React majors.
+  Copilot Component cleanup belongs in `onTeardown` and must await the base implementation; do not use
+  a web-part-only disposal hook for a Copilot Component.
+
 - `` `<Name>CopilotComponent.manifest.json` `` - `componentType: "CopilotComponent"`, `copilotType: "Ux"`,
   `capabilities.availableDisplayModes`, and the `tools` array (name, localized description,
   `propertiesSchema` → compiled properties module).
@@ -650,8 +691,9 @@ interface IResolvedIntent<TNormalized> {
 
 - Keep exported tool Zod schemas simple and packaging-safe. A separate runtime-only Zod schema MAY use
   `z.enum`, `.min()`, `.max()`, transforms, `safeParse`, and `.catch()` because it is not passed to
-  `zodToJsonSchema`; alternatively use plain normalization functions. Invalid input falls back to a
-  useful default instead of failing render.
+  `zodToJsonSchema`; alternatively use plain normalization functions. Missing optional values can use
+  documented sample defaults. Invalid supplied values need visible correction states; unknown record
+  IDs must remain no-match states, never silently select another record or publish a healthy result.
 - Build signatures from normalized values in a deterministic field order. Increment a properties-
   version token only when that signature changes. Theme, dimensions, host context, or other passive
   rerenders MUST NOT increment it or reset edits.
@@ -814,19 +856,25 @@ dashboard with different labels.
 ```ts
 import { z } from 'zod';
 import zodToJsonSchema from 'zod-to-json-schema';
-const schema = z.object({ message: z.string().describe('...') });
+const schema = z.object({
+  query: z.string().optional().describe('User-supplied search terms for this tool, applied visibly to its owning experience.')
+});
 export type I<Name>Props = z.infer<typeof schema>;
 export default zodToJsonSchema(schema);
 ```
 
 - Every field MUST have `.describe()` - the text drives how Copilot populates the tool.
+- Do not keep a scaffold `message` property that the UI ignores. Advertise only fields whose visible
+  behavior, draft/review values, or record selection are implemented and tested.
 - All prompt fields SHOULD be optional so `{}` produces a useful default and extraction can be partial.
   This sample's catalog validator makes `.optional()` mandatory.
-- The authored Copilot Component schema is JSON Schema draft-07, but SPFx packaging translates it into
-  API plugin v2.4 `functions[].parameters` and mirrored MCP `tools[].inputSchema`. Validate generated
-  `ai-plugin.json` from the agent ZIP embedded under `sharepoint/solution/debug/ClientSideAssets/`, not
-  only the Zod source or the seed `copilot/ai-plugin.json`.
-- The packaged API plugin parameter subset supports top-level `type: object`, `properties`, and optional
+- The authored Copilot Component schema is JSON Schema draft-07. RC0 discovers tools dynamically from
+  SharePoint; `ai-plugin.json` deliberately contains no static parameter/function catalog. Validate
+  source manifests and compiled property schemas separately, then inspect the generated plugin in the
+  embedded agent ZIP and the final `.sppkg`, not only the seed `copilot/ai-plugin.json`.
+- Preserve the portable v2.4 parameter subset for compatibility, including any rollout-time static
+  fallback. Do not infer broader tenant schema support merely from a successful local build.
+  The portable subset supports top-level `type: object`, `properties`, and optional
   `required`; each parameter supports `type`, `items`, string `enum`, `description`, and `default`.
   Supported types are `string`, `array`, `boolean`, `integer`, and `number`; array items are simple
   parameters. Property names match `^[A-Za-z0-9_]+$`.
@@ -882,6 +930,14 @@ type from component names at render time.
   intents and asserts the expected count of unique default layouts.
 - A shared application root owns only framing: workspace accent, title/summary, full-screen action,
   routed body, and status/context footer. It does not own a universal intent body.
+- **Inline density budget:** the settled first view has one dominant answer and normally no more than
+  one chart/data visualization. Supporting exact-value tables, compact evidence, legends, and one local
+  action area are allowed when they explain that answer. Two visuals may coexist only when they answer
+  one inseparable question and selection is coordinated. Three independently useful charts MUST NOT be
+  shipped as one inline experience; generate separately routed components and join them in full screen.
+- Before splitting, write the three candidate user questions. If each can be asked naturally, has a
+  distinct `Use when`/`Do not use` boundary, and produces a useful standalone answer, each earns its own
+  final-named Yeoman component. If not, keep the material as supporting detail or full-screen analysis.
 
 ### 6.2 Truthful control audit
 
@@ -939,6 +995,11 @@ This is not technical API documentation and not a static help page.
   If the agent intentionally exposes exactly three starters, this is the **third** starter. Retain two
   high-value direct tasks and let the explorer cover the remaining breadth.
 
+  An existing approved curated showcase can retain operational-only starters or its existing
+  full-screen discovery path. Document the exception and replacement help/navigation in `todo.md`,
+  and still validate every starter's distinct owning tool. This is not permission for a new large
+  catalog to omit discovery without an explicit UX decision.
+
 - Agent instructions route broad capability/help prompts (“what can you do?”, “show available
   scenarios”, “help me get started”) to the explorer before broad summary fallbacks.
 - Keep the other starters focused on high-value first-run tasks. The explorer starter is the durable
@@ -969,6 +1030,11 @@ This is not technical API documentation and not a static help page.
   equals the advertised catalog count.
 
 **Inline education UX:**
+
+- List every current operational scenario. Do not truncate with an unlabelled `slice` or show a total
+  count that cannot be reached. Use search/filter plus Previous/Next paging or virtualization when all
+  items do not fit. Display visible range, total result count, and page position; reset paging when the
+  query/filter changes and publish range/page/selected-preview state to Copilot.
 
 - Lead with business language: “What are you trying to accomplish?” not component/tool names.
 - Group scenarios into 4-7 understandable categories based on the agent domain (for Zava: My Work,
@@ -1033,23 +1099,28 @@ metadata, routes, and preview adapters rather than copying Zava-specific UI/data
 
 ### 7.1 MCP Apps host communication contract
 
-SPFx Copilot Components implement the MCP Apps model, but application code uses the public Beta 3
+SPFx Copilot Components implement the MCP Apps model, but application code uses the public RC0
 `BaseCopilotComponent` and `context.copilotBridge` APIs. The framework owns the `postMessage` transport,
 JSON-RPC handshake, tool-input delivery, host-context updates, and teardown. Never implement a second
 transport or send raw protocol messages.
 
-| Need | SPFx Beta 3 API | Rule |
+| Need | SPFx RC0 API | Rule |
 | --- | --- | --- |
 | Tell Copilot what the UI currently shows | `copilotBridge.updateModelContextAsync(...)` | Publish one complete semantic snapshot; the latest call replaces the previous context and does not start a chat turn. |
 | Ask Copilot to continue the conversation | `copilotBridge.sendFollowUpMessageAsync(...)` | User-initiated only; build content with `createCopilotTextContent` and handle host rejection. |
 | Expand the current experience | `requestDisplayModeAsync('fullscreen')` | Offer only when full screen is declared/available; wait for `hostContext.displayMode` instead of changing mode locally. |
-| Resize inline content | automatic host sizing; rarely `requestSizeChangeAsync(...)` | Prefer the framework observer; manual sizing must respect advertised container dimensions. |
+| Resize inline content | automatic host sizing; `requestSizeChangeAsync(width, height)` when needed | Prefer the framework observer. If list/detail, workflow, filter, or responsive changes are not reflected reliably, observe the rendered inline root, clamp to `hostContext.containerDimensions`, batch per animation frame, deduplicate equal sizes, skip full screen, and disconnect on teardown. |
 | Open an external destination | `copilotBridge.openLinkAsync(...)` | User-initiated, valid HTTPS URL, and handle `isError`. Internal routes stay inside React state. |
 | Execute or refresh server work | `copilotBridge.callServerToolAsync(...)` | Use for an actual MCP server operation, not for local UI transitions; inspect `isError`. |
 | Read server resources | `copilotBridge.readServerResourceAsync(...)` | Use for declared server resources; keep large payloads out of model context. |
 
 **Model-context snapshots:**
 
+- Publish an initial purpose-specific snapshot for **every** component after its first useful state
+  commits. A static information body still needs context; do not limit reporting to forms or components
+  with interactive filters. The activation summary names the visible visual grammar and decisive data
+  (for example demand river, selected regional map, ranked queue, evidence canvas, or review draft), not
+  merely the catalog outcome.
 - Every inline and full-screen root defines a typed `IModelContextSnapshot` containing at minimum the
   intent/tool key, display mode, semantic route/view, selected entity IDs and labels, active filters,
   visible summary, workflow stage, and available next actions. Full screen adds its focused workspace
@@ -1058,6 +1129,10 @@ transport or send raw protocol messages.
   mode/route change, material filter or selection change, review entry, and confirmed receipt. Coalesce
   rapid changes and deduplicate by a stable semantic signature. Never call the bridge from render or
   send on every keystroke, animation frame, hover, focus event, or chart redraw.
+- List/detail experiences publish list result count/query before selection, selected entity and visible
+  detail after drill-in, and restored list state after Back. Paginated surfaces publish visible range,
+  total count, page, active filters, and selected preview. Charts publish the filter/selection values
+  that materially determine the marks, paths, coordinates, hierarchy, or exact-value table.
 - Prefer `structuredContent` for stable IDs/state and a short `content` summary for model grounding.
   Include only what the user can currently see or has explicitly selected. Do not send hidden records,
   secrets, access tokens, raw telemetry, or unconfirmed sensitive/free-text draft values. For a form,
@@ -1478,14 +1553,41 @@ evidence, safeguards, rationale, confirmation, semantic receipt, updated queue, 
   `.sppkg`, then release evidence is generated from those exact bytes and checked immediately. Do not ask
   operators to remember separate release commands that can package an invalid catalog, stale docs, or
   mismatched evidence.
-- Use the Node.js range in the clean target scaffold's `package.json`; for SPFx 1.24 Beta 3 it is
-  **>=22.14.0 <23.0.0**. The clean-clone gate verifies the active Node version before `npm ci`.
+- RC0 generates API plugin v2.4 with an empty `functions` array, one `RemoteMCPServer` runtime,
+  `run_for_functions: ["*"]`, and a URL-only `spec` for dynamic tool discovery. Do not require the
+  older embedded `mcp_tool_description` or static functions. Validate source tool names, unique IDs,
+  descriptions, property schemas, and registration independently; inspect both the embedded agent ZIP
+  and the final `.sppkg`. A copied Teams ZIP must match the one generated by the current build.
+- RC0 may append a fourth hotfix segment to the authored three-part Teams manifest version when agent
+  content changes. Validate the authored base plus the generator-produced hotfix, and record the
+  actual packaged version. Keep `teams/.copilot-agent-hotfix.json` ignored; do not hand-edit or commit
+  this local fingerprint cache. Source and packaged instruction comparison normalizes CRLF/LF.
+- A unique tool name or `data-layout` label is not proof of unique UX. Reject repeated working-note
+  fallbacks and copied superset schemas. Test each actual business surface, visible parameter effects,
+  near-sibling boundaries, numeric/authority thresholds, unknown-record states, and every operation's
+  review/confirm/receipt path. Only advertise parameters the owning surface can use meaningfully.
+- Use the Node.js range in the target scaffold's `package.json`; for SPFx 1.24 RC0 it is
+  **>=22.14.0 <23.0.0 || >=24.0.0 <25.0.0 || >=26.0.0 <27.0.0**. The clean-clone gate verifies the
+  active Node version before `npm ci`.
+- Verify registry availability for the exact prerelease before claiming public clean-clone
+  reproducibility. In this rollout RC0 was available through the configured Microsoft proxy/backing
+  feed but not npmjs.org. An explicitly approved prerelease feed is a documented prerequisite, not a
+  reason to fake public tarball URLs, bypass peer checks, or commit credentials. Rehearse a public
+  restore again when the public release is available.
+- Keep current prerequisites, badges, generator metadata, gallery metadata, technical demos, and
+  release evidence aligned. Version-history entries retain their historical versions. RC0 alignment
+  is not proof of GA availability or authenticated-host validation.
 
 ### 17.2 Lint / Griffel gotchas (learned - avoid these)
 
 - **No inline `style={{…}}` by this playbook's convention.** Use `makeStyles` classes; for dynamic values
   like stagger delay, use discrete static classes. Enforce the convention in the sample lint/source audit
   instead of assuming the base SPFx lint preset rejects inline styles.
+- RC0 lint also visits authored review-harness TypeScript. Give it a dedicated no-emit tsconfig and
+  include that project in ESLint. Ignore only generated review bundles, not authored harness source.
+- If preserving an older Fluent v9 profile, validate its resolved motion packages in a clean
+  production bundle. Zava's `9.54.0` profile requires the reference `@fluentui/react-motion@9.16.1`
+  compatibility pin; a successful type check alone does not catch missing runtime exports.
 - **No `background` shorthand** in `makeStyles` (Griffel) → use `backgroundImage` (+ `backgroundColor`).
 - Do not mix a border shorthand in a base Griffel style with `borderColor` in a nested state such as
   `:disabled`; override the complete `border` declaration in that state. Disabled controls must pair
@@ -1780,11 +1882,18 @@ samples/<name>/
   it is not a generic card/KPI layout, thin accent-line skin, or initials-only people experience.
 - [ ] Catalog-driven configure/validate scripts pass: unique GUIDs/tools/descriptions, expected bundles,
   schemas, resources, registrations, and no scaffold placeholders.
+- [ ] Every tool description has one tested `Use when` trigger and `Do not use` nearest-sibling
+  boundary; positive, negative, and collision prompts cover every current tool.
 - [ ] Copilot Component (no web part / no property pane); Heft; target-profile React 18 runtime/types
-  pinned and single-versioned in the application graph; only the generated isolated SP loader React 17
+  pinned and single-versioned in the application graph; only audited generator-owned isolated React 17
   copy is accepted; one persistent `createRoot`; abortable/idempotent effects; Fluent v9 only.
 - [ ] Focused inline root + approved shared/isolated/hybrid full-screen topology;
   `requestDisplayModeAsync` for the consistent top-right View in full screen control.
+- [ ] Each inline component answers one conversational question with one dominant visual/list/form;
+  independently useful trend/map/driver or other chart questions are separate final-named generated
+  components, while coordinated multi-chart analysis lives in full screen.
+- [ ] Inline size changes are verified in the tenant host. Where automatic sizing is insufficient,
+  `requestSizeChangeAsync(width, height)` is bounded, batched, deduplicated, inline-only, and cleaned up.
 - [ ] Every primary workspace has a useful default dashboard; navigation orientation is justified by
   workspace count/labels/workflow and uses the available mobile, desktop, and projector canvas.
 - [ ] Workspace purpose matrix covers persona, competitor/category benchmark, data grain, decision
@@ -1797,6 +1906,9 @@ samples/<name>/
 - [ ] Every inline/full-screen journey publishes a bounded, deduplicated semantic snapshot with
   `updateModelContextAsync`; each sample demonstrates an explicit user-triggered follow-up; bridge
   rejection/error paths and no-automatic-message behavior are tested.
+- [ ] Every component publishes one purpose-specific activation snapshot naming the actual visible UX
+  and data; list/detail, paging, filter, chart selection, workflow, receipt, and Back transitions publish
+  updated visible state without hidden/sensitive payloads.
 - [ ] Message-driven update demo works end to end: current full-screen selection grounds Copilot, chat
   or an explicit message action routes to the domain-appropriate update tool, and fresh tool properties
   open a prefilled Draft -> Validate -> Review -> Confirm -> Receipt flow without auto-submission.
@@ -1808,7 +1920,9 @@ samples/<name>/
 - [ ] Operation-aware information/review/submit dispatchers; unique `data-layout` identities; no generic
   fallback body or shared domain review evidence.
 - [ ] If the catalog has 11+ operational inline tools, one generated Agent Capability Explorer exists,
-  complete education metadata validates, and the final conversation starter routes to it.
+  complete education metadata validates, and the final conversation starter routes to it. Every
+  operational scenario is reachable through search/filter and paging/virtualization; visible range,
+  total count, page, and selected preview are accessible and reported to Copilot.
 - [ ] Single stable-key theme provider; Griffel renderer targets `ownerDocument`; tokens only; no
   `background` shorthand; no inline styles.
 - [ ] Shared mode-root error boundary provides localized accessible recovery; event-handler/async
@@ -1857,12 +1971,12 @@ samples/<name>/
 - [ ] Tenant-authenticated Workbench smoke passes CSP, display-mode request, iframe focus, and screen-reader
   output, or the missing tenant/auth prerequisite is explicitly recorded.
 - [ ] Catalog/media audits and `heft test --clean` green (zero warnings); current agent ZIP and committed
-  `.sppkg` inspected and regenerated; generated plugin v2.4 metadata/functions/MCP tools and length
+  `.sppkg` inspected and regenerated; plugin v2.4 metadata/dynamic runtime, source tools/schemas, and length
   limits pass against the actual SharePoint-embedded ZIP; no stale package artifacts.
 - [ ] Bundle strategy is measured: shared component entries deduplicate common runtime/media/icons or
   intentional split bundles document their lazy-loading benefit; production icon output contains only
   supported named imports; package report records JS count/size and duplicate-media count.
-- [ ] `check:package-output` runs last and passes against the final `.sppkg`: hashed JS only, no duplicate
+- [ ] `check:package-output` runs after packaging and passes against the final `.sppkg`: current hashed JS only, no duplicate
   media/base64 payloads across bundles, no accidental Fluent icon font, and size investigation flags
   recorded against the accepted baseline.
 - [ ] `check:gallery` passes: every publication screenshot exists, is a valid adequately sized PNG,

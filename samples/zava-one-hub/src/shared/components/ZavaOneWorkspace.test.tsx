@@ -6,15 +6,10 @@ jest.mock('./PersonalDetailExperiences', () => ({}));
 jest.mock('./PersonalWorkflowExperiences', () => ({}));
 
 import * as React from 'react';
-import type { act as ActSignature } from 'react-dom/test-utils';
+import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import type { ZavaWorkspaceMode } from '../models/zavaOne';
 import { ZavaOneWorkspace } from './ZavaOneExperiences';
-
-// React 18.3 exports act, but the pinned React 18.2 typings do not declare it.
-const testReact: typeof React & { act?: typeof ActSignature } = React;
-if (typeof testReact.act !== 'function') throw new Error('Workspace tests require the pinned React 18.3 runtime.');
-const act = testReact.act;
 
 beforeAll(() => {
   Object.defineProperty(globalThis, 'IS_REACT_ACT_ENVIRONMENT', { configurable: true, value: true });

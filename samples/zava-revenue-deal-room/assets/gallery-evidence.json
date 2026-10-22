@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-08-31T12:44:04.051Z",
+  "capturedAt": "2026-10-20T14:04:14.524Z",
+  "sourceSha256": "a2e9273031b9901b2348ffe972b03cd7a2277a704c5663bd2eb05e1141f8cb9d",
   "totalCaptures": 13,
   "failureCount": 0,
   "captures": [
@@ -11,11 +12,12 @@
       "height": 940,
       "alt": "Inline buying committee influence orbit with customer authority, stance, relationship strength, and evidence",
       "capturedWidth": 760,
-      "capturedHeight": 1295,
-      "bytes": 269030,
-      "sha256": "84e8544c40ba262ef48732f52faf012456b4d0bcc98d32660aa4fe574749c720",
+      "capturedHeight": 1662,
+      "bytes": 414315,
+      "sha256": "ea80fa7ca35d89c5b4be5f2c7d28ae35efd0a43a713f9a7d2d594bceee1e8df5",
       "layouts": [
-        "MapBuyingCommittee-inline"
+        "MapBuyingCommittee-inline",
+        "MapBuyingCommittee-business-draft"
       ]
     },
     {
@@ -25,11 +27,12 @@
       "height": 940,
       "alt": "Inline mutual action plan with buyer and seller commitments, critical path, owners, and credible close range",
       "capturedWidth": 760,
-      "capturedHeight": 1167,
-      "bytes": 204214,
-      "sha256": "b0328665e5088284b0e4616f47f2d1a509b7383e2e28ab8c55db5e7049722b9a",
+      "capturedHeight": 940,
+      "bytes": 236084,
+      "sha256": "c4e73873c29b45c4fb202b0319adcdd0b252f28dbee969633d7791dbd7ac2e0c",
       "layouts": [
-        "BuildMutualActionPlan-inline"
+        "BuildMutualActionPlan-inline",
+        "BuildMutualActionPlan-business-draft"
       ]
     },
     {
@@ -39,11 +42,12 @@
       "height": 980,
       "alt": "Inline commercial scenario studio with editable inputs, margin guardrail, authority, forecast, and outcome contour",
       "capturedWidth": 760,
-      "capturedHeight": 1343,
-      "bytes": 283455,
-      "sha256": "80cacb885bb543e94f759742930ab43de27d3f6c59d7114f7f6865a06a5374a2",
+      "capturedHeight": 1325,
+      "bytes": 364791,
+      "sha256": "8e88b928d2879a5a01d21a33e81dd5b34968a2129c3fdc31bcaba10f186e1ce4",
       "layouts": [
-        "SimulateCommercialOffer-inline"
+        "SimulateCommercialOffer-inline",
+        "SimulateCommercialOffer-business-draft"
       ]
     },
     {
@@ -53,11 +57,12 @@
       "height": 980,
       "alt": "Inline D3 projected global opportunity map with regional value bubbles, slip risk, selection, and exact table values",
       "capturedWidth": 760,
-      "capturedHeight": 1323,
-      "bytes": 320804,
-      "sha256": "99844770ccb88b7b654dcb54d03299bafa4ff4845aa5bd8b00760523b0755d24",
+      "capturedHeight": 1392,
+      "bytes": 416739,
+      "sha256": "902ce7b7119d3e5d024d790aca99cdceb7b53f1360197a9d9876523b5b986e70",
       "layouts": [
-        "DiscoverAccountOpportunity-inline"
+        "DiscoverAccountOpportunity-inline",
+        "DiscoverAccountOpportunity-business-draft"
       ]
     },
     {
@@ -67,11 +72,12 @@
       "height": 940,
       "alt": "Inline D3 evidence-weighted pipeline chart with stage volume, buyer-proof quality, and intervention legend",
       "capturedWidth": 760,
-      "capturedHeight": 1096,
-      "bytes": 238852,
-      "sha256": "ca71296777f81be257c607921dd4531560558f49623ab21d3a02aecac3022285",
+      "capturedHeight": 1526,
+      "bytes": 425530,
+      "sha256": "08b9457eead244dc0a7273280aef817da075ef17115f7a6ef8e5e5c75df8b8f3",
       "layouts": [
-        "ExplorePipelineQuality-inline"
+        "ExplorePipelineQuality-inline",
+        "ExplorePipelineQuality-business-draft"
       ]
     },
     {
@@ -81,11 +87,12 @@
       "height": 940,
       "alt": "Inline forecast review with verified buyer proof, contrary evidence, seller judgment, and critical close path",
       "capturedWidth": 760,
-      "capturedHeight": 1633,
-      "bytes": 323587,
-      "sha256": "10ba9c242ac54d8146057c05258697c4cdb0f36f751be9491995ce35d2a7ec94",
+      "capturedHeight": 940,
+      "bytes": 227425,
+      "sha256": "50a06cba1a3da4e2cac07f35ac0bc313b8833916f754133d1654b159bfb70c2b",
       "layouts": [
-        "InspectForecastCommit-inline"
+        "InspectForecastCommit-inline",
+        "InspectForecastCommit-business-draft"
       ]
     },
     {
@@ -95,12 +102,12 @@
       "height": 900,
       "alt": "Inline searchable Revenue Deal Room capability catalog with business outcomes and safe scenario previews",
       "capturedWidth": 760,
-      "capturedHeight": 1075,
-      "bytes": 260984,
-      "sha256": "c1192ce5894e7d4e1da3f68a6fc9af4e28c4c7982c62a91e01791096f03be26d",
+      "capturedHeight": 1027,
+      "bytes": 306841,
+      "sha256": "10a0345eb7775613831b0a195d5c241e55668d762c78fae78c0c529844674903",
       "layouts": [
         "ExploreAgentCapabilities-inline",
-        "capability-explorer"
+        "ExploreAgentCapabilities-business-draft"
       ]
     },
     {
@@ -111,11 +118,12 @@
       "height": 980,
       "alt": "Full-screen Deal Room workspace coordinating Contoso relationship influence, evidence, and credible close range",
       "capturedWidth": 1440,
-      "capturedHeight": 2139,
-      "bytes": 762286,
-      "sha256": "437160218b9f30b7023c880d3ce292fdc72bf753b3f95575e549dc5861396f53",
+      "capturedHeight": 2906,
+      "bytes": 1057791,
+      "sha256": "186453ee7a518ad80614b7886a6c1e493a078f1ac8037bd95e42bdb3db631179",
       "layouts": [
         "MapBuyingCommittee-fullscreen",
+        "MapBuyingCommittee-business-draft",
         "deal-room-dashboard"
       ]
     },
@@ -127,11 +135,12 @@
       "height": 980,
       "alt": "Full-screen Commercial Desk with Contoso scenario economics, adoption outcome, margin, authority, and close runway",
       "capturedWidth": 1440,
-      "capturedHeight": 1208,
-      "bytes": 555378,
-      "sha256": "5cbbe8d0e30ba26f2c72492c5387737d9e7aea1b0de6082dd4212cb83909317c",
+      "capturedHeight": 2245,
+      "bytes": 917146,
+      "sha256": "b90bb5d099e28714cfbb08cca5f1088689b275d26b0e961a541f78cf9fb192d0",
       "layouts": [
         "SimulateCommercialOffer-fullscreen",
+        "SimulateCommercialOffer-business-draft",
         "commercial-desk-dashboard"
       ]
     },
@@ -143,11 +152,12 @@
       "height": 980,
       "alt": "Full-screen Revenue Command forecast review with evidence ledger, movement context, and critical milestones",
       "capturedWidth": 1440,
-      "capturedHeight": 1946,
-      "bytes": 827401,
-      "sha256": "80d76eb9217b8145e1b92e7f19b48e735b1d33af2d7939d773ed034c671929cc",
+      "capturedHeight": 2424,
+      "bytes": 1013280,
+      "sha256": "42ae863ca2488b82ba7710b43c9c4da8652ee9e1c5659a0c794aba740cea3066",
       "layouts": [
         "InspectForecastCommit-fullscreen",
+        "InspectForecastCommit-business-draft",
         "revenue-command-dashboard"
       ]
     },
@@ -159,11 +169,12 @@
       "height": 980,
       "alt": "Full-screen My Deals dashboard with D3 projected opportunity map, evidence-weighted pipeline, and deal context",
       "capturedWidth": 1440,
-      "capturedHeight": 1872,
-      "bytes": 792295,
-      "sha256": "3138cc910abf2951515f8181f51675666f4ee44abc76530642cb9eb1a325bc4f",
+      "capturedHeight": 3012,
+      "bytes": 1242536,
+      "sha256": "254c337d7946257d7451135656ab695af4c56c8f00631cd1dcc8f36afdf24f00",
       "layouts": [
         "DiscoverAccountOpportunity-fullscreen",
+        "DiscoverAccountOpportunity-business-draft",
         "my-deals-dashboard"
       ]
     },
@@ -175,11 +186,12 @@
       "height": 844,
       "alt": "Deal Room workspace adapted to a narrow mobile viewport with scrollable navigation and readable evidence",
       "capturedWidth": 390,
-      "capturedHeight": 3200,
-      "bytes": 516068,
-      "sha256": "bddb029c242ae3d1fd09f26a25d7ec5a2b17a36538119f566161943a98333fff",
+      "capturedHeight": 4055,
+      "bytes": 665430,
+      "sha256": "70c9445ab455e62fb45e057e15fee12961c5a43350731756a08904f73382c271",
       "layouts": [
         "MapBuyingCommittee-fullscreen",
+        "MapBuyingCommittee-business-draft",
         "deal-room-dashboard"
       ]
     },
@@ -192,11 +204,12 @@
       "height": 980,
       "alt": "Full-screen Deal Room in dark theme with accessible relationship orbit, evidence provenance, and status colors",
       "capturedWidth": 1440,
-      "capturedHeight": 2139,
-      "bytes": 667993,
-      "sha256": "fa10d6a702b97e0547b42a4cc59544706e7b167745269c10afd57984888aa9f3",
+      "capturedHeight": 2906,
+      "bytes": 863952,
+      "sha256": "6e5c1e3aa499ec96658772374b4be061d064ccdd822de2803a6dd0e826e5d1f0",
       "layouts": [
         "MapBuyingCommittee-fullscreen",
+        "MapBuyingCommittee-business-draft",
         "deal-room-dashboard"
       ]
     }

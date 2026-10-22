@@ -42,7 +42,7 @@ Open `src/shared/components/ZavaOneApp.tsx` and the two host bases.
 - Both use React 18 `createRoot` and explicit `unmount`.
 - `ZavaErrorBoundary` provides a no-submit fallback and route/theme reset key.
 
-Run `npm run check:react-baseline` and point out the exact beta.5/React 18 pins and allowlisted
+Run `npm run check:react-baseline` and point out the exact RC0/React 18 pins and allowlisted
 framework-internal React 17 copies.
 
 ### 2:30-3:30 — Host and bundle isolation
@@ -106,7 +106,7 @@ Open `copilot/declarativeAgent.json` and `copilot/instruction.txt`.
 
 - Six conversation starters cover news, knowledge, praise, sales, offices, and Explorer.
 - Explorer is last.
-- Instructions route all 37 functions and prefer the narrowest tool.
+- Instructions route all 37 source tools and prefer the narrowest tool.
 - Tool parameters filter or prefill; they never authorize a write.
 
 Run `npm run check:generated-plugin`.

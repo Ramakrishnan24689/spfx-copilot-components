@@ -83,8 +83,22 @@ the supported SPFx Copilot component version in your target tenant before produc
   npm start
   ```
 
-- Add the generated Zava agent to Microsoft Copilot and start with one of the three conversation
+- Add the generated Zava agent to Microsoft Copilot and start with one of the six conversation
   starters. Use the prompt catalog for deterministic routing checks.
+
+### Six conversation starters
+
+The [canonical starter map](config/conversation-starters.json) and agent instructions select one
+owning component per prompt. Five operational starters are followed by the dedicated feature explorer.
+
+| Starter | Owning component tool |
+| --- | --- |
+| What needs my attention across my projects this week? | `GetMyWorkSummary` |
+| Compare Customer Service Copilot with Contract Intelligence on delivery and value. | `CompareProjects` |
+| Show the current delivery health of Customer Service Copilot. | `GetProjectHealth` |
+| Analyze AI spending across the portfolio this quarter. | `GetPortfolioAiSpend` |
+| Review the project budget request for Customer Service Copilot. | `ReviewProjectBudget` |
+| Show me the project and portfolio scenarios you can help with. | `ExploreAgentCapabilities` |
 
 ### Video: test the package in Microsoft 365
 

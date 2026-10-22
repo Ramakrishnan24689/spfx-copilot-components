@@ -1,5 +1,7 @@
 # Zava One - 34 component blueprints
 
+> **Historical design record; RC0 supersedes the earlier toolchain selection.** September Beta 5 decisions and verified source dates below are retained as history. The approved current baseline is SPFx 1.24.0-rc.0 / React 18.3.1. Follow the [current README](../README.md), [synchronized creation guide](../agentic-creation-rules.md), and [RC0 report](../../../RC0-updates.md), not an old instruction to stop on RC adoption.
+
 **Design proposal v0.5 | 28 September 2026 | SPFx 1.24 beta.5 + React 18 | Read with the** [**coding-agent handoff**](Zava-One-Agentic-Handoff.md)**,** [**concept plan**](Zava-One-Concept-Plan.md) **and** [**visual boards**](Zava-One-Experience-Boards.html)**.**
 
 Each numbered capability is an independently composable React 18 module, not a separate application. **Card** describes a SharePoint web part or workspace module. **Inline** describes the focused Copilot experience. **Expanded** is a detail destination in the common Teams/Copilot shell, or a supported SharePoint detail experience. Native dashboard cards use the constrained ACE alternative described below.

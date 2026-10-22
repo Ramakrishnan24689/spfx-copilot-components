@@ -2,8 +2,6 @@ import * as React from "react";
 import {
   Badge,
   Button,
-  Input,
-  Slider,
   Spinner,
   makeStyles,
   mergeClasses,
@@ -11,10 +9,7 @@ import {
 } from "@fluentui/react-components";
 import {
   ArrowExpand20Regular,
-  ArrowRight20Regular,
   Chat20Regular,
-  CheckmarkCircle20Filled,
-  ChevronRight20Regular,
   DataTrending20Regular,
   Money20Regular,
   PeopleTeam20Regular,
@@ -27,7 +22,7 @@ import type {
   IRevenueProperties,
   RevenueLens,
 } from "./catalog";
-import { INTENTS, LENS_LABELS } from "./catalog";
+import { LENS_LABELS } from "./catalog";
 import {
   CONTACTS,
   HERO_EVIDENCE,
@@ -36,6 +31,8 @@ import {
   type EvidenceKind,
 } from "./domain";
 import { PERSONA_MEDIA } from "./media";
+import RevenueExperiences from "./RevenueExperiences";
+import { resolveScope } from "./operations";
 import {
   D3CommercialContour,
   D3ForecastBridge,
@@ -63,6 +60,9 @@ export interface IRevenueAppProps {
     snapshot: IModelContextSnapshot,
   ) => Promise<void>;
   readonly onSendFollowUp: (message: string) => Promise<boolean>;
+  readonly visibleWorkspaceLens?: RevenueLens;
+  readonly referenceEvidenceId?: string;
+  readonly referenceRegion?: string;
 }
 
 const fadeInUp = {
@@ -795,6 +795,7 @@ function EvidenceLedger(props: {
 
 function BuyingCommittee(): React.ReactElement {
   const styles = useStyles();
+  const id = React.useId();
   const heroContacts = CONTACTS.filter(
     (contact) => contact.accountId === "CONTOSO",
   ).slice(0, 4);
@@ -803,10 +804,10 @@ function BuyingCommittee(): React.ReactElement {
   const economic = PERSONA_MEDIA["Lee Gu"].src;
   const legal = PERSONA_MEDIA["Patti Fernandez"].src;
   return (
-    <section className={styles.panel} aria-labelledby="orbit-title">
+    <section className={styles.panel} aria-labelledby={`${id}-orbit-title`}>
       <div className={styles.panelTitle}>
         <div>
-          <h2 id="orbit-title" className={styles.heading}>
+          <h2 id={`${id}-orbit-title`} className={styles.heading}>
             Decision influence
           </h2>
           <p className={styles.insight}>
@@ -828,16 +829,16 @@ function BuyingCommittee(): React.ReactElement {
           direct path to the economic buyer.
         </desc>
         <defs>
-          <clipPath id="champion-photo">
+          <clipPath id={`${id}-champion-photo`}>
             <circle cx="105" cy="70" r="38" />
           </clipPath>
-          <clipPath id="economic-photo">
+          <clipPath id={`${id}-economic-photo`}>
             <circle cx="405" cy="65" r="38" />
           </clipPath>
-          <clipPath id="technical-photo">
+          <clipPath id={`${id}-technical-photo`}>
             <circle cx="110" cy="215" r="34" />
           </clipPath>
-          <clipPath id="legal-photo">
+          <clipPath id={`${id}-legal-photo`}>
             <circle cx="410" cy="210" r="34" />
           </clipPath>
         </defs>
@@ -878,7 +879,7 @@ function BuyingCommittee(): React.ReactElement {
           width="76"
           height="76"
           preserveAspectRatio="xMidYMid slice"
-          clipPath="url(#champion-photo)"
+          clipPath={`url(#${id}-champion-photo)`}
         />
         <text x="105" y="126" textAnchor="middle" className={styles.orbitLabel}>
           Nestor · Champion
@@ -891,7 +892,7 @@ function BuyingCommittee(): React.ReactElement {
           width="76"
           height="76"
           preserveAspectRatio="xMidYMid slice"
-          clipPath="url(#economic-photo)"
+          clipPath={`url(#${id}-economic-photo)`}
         />
         <text x="405" y="121" textAnchor="middle" className={styles.orbitLabel}>
           Lee · Economic buyer
@@ -904,7 +905,7 @@ function BuyingCommittee(): React.ReactElement {
           width="68"
           height="68"
           preserveAspectRatio="xMidYMid slice"
-          clipPath="url(#technical-photo)"
+          clipPath={`url(#${id}-technical-photo)`}
         />
         <text x="110" y="267" textAnchor="middle" className={styles.orbitLabel}>
           Pradeep · Security
@@ -917,7 +918,7 @@ function BuyingCommittee(): React.ReactElement {
           width="68"
           height="68"
           preserveAspectRatio="xMidYMid slice"
-          clipPath="url(#legal-photo)"
+          clipPath={`url(#${id}-legal-photo)`}
         />
         <text x="410" y="262" textAnchor="middle" className={styles.orbitLabel}>
           Patti · Legal
@@ -1002,8 +1003,8 @@ function CommitmentRunway(): React.ReactElement {
 
 function CommercialStudio(): React.ReactElement {
   const styles = useStyles();
-  const [discount, setDiscount] = React.useState(14);
-  const [quantity, setQuantity] = React.useState(860);
+  const discount = 14;
+  const quantity = 860;
   const result = calculateCommercialOffer({
     quantity,
     termMonths: 36,
@@ -1025,25 +1026,7 @@ function CommercialStudio(): React.ReactElement {
         </div>
         <Money20Regular />
       </div>
-      <div className={styles.controls}>
-        <label className={styles.field}>
-          Licensed users
-          <Input
-            type="number"
-            value={String(quantity)}
-            onChange={(_, data) => setQuantity(Number(data.value) || 0)}
-          />
-        </label>
-        <label className={styles.field}>
-          Discount · {discount}%
-          <Slider
-            min={0}
-            max={30}
-            value={discount}
-            onChange={(_, data) => setDiscount(data.value)}
-          />
-        </label>
-      </div>
+      <p className={styles.insight}>Reference only: 860 users · 36 months · 14% discount · $420,000 services · 72% probability. Edit the specialist scenario above for live economics.</p>
       <div className={styles.metrics}>
         <div className={styles.metric}>
           <span className={styles.tiny}>CONTRACT VALUE</span>
@@ -1077,253 +1060,15 @@ function CommercialStudio(): React.ReactElement {
   );
 }
 
-function OperationWorkflow(props: {
-  readonly definition: IIntentDefinition;
-}): React.ReactElement {
-  const styles = useStyles();
-  const [stage, setStage] = React.useState(0);
-  const labels =
-    props.definition.operation === "review"
-      ? ["Evidence", "Decision", "Confirm", "Receipt"]
-      : ["Draft", "Validate", "Review", "Receipt"];
-  return (
-    <section
-      className={mergeClasses(
-        styles.panel,
-        props.definition.operation === "review"
-          ? styles.panelWarm
-          : styles.panelGreen,
-      )}
-      data-layout={`${props.definition.key}-${labels[stage].toLowerCase()}`}
-    >
-      <div className={styles.stageBar}>
-        {labels.map((label, index) => (
-          <span
-            key={label}
-            className={mergeClasses(
-              styles.stage,
-              index <= stage && styles.stageDone,
-            )}
-            aria-label={`${label}${index <= stage ? " complete" : ""}`}
-          />
-        ))}
-      </div>
-      <div className={styles.panelTitle}>
-        <div>
-          <h2 className={styles.heading}>
-            {labels[stage]} · {props.definition.title}
-          </h2>
-          <p className={styles.insight}>
-            {stage === 0
-              ? props.definition.outcome
-              : stage === labels.length - 1
-                ? "Session receipt ZDR-2042-01 recorded. No external system was changed."
-                : "Review the evidence and consequences before moving forward."}
-          </p>
-        </div>
-        {stage === labels.length - 1 ? (
-          <CheckmarkCircle20Filled
-            color={tokens.colorPaletteGreenForeground1}
-          />
-        ) : (
-          <ShieldCheckmark20Regular />
-        )}
-      </div>
-      <div className={styles.metrics}>
-        <div className={styles.metric}>
-          <span className={styles.tiny}>CUSTOMER OUTCOME</span>
-          <strong>18-country operating model</strong>
-        </div>
-        <div className={styles.metric}>
-          <span className={styles.tiny}>SAFEGUARD</span>
-          <strong>Human confirmation required</strong>
-        </div>
-      </div>
-      <div className={styles.actions}>
-        {stage > 0 && stage < labels.length - 1 && (
-          <Button onClick={() => setStage(stage - 1)}>Edit</Button>
-        )}
-        <Button
-          appearance="primary"
-          iconPosition="after"
-          icon={<ArrowRight20Regular />}
-          onClick={() => setStage(stage === labels.length - 1 ? 0 : stage + 1)}
-        >
-          {stage === labels.length - 1
-            ? "Reset"
-            : stage === labels.length - 2
-              ? `Confirm ${props.definition.title.toLowerCase()}`
-              : "Continue"}
-        </Button>
-      </div>
-    </section>
-  );
-}
-
-function CapabilityExplorer(): React.ReactElement {
-  const styles = useStyles();
-  const [query, setQuery] = React.useState("");
-  const operational = INTENTS.filter(
-    (intent) =>
-      intent.operation !== "education" &&
-      `${intent.title} ${intent.outcome}`
-        .toLowerCase()
-        .indexOf(query.toLowerCase()) >= 0,
-  );
-  const [selectedKey, setSelectedKey] = React.useState(operational[0].key);
-  const selected =
-    INTENTS.find((intent) => intent.key === selectedKey) || operational[0];
-  return (
-    <section
-      className={styles.capabilityGrid}
-      data-layout="capability-explorer"
-    >
-      <div>
-        <h2 className={styles.heading}>What are you trying to accomplish?</h2>
-        <Input
-          aria-label="Search revenue scenarios"
-          placeholder="Search scenarios"
-          value={query}
-          onChange={(_, data) => setQuery(data.value)}
-        />
-        <div className={styles.scenarioList}>
-          {operational.map((intent) => (
-            <Button
-              key={intent.key}
-              className={mergeClasses(
-                styles.scenario,
-                selected.key === intent.key && styles.selectedScenario,
-              )}
-              appearance="subtle"
-              onClick={() => setSelectedKey(intent.key)}
-            >
-              {intent.title}
-              <ChevronRight20Regular />
-            </Button>
-          ))}
-        </div>
-      </div>
-      <div className={styles.panel}>
-        <Badge appearance="tint">{selected.operation}</Badge>
-        <h2 className={styles.title}>{selected.title}</h2>
-        <p className={styles.subtitle}>{selected.outcome}</p>
-        <div className={styles.metric}>
-          <span className={styles.tiny}>TRY THIS PROMPT</span>
-          <p>{selected.prompt}</p>
-        </div>
-        <p className={styles.notice}>
-          <ShieldCheckmark20Regular />
-          Demo preview · no action applied
-        </p>
-      </div>
-    </section>
-  );
-}
-
-function IntentBody(props: {
+interface IWorkspaceProps {
   readonly definition: IIntentDefinition;
   readonly selectedEvidence: string;
   readonly onSelectEvidence: (id: string) => void;
-}): React.ReactElement {
-  const styles = useStyles();
-  if (props.definition.operation === "education") return <CapabilityExplorer />;
-  if (props.definition.key === "MapBuyingCommittee") return <BuyingCommittee />;
-  if (
-    props.definition.key === "BuildMutualActionPlan" ||
-    props.definition.key === "TrackMeetingFollowUp"
-  )
-    return <CommitmentRunway />;
-  if (props.definition.key === "SimulateCommercialOffer")
-    return <CommercialStudio />;
-  if (props.definition.key === "ExplorePipelineQuality")
-    return <D3PipelineQuality />;
-  if (props.definition.key === "DiscoverAccountOpportunity")
-    return <D3RevenueMap />;
-  if (props.definition.key === "InspectForecastCommit")
-    return (
-      <div className={styles.visualStack}>
-        <D3ForecastBridge />
-        <EvidenceLedger
-          selectedId={props.selectedEvidence}
-          onSelect={props.onSelectEvidence}
-        />
-      </div>
-    );
-  if (
-    props.definition.key === "GetDealRisk" ||
-    props.definition.key === "BuildAccountBrief"
-  )
-    return (
-      <EvidenceLedger
-        selectedId={props.selectedEvidence}
-        onSelect={props.onSelectEvidence}
-      />
-    );
-  if (
-    props.definition.operation === "review" ||
-    props.definition.operation === "submit"
-  )
-    return <OperationWorkflow definition={props.definition} />;
-  return (
-    <section
-      className={styles.panel}
-      data-layout={`${props.definition.key}-analysis`}
-    >
-      <div className={styles.panelTitle}>
-        <div>
-          <h2 className={styles.heading}>{props.definition.question}</h2>
-          <p className={styles.insight}>{props.definition.outcome}</p>
-        </div>
-        <DataTrending20Regular />
-      </div>
-      <div className={styles.metrics}>
-        <div className={styles.metric}>
-          <span className={styles.tiny}>PRIMARY SIGNAL</span>
-          <span className={styles.metricValue}>Strong</span>
-          <span className={styles.tiny}>3 verified sources</span>
-        </div>
-        <div className={styles.metric}>
-          <span className={styles.tiny}>NEXT OWNED ACTION</span>
-          <strong>Resolve sponsor access</strong>
-          <br />
-          <span className={styles.tiny}>Megan Bowen · due in 3 days</span>
-        </div>
-      </div>
-    </section>
-  );
+  readonly selectedRegion: string;
+  readonly onSelectRegion: (id: string) => void;
 }
 
-function FocusedIntent(props: {
-  readonly definition: IIntentDefinition;
-  readonly selectedEvidence: string;
-  readonly onSelectEvidence: (id: string) => void;
-  readonly omittedKeys: readonly string[];
-}): React.ReactElement | undefined {
-  const styles = useStyles();
-  if (props.omittedKeys.indexOf(props.definition.key) >= 0) return undefined;
-  return (
-    <section className={styles.focusedModule} aria-label="Invoked intent focus">
-      <div className={styles.panelTitle}>
-        <div>
-          <span className={styles.tiny}>FROM YOUR COPILOT REQUEST</span>
-          <h2 className={styles.heading}>{props.definition.title}</h2>
-        </div>
-        <Badge appearance="tint">Focused module</Badge>
-      </div>
-      <IntentBody
-        definition={props.definition}
-        selectedEvidence={props.selectedEvidence}
-        onSelectEvidence={props.onSelectEvidence}
-      />
-    </section>
-  );
-}
-
-function MyDealsDashboard(props: {
-  readonly definition: IIntentDefinition;
-  readonly selectedEvidence: string;
-  readonly onSelectEvidence: (id: string) => void;
-}): React.ReactElement {
+function MyDealsDashboard(props: IWorkspaceProps): React.ReactElement {
   const styles = useStyles();
   const deals = [
     { rank: "1", name: "Contoso Global Expansion", owner: "Megan Bowen", value: "$3.7M", signal: "Sponsor access", tone: "warning" as const },
@@ -1349,17 +1094,12 @@ function MyDealsDashboard(props: {
           </div>
         </section>
       </div>
-      <div className={styles.workspaceGridEqual}><D3RevenueMap /><D3ForecastBridge /></div>
-      <FocusedIntent {...props} omittedKeys={["DiscoverAccountOpportunity", "PrepareCustomerMeeting"]} />
+      <div className={styles.workspaceGridEqual}><D3RevenueMap selectedRegion={props.selectedRegion} onSelectRegion={props.onSelectRegion} /><D3ForecastBridge /></div>
     </div>
   );
 }
 
-function DealRoomDashboard(props: {
-  readonly definition: IIntentDefinition;
-  readonly selectedEvidence: string;
-  readonly onSelectEvidence: (id: string) => void;
-}): React.ReactElement {
+function DealRoomDashboard(props: IWorkspaceProps): React.ReactElement {
   const styles = useStyles();
   return (
     <div className={styles.workspace} data-layout="deal-room-dashboard">
@@ -1373,16 +1113,11 @@ function DealRoomDashboard(props: {
         <div className={styles.actionTile}><span className={styles.tiny}>PROOF PLAN</span><strong>Close two security controls</strong><p className={styles.insight}>Owner: Pradeep Gupta · 5 days</p></div>
         <div className={styles.actionTile}><span className={styles.tiny}>CLOSE CONDITION</span><strong>Confirm launch dependency</strong><p className={styles.insight}>Buyer checkpoint: 9 days</p></div>
       </div>
-      <FocusedIntent {...props} omittedKeys={["MapBuyingCommittee", "TrackMeetingFollowUp", "BuildMutualActionPlan", "InspectForecastCommit"]} />
     </div>
   );
 }
 
-function CommercialDeskDashboard(props: {
-  readonly definition: IIntentDefinition;
-  readonly selectedEvidence: string;
-  readonly onSelectEvidence: (id: string) => void;
-}): React.ReactElement {
+function CommercialDeskDashboard(props: IWorkspaceProps): React.ReactElement {
   const styles = useStyles();
   const exceptions = [
     { title: "Contoso payment terms", detail: "Net 60 · $3.7M TCV", owner: "Miriam Graham", status: "Needs conditions", color: "warning" as const },
@@ -1399,26 +1134,21 @@ function CommercialDeskDashboard(props: {
         </section>
       </div>
       <section className={styles.policyBand} aria-label="Commercial policy position">
-        <div className={styles.policyItem}><span className={styles.tiny}>MARGIN FLOOR</span><strong>68% protected</strong><p className={styles.insight}>Current scenario: 78.9%</p></div>
+        <div className={styles.policyItem}><span className={styles.tiny}>MARGIN FLOOR</span><strong>68% required</strong><p className={styles.insight}>Reference scenario: {calculateCommercialOffer({ quantity: 860, termMonths: 36, discount: 14, services: 420000, probability: 0.72 }).grossMargin.toFixed(1)}% · review below floor</p></div>
         <div className={styles.policyItem}><span className={styles.tiny}>DISCOUNT AUTHORITY</span><strong>Commercial director</strong><p className={styles.insight}>Executive committee above 18%</p></div>
         <div className={styles.policyItem}><span className={styles.tiny}>TERM EXCEPTION</span><strong>Finance + legal</strong><p className={styles.insight}>Condition required for Net 60</p></div>
       </section>
-      <FocusedIntent {...props} omittedKeys={["SimulateCommercialOffer"]} />
     </div>
   );
 }
 
-function RevenueCommandDashboard(props: {
-  readonly definition: IIntentDefinition;
-  readonly selectedEvidence: string;
-  readonly onSelectEvidence: (id: string) => void;
-}): React.ReactElement {
+function RevenueCommandDashboard(props: IWorkspaceProps): React.ReactElement {
   const styles = useStyles();
   return (
     <div className={styles.workspace} data-layout="revenue-command-dashboard">
       <div className={styles.workspaceGridEqual}><D3PipelineQuality /><D3ForecastBridge /></div>
       <div className={styles.workspaceGrid}>
-        <D3RevenueMap />
+        <D3RevenueMap selectedRegion={props.selectedRegion} onSelectRegion={props.onSelectRegion} />
         <section className={styles.panel} aria-labelledby="interventions-title">
           <div className={styles.panelTitle}><div><span className={styles.tiny}>LEADERSHIP ACCOUNTABILITY</span><h2 id="interventions-title" className={styles.heading}>Named interventions</h2></div><Badge color="danger">$4.2M exposed</Badge></div>
           <div className={styles.workspaceList}>
@@ -1428,57 +1158,36 @@ function RevenueCommandDashboard(props: {
           </div>
         </section>
       </div>
-      <FocusedIntent {...props} omittedKeys={["ExplorePipelineQuality", "InspectForecastCommit"]} />
     </div>
   );
 }
 
-function WorkspaceDashboard(props: {
-  readonly definition: IIntentDefinition;
-  readonly selectedEvidence: string;
-  readonly onSelectEvidence: (id: string) => void;
-}): React.ReactElement {
+function WorkspaceDashboard(props: IWorkspaceProps): React.ReactElement {
   if (props.definition.lens === "my-deals") return <MyDealsDashboard {...props} />;
   if (props.definition.lens === "deal-room") return <DealRoomDashboard {...props} />;
   if (props.definition.lens === "commercial-desk") return <CommercialDeskDashboard {...props} />;
   if (props.definition.lens === "revenue-command") return <RevenueCommandDashboard {...props} />;
-  return <IntentBody definition={props.definition} selectedEvidence={props.selectedEvidence} onSelectEvidence={props.onSelectEvidence} />;
+  return <></>;
 }
 
 function RevenueContent(
-  props: IRevenueAppProps & { readonly fullScreen: boolean },
+  props: IRevenueAppProps & { readonly fullScreen: boolean; readonly workspaceLens: RevenueLens },
 ): React.ReactElement {
   const styles = useStyles();
-  const [selectedEvidence, setSelectedEvidence] = React.useState(
-    props.properties.selectedId || "EV-03",
-  );
+  const [selectedEvidence, setSelectedEvidence] = React.useState("EV-03");
+  const [referenceRegion, setReferenceRegion] = React.useState("emea");
   const [followUpState, setFollowUpState] = React.useState<
     "idle" | "sending" | "sent" | "error"
   >("idle");
-  const signature = `${props.definition.key}|${props.displayMode || "inline"}|${selectedEvidence}`;
-  const lastSignature = React.useRef("");
-
-  React.useEffect(() => {
-    if (signature === lastSignature.current) return;
-    lastSignature.current = signature;
-    props
-      .onUpdateModelContext({
-        intent: props.definition.key,
-        displayMode: props.displayMode || "inline",
-        route: props.definition.route,
-        selectedEntityId: "ZDR-2042",
-        workflowStage: "analysis",
-        summary: `${props.definition.title}: ${props.definition.outcome}`,
-        availableActions: ["View evidence", "Ask Copilot", "Open full screen"],
-      })
-      .catch(() => undefined);
-  }, [props, signature]);
+  const [expandError, setExpandError] = React.useState(false);
+  const scope = resolveScope(props.properties);
+  const showReferenceWorkspace = scope.errors.length === 0 && scope.opportunity?.id === "ZDR-2042";
 
   const sendFollowUp = async (): Promise<void> => {
     setFollowUpState("sending");
     try {
       const accepted = await props.onSendFollowUp(
-        `Help me act on ${props.definition.title.toLowerCase()} for Contoso Global Expansion ZDR-2042.`,
+        `Help me analyze ${props.definition.title.toLowerCase()} for ${scope.errors.length ? JSON.stringify(props.properties) : `${scope.account?.name} ${scope.opportunity?.id}`}. Use the visible session context; do not execute external actions.`,
       );
       setFollowUpState(accepted ? "sent" : "error");
     } catch {
@@ -1486,7 +1195,6 @@ function RevenueContent(
     }
   };
 
-  const isEducation = props.definition.operation === "education";
   const profile = lensProfile[props.definition.lens];
   return (
     <>
@@ -1521,7 +1229,7 @@ function RevenueContent(
               className={styles.iconButton}
               appearance="primary"
               icon={<ArrowExpand20Regular />}
-              onClick={() => props.onRequestFullscreen?.()}
+              onClick={() => { props.onRequestFullscreen?.().catch(() => setExpandError(true)); }}
             >
               View in full screen
             </Button>
@@ -1529,7 +1237,7 @@ function RevenueContent(
         </div>
       </header>
       <div className={styles.content}>
-        {props.fullScreen && (
+        {props.fullScreen && showReferenceWorkspace && (
           <section className={styles.heroBand}>
             <div>
               <Badge appearance="filled" color="informative">
@@ -1568,34 +1276,26 @@ function RevenueContent(
             </div>
           </section>
         )}
-        {props.fullScreen ? (
+        <RevenueExperiences
+          key={`${props.definition.key}|${JSON.stringify(Object.keys(props.properties).sort().map(key => [key, props.properties[key as keyof IRevenueProperties]]))}`}
+          {...props}
+          committeeVisual={props.fullScreen ? undefined : <BuyingCommittee />}
+          visibleWorkspaceLens={props.fullScreen && showReferenceWorkspace ? props.workspaceLens : undefined}
+          referenceEvidenceId={props.fullScreen && showReferenceWorkspace ? selectedEvidence : undefined}
+          referenceRegion={props.fullScreen && showReferenceWorkspace ? referenceRegion : undefined}
+        />
+        {expandError && <p role="alert">The host did not open full screen. Your draft is unchanged.</p>}
+        {props.fullScreen && showReferenceWorkspace && (
+          <section aria-label="Illustrative role workspace">
+          <p className={styles.notice}>Illustrative Contoso role workspace · fixed showcase reference metrics, not live CRM or the editable scenario above.</p>
           <WorkspaceDashboard
-            definition={props.definition}
+            definition={{ ...props.definition, lens: props.workspaceLens }}
             selectedEvidence={selectedEvidence}
             onSelectEvidence={setSelectedEvidence}
+            selectedRegion={referenceRegion}
+            onSelectRegion={setReferenceRegion}
           />
-        ) : (
-          <div
-            className={mergeClasses(
-              styles.grid,
-              isEducation && styles.gridSingle,
-            )}
-          >
-            <IntentBody
-              definition={props.definition}
-              selectedEvidence={selectedEvidence}
-              onSelectEvidence={setSelectedEvidence}
-            />
-            {!isEducation && props.definition.key !== "MapBuyingCommittee" && (
-              <CommitmentRunway />
-            )}
-            {props.definition.key === "MapBuyingCommittee" && (
-              <EvidenceLedger
-                selectedId={selectedEvidence}
-                onSelect={setSelectedEvidence}
-              />
-            )}
-          </div>
+          </section>
         )}
         <div className={styles.actions}>
           <Button
@@ -1633,16 +1333,6 @@ export default function RevenueApp(
   );
   if (!props.definition)
     return <Spinner className={styles.spinner} label="Preparing deal room" />;
-  if (!fullScreen)
-    return (
-      <div
-        className={mergeClasses(styles.app, styles.inline)}
-        data-layout={`${props.definition.key}-inline`}
-      >
-        <div className={styles.brandLine} />
-        <RevenueContent {...props} fullScreen={false} />
-      </div>
-    );
   const lenses: RevenueLens[] = [
     "my-deals",
     "deal-room",
@@ -1651,12 +1341,12 @@ export default function RevenueApp(
   ];
   return (
     <div
-      className={mergeClasses(styles.app, styles.full)}
-      data-layout={`${props.definition.key}-fullscreen`}
+      className={mergeClasses(styles.app, fullScreen ? styles.full : styles.inline)}
+      data-layout={`${props.definition.key}-${fullScreen ? "fullscreen" : "inline"}`}
     >
       <div className={styles.brandLine} />
-      <div className={styles.shell}>
-        <aside className={styles.rail}>
+      <div className={fullScreen ? styles.shell : undefined}>
+        <aside className={styles.rail} hidden={!fullScreen}>
           <div className={styles.brand}>
             <span className={styles.brandMark}>
               <TargetArrow20Regular />
@@ -1692,14 +1382,10 @@ export default function RevenueApp(
         </aside>
         <main className={styles.main}>
           <RevenueContent
+            key={`${props.definition.key}|${JSON.stringify(Object.keys(props.properties).sort().map(key => [key, props.properties[key as keyof IRevenueProperties]]))}`}
             {...props}
-            definition={
-              activeLens === props.definition.lens
-                ? props.definition
-                : INTENTS.find((intent) => intent.lens === activeLens) ||
-                  props.definition
-            }
-            fullScreen
+            workspaceLens={activeLens}
+            fullScreen={fullScreen}
           />
         </main>
       </div>

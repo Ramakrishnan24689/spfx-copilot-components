@@ -3,8 +3,10 @@ import { Badge, Button, makeStyles, mergeClasses, tokens } from '@fluentui/react
 import { ArrowTrendingLines20Regular, Globe20Regular } from '@fluentui/react-icons';
 import { geoGraticule10, geoNaturalEarth1, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
-import type { GeometryCollection, Topology } from 'topojson-specification';
+import type { Topology } from 'topojson-specification';
+import { z } from 'zod';
 import world from 'world-atlas/countries-110m.json';
+import { ACCOUNTS, HERO_EVIDENCE, type IOpportunity } from '../domain';
 import {
   buildCommercialGeometry,
   buildForecastBridge,
@@ -62,8 +64,18 @@ const signedMoney = (value: number): string => `${value > 0 ? '+' : value < 0 ? 
 
 export function D3CommercialContour(props: { readonly discount: number; readonly margin: number; readonly quantity: number }): React.ReactElement {
   const styles = useStyles();
+  const gradient = React.useId();
   const geometry = buildCommercialGeometry(props.discount, props.margin, props.quantity);
-  return <div><svg className={styles.chart} viewBox="0 0 520 190" role="img" aria-label={`Commercial outcome curve with ${props.margin.toFixed(1)} percent margin at ${props.discount} percent discount`}><title>Commercial margin and adoption contour</title><desc>D3 scales and monotone curves position the selected offer against margin protection and customer adoption.</desc><defs><linearGradient id="commercial-area" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stopColor={tokens.colorBrandBackground2}/><stop offset="0.58" stopColor={tokens.colorPaletteGreenBackground2}/><stop offset="1" stopColor={tokens.colorPaletteMarigoldBackground2}/></linearGradient></defs><line x1="48" y1="154" x2="494" y2="154" className={styles.axis}/><line x1="48" y1="24" x2="48" y2="154" className={styles.axis}/><path d={geometry.areaPath} className={styles.commercialArea}/><path d={geometry.linePath} className={styles.commercialLine}/><circle cx={geometry.selectedX} cy={geometry.selectedY} r="11" className={styles.commercialPoint}/><text x="50" y="177" className={styles.label}>0% DISCOUNT</text><text x="420" y="177" className={styles.label}>30%</text><text x={geometry.selectedX} y={geometry.selectedY - 17} textAnchor="middle" className={styles.value}>{props.margin.toFixed(1)}%</text></svg><p className={styles.insight}>Selected scenario reaches {geometry.selectedPoint.customerValue.toFixed(0)} customer-value points while preserving {props.margin.toFixed(1)}% gross margin.</p></div>;
+  return <div>
+    <svg className={styles.chart} viewBox="0 0 520 190" role="img" aria-label={`Commercial outcome curve with ${props.margin.toFixed(1)} percent margin at ${props.discount} percent discount`}>
+      <title>Commercial margin and adoption contour</title><desc>D3 scales position the actual computed margin. The curve and adoption index are illustrative deterministic assumptions, not verified customer benefits.</desc>
+      <defs><linearGradient id={gradient} x1="0" y1="1" x2="1" y2="0"><stop offset="0" stopColor={tokens.colorBrandBackground2}/><stop offset="0.58" stopColor={tokens.colorPaletteGreenBackground2}/><stop offset="1" stopColor={tokens.colorPaletteMarigoldBackground2}/></linearGradient></defs>
+      <line x1="48" y1="154" x2="494" y2="154" className={styles.axis}/><line x1="48" y1="24" x2="48" y2="154" className={styles.axis}/>
+      <path d={geometry.areaPath} className={styles.commercialArea} style={{ fill: `url(#${gradient})` }}/><path d={geometry.linePath} className={styles.commercialLine}/><circle cx={geometry.selectedX} cy={geometry.selectedY} r="11" className={styles.commercialPoint}/>
+      <text x="50" y="177" className={styles.label}>0% DISCOUNT</text><text x="420" y="177" className={styles.label}>{Math.max(30, props.discount)}%</text><text x={geometry.selectedX} y={geometry.selectedY - 17} textAnchor="middle" className={styles.value}>{props.margin.toFixed(1)}%</text>
+    </svg>
+    <p className={styles.insight}>Illustrative adoption index: {geometry.selectedPoint.customerValue.toFixed(0)} points, not sourced customer savings. Actual computed margin: {props.margin.toFixed(1)}%.</p>
+  </div>;
 }
 
 const FORECAST: readonly IForecastMovement[] = [
@@ -87,10 +99,20 @@ const PIPELINE: readonly IPipelineStage[] = [
   { label: 'Commit', value: 14, evidence: 84 }
 ];
 
-export function D3PipelineQuality(): React.ReactElement {
+export function D3PipelineQuality(props: { readonly opportunities?: readonly IOpportunity[] }): React.ReactElement {
   const styles = useStyles();
-  const bars = buildPipelineBars(PIPELINE);
-  return <section className={styles.panel} aria-labelledby="pipeline-title"><div className={styles.chartHeader}><div><h2 id="pipeline-title" className={styles.heading}>Evidence-weighted pipeline</h2><p className={styles.insight}>Volume narrows toward commit while evidence quality rises from 54% to 84%.</p></div><Badge className={styles.chartBadge} appearance="tint">$31.8M open</Badge></div><svg className={styles.chart} viewBox="0 0 520 190" role="img" aria-label="Pipeline stages by opportunity count and evidence quality"><title>Evidence-weighted pipeline</title><desc>D3 band and linear scales size four pipeline stages. Color intensity represents evidence quality.</desc>{bars.map((bar) => <g key={bar.label}><rect x={bar.x} y={bar.y} width={bar.width} height={bar.height} rx="5" fill={bar.evidence >= 80 ? tokens.colorPaletteGreenBackground3 : bar.evidence >= 65 ? tokens.colorBrandBackground : tokens.colorPaletteMarigoldBackground3}/><text x={bar.x + bar.width / 2} y={bar.y + 21} textAnchor="middle" className={styles.onBrandValue}>{bar.value}</text><text x={bar.x + bar.width / 2} y={bar.y - 7} textAnchor="middle" className={styles.value}>{bar.evidence}% proof</text><text x={bar.x + bar.width / 2} y="176" textAnchor="middle" className={styles.label}>{bar.label}</text></g>)}</svg><div className={styles.legend}><span className={styles.legendItem}><i className={mergeClasses(styles.swatch, styles.swatchGreen)}/>Strong buyer evidence</span><span className={styles.legendItem}><i className={styles.swatch}/>Developing evidence</span><span className={styles.legendItem}><i className={mergeClasses(styles.swatch, styles.swatchRed)}/>Intervention needed</span></div></section>;
+  const headingId = React.useId();
+  const data = props.opportunities ? PIPELINE.map(stage => {
+    const records = props.opportunities?.filter(item => item.stage === stage.label) || [];
+    return { label: stage.label, value: records.length, evidence: records.length ? Math.round(records.filter(item => HERO_EVIDENCE.some(evidence => evidence.opportunityId === item.id && evidence.kind === 'verified')).length / records.length * 100) : 0 };
+  }) : PIPELINE;
+  const bars = buildPipelineBars(data);
+  const open = props.opportunities ? `$${(props.opportunities.reduce((sum, item) => sum + item.value, 0) / 1000000).toFixed(2)}M` : '$31.8M';
+  return <section className={styles.panel} aria-labelledby={headingId}>
+    <div className={styles.chartHeader}><div><h2 id={headingId} className={styles.heading}>Evidence-weighted pipeline</h2><p className={styles.insight}>{props.opportunities ? 'Filtered counts; proof is the percentage of opportunities with at least one verified buyer evidence record.' : 'Illustrative reference: volume narrows toward commit while proof rises from 54% to 84%.'}</p></div><Badge className={styles.chartBadge} appearance="tint">{open} open</Badge></div>
+    <svg className={styles.chart} viewBox="0 0 520 190" role="img" aria-label="Pipeline stages by opportunity count and evidence quality"><title>Evidence-weighted pipeline</title><desc>D3 band and linear scales size four pipeline stages. Color intensity represents evidence quality.</desc>{bars.map((bar) => <g key={bar.label}><rect x={bar.x} y={bar.y} width={bar.width} height={bar.height} rx="5" fill={bar.evidence >= 80 ? tokens.colorPaletteGreenBackground3 : bar.evidence >= 65 ? tokens.colorBrandBackground : tokens.colorPaletteMarigoldBackground3}/><text x={bar.x + bar.width / 2} y={bar.y + 21} textAnchor="middle" className={styles.onBrandValue}>{bar.value}</text><text x={bar.x + bar.width / 2} y={bar.y - 7} textAnchor="middle" className={styles.value}>{bar.evidence}% proof</text><text x={bar.x + bar.width / 2} y="176" textAnchor="middle" className={styles.label}>{bar.label}</text></g>)}</svg>
+    <div className={styles.legend}><span className={styles.legendItem}><i className={mergeClasses(styles.swatch, styles.swatchGreen)}/>Strong buyer evidence</span><span className={styles.legendItem}><i className={styles.swatch}/>Developing evidence</span><span className={styles.legendItem}><i className={mergeClasses(styles.swatch, styles.swatchRed)}/>Intervention needed</span></div>
+  </section>;
 }
 
 const REGIONS: readonly IRegionSignal[] = [
@@ -100,15 +122,44 @@ const REGIONS: readonly IRegionSignal[] = [
   { id: 'latam', label: 'Latin America', longitude: -60, latitude: -15, value: 3.0, risk: 31 }
 ];
 
-const topology = world as unknown as Topology;
-const countries = feature(topology, topology.objects.countries as GeometryCollection);
+const geometryMetadata = { id: z.string().optional(), properties: z.object({ name: z.string() }).optional() };
+const topology: Topology = z.object({
+  type: z.literal('Topology'),
+  transform: z.object({ scale: z.tuple([z.number(), z.number()]), translate: z.tuple([z.number(), z.number()]) }),
+  arcs: z.array(z.array(z.tuple([z.number(), z.number()]))),
+  objects: z.object({ countries: z.object({
+    type: z.literal('GeometryCollection'),
+    geometries: z.array(z.union([
+      z.object({ ...geometryMetadata, type: z.literal('Polygon'), arcs: z.array(z.array(z.number())) }),
+      z.object({ ...geometryMetadata, type: z.literal('MultiPolygon'), arcs: z.array(z.array(z.array(z.number()))) }),
+      z.object({ ...geometryMetadata, type: z.literal('GeometryCollection'), geometries: z.array(z.never()) })
+    ]))
+  }) })
+}).parse(world);
+const countries = feature(topology, topology.objects.countries);
 const projection = geoNaturalEarth1().fitExtent([[18, 16], [502, 174]], countries);
 const path = geoPath(projection);
 
-export function D3RevenueMap(): React.ReactElement {
+export function D3RevenueMap(props: { readonly opportunities?: readonly IOpportunity[]; readonly selectedRegion?: string; readonly onSelectRegion?: (id: string) => void }): React.ReactElement {
   const styles = useStyles();
-  const [selectedId, setSelectedId] = React.useState('emea');
-  const marks = buildRegionMarks(REGIONS);
-  const selected = REGIONS.find((region) => region.id === selectedId) || REGIONS[0];
-  return <section className={styles.panel} aria-labelledby="region-map-title"><div className={styles.chartHeader}><div><h2 id="region-map-title" className={styles.heading}>Global opportunity signals</h2><p className={styles.insight}>{selected.label} carries {money(selected.value)} with {selected.risk}% slip risk.</p></div><Globe20Regular/></div><svg className={styles.map} viewBox="0 0 520 190" role="img" aria-label={`Global revenue opportunity map with ${selected.label} selected`}><title>Global revenue opportunity signals</title><desc>Natural Earth geography is projected with D3. Bubble area represents opportunity value and color represents slip risk.</desc><path d={path(geoGraticule10()) || ''} className={styles.graticule}/><path d={path(countries) || ''} className={styles.land}/>{marks.map((mark) => { const projected = projection([mark.longitude, mark.latitude]) || [mark.x, mark.y]; return <g key={mark.id} role="button" tabIndex={0} aria-label={`${mark.label}, ${money(mark.value)}, ${mark.risk} percent slip risk`} onClick={() => setSelectedId(mark.id)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') setSelectedId(mark.id); }}><circle cx={projected[0]} cy={projected[1]} r={mark.radius} fill={mark.risk >= 35 ? tokens.colorPaletteRedBackground3 : mark.risk >= 25 ? tokens.colorPaletteMarigoldBackground3 : tokens.colorPaletteGreenBackground3} opacity="0.86" className={selectedId === mark.id ? styles.selected : undefined}/><text x={projected[0]} y={projected[1] + 4} textAnchor="middle" className={styles.onBrandValue}>{money(mark.value)}</text></g>; })}</svg><div className={styles.regionButtons}>{REGIONS.map((region) => <Button key={region.id} size="small" appearance={selectedId === region.id ? 'primary' : 'secondary'} className={mergeClasses(styles.regionButton, selectedId === region.id && styles.regionSelected)} onClick={() => setSelectedId(region.id)}>{region.label}</Button>)}</div><table className={styles.table}><thead><tr><th className={styles.cell}>Region</th><th className={styles.cell}>Open value</th><th className={styles.cell}>Slip risk</th></tr></thead><tbody>{REGIONS.map((region) => <tr key={region.id}><td className={styles.cell}>{region.label}</td><td className={styles.cell}>{money(region.value)}</td><td className={styles.cell}>{region.risk}%</td></tr>)}</tbody></table></section>;
+  const headingId = React.useId();
+  const [localSelectedId, setLocalSelectedId] = React.useState('emea');
+  const selectedId = props.selectedRegion || localSelectedId;
+  const setSelectedId = (id: string): void => { setLocalSelectedId(id); props.onSelectRegion?.(id); };
+  const regions = props.opportunities ? REGIONS.map(region => {
+    const records = props.opportunities?.filter(item => ACCOUNTS.find(account => account.id === item.accountId)?.region === (region.id === 'apac' ? 'Asia Pacific' : region.label)) || [];
+    return { ...region, value: records.reduce((sum, item) => sum + item.value, 0) / 1000000, risk: records.length ? Math.round(records.reduce((sum, item) => sum + (1 - item.probability), 0) / records.length * 100) : 0 };
+  }) : REGIONS;
+  const marks = buildRegionMarks(regions);
+  const selected = regions.find(region => region.id === selectedId) || regions[0];
+  return <section className={styles.panel} aria-labelledby={headingId}>
+    <div className={styles.chartHeader}><div><h2 id={headingId} className={styles.heading}>Global opportunity signals</h2><p className={styles.insight}>{selected.label} carries {money(selected.value)} with {selected.risk}% {props.opportunities ? 'seller-derived uncertainty (1 − probability), not verified slip risk' : 'illustrative slip risk'}.</p></div><Globe20Regular/></div>
+    <svg className={styles.map} viewBox="0 0 520 190" role="img" aria-label={`Global revenue opportunity map with ${selected.label} selected`}>
+      <title>Global revenue opportunity signals</title><desc>Natural Earth geography is projected with D3. Bubble area represents opportunity value; color represents scenario uncertainty.</desc>
+      <path d={path(geoGraticule10()) || ''} className={styles.graticule}/><path d={path(countries) || ''} className={styles.land}/>
+      {marks.map(mark => { const projected = projection([mark.longitude, mark.latitude]) || [mark.x, mark.y]; return <g key={mark.id} role="button" tabIndex={0} aria-label={`${mark.label}, ${money(mark.value)}, ${mark.risk} percent uncertainty`} onClick={() => setSelectedId(mark.id)} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setSelectedId(mark.id); } }}><circle cx={projected[0]} cy={projected[1]} r={mark.radius} fill={mark.risk >= 35 ? tokens.colorPaletteRedBackground3 : mark.risk >= 25 ? tokens.colorPaletteMarigoldBackground3 : tokens.colorPaletteGreenBackground3} opacity="0.86" className={selectedId === mark.id ? styles.selected : undefined}/><text x={projected[0]} y={projected[1] + 4} textAnchor="middle" className={styles.onBrandValue}>{money(mark.value)}</text></g>; })}
+    </svg>
+    <div className={styles.regionButtons}>{regions.map(region => <Button key={region.id} size="small" appearance={selectedId === region.id ? 'primary' : 'secondary'} className={mergeClasses(styles.regionButton, selectedId === region.id && styles.regionSelected)} onClick={() => setSelectedId(region.id)}>{region.label}</Button>)}</div>
+    <table className={styles.table}><thead><tr><th className={styles.cell}>Region</th><th className={styles.cell}>Open value</th><th className={styles.cell}>Uncertainty</th></tr></thead><tbody>{regions.map(region => <tr key={region.id}><td className={styles.cell}>{region.label}</td><td className={styles.cell}>{props.opportunities ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(region.value * 1000000) : money(region.value)}</td><td className={styles.cell}>{region.risk}%</td></tr>)}</tbody></table>
+  </section>;
 }

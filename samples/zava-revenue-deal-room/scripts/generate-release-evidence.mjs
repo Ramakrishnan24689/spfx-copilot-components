@@ -8,8 +8,16 @@ const outputPath = path.join(root, 'assets', 'release-evidence.json');
 const packageConfig = JSON.parse(fs.readFileSync(path.join(root, 'config', 'package-solution.json'), 'utf8'));
 const config = JSON.parse(fs.readFileSync(path.join(root, 'config', 'config.json'), 'utf8'));
 const gallery = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'gallery-evidence.json'), 'utf8'));
+const matrix = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'business-matrix-evidence.json'), 'utf8'));
+const testReport = fs.readFileSync(path.join(root, 'jest-output', 'JUnit.xml'), 'utf8');
+const testSummary = testReport.match(/<testsuites\b[^>]*tests="(\d+)"[^>]*failures="(\d+)"[^>]*errors="(\d+)"/);
+if (!testSummary || Number(testSummary[1]) === 0 || Number(testSummary[2]) !== 0 || Number(testSummary[3]) !== 0) throw new Error('A passing current Jest report is required for release evidence.');
 const packagePath = path.join(root, 'sharepoint', packageConfig.paths.zippedPackage);
 const agentPath = path.join(root, 'teams', 'zava-revenue-deal-room.zip');
+const agentArchive = await unzipper.Open.file(agentPath);
+const agentManifestEntry = agentArchive.files.find(entry => entry.path === 'manifest.json');
+if (!agentManifestEntry) throw new Error('Packaged Teams manifest is missing');
+const agentManifest = JSON.parse((await agentManifestEntry.buffer()).toString('utf8'));
 const hash = (buffer) => crypto.createHash('sha256').update(buffer).digest('hex');
 const packageBytes = fs.readFileSync(packagePath);
 const archive = await unzipper.Open.file(packagePath);
@@ -35,6 +43,17 @@ const evidence = {
   duplicateMediaHashes: media.length - new Set(mediaHashes).size,
   visualCaptures: gallery.totalCaptures,
   visualFailures: gallery.failureCount,
+  visualSourceSha256: matrix.sourceSha256,
+  businessMatrixCaptures: matrix.totalCaptures,
+  businessMatrixFailures: matrix.failureCount,
+  businessMatrixInlineIntents: matrix.inlineMatrixCount / 3,
+  workflowReviewCaptures: matrix.workflowReviewCount,
+  workflowReceiptCaptures: matrix.workflowReceiptCount,
+  testsPassed: Number(testSummary[1]),
+  testsFailed: Number(testSummary[2]),
+  solutionVersion: packageConfig.solution.version,
+  agentAuthoredVersion: JSON.parse(fs.readFileSync(path.join(root, 'copilot', 'manifest.json'), 'utf8')).version,
+  agentPackagedVersion: agentManifest.version,
   externalPrerequisite: 'Authenticated Microsoft 365 tenant for Workbench CSP, model routing, iframe focus, forced colors, and screen-reader host validation.'
 };
 const stable = (value) => JSON.stringify({ ...value, generatedAt: undefined }, null, 2);

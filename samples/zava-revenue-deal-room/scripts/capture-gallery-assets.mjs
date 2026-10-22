@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import { chromium } from 'playwright';
+import { visualSourceSignature } from './visual-source-signature.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const harness = path.join(root, 'temp', 'visual-harness');
@@ -59,5 +60,5 @@ try {
   await browser.close();
   await new Promise((resolve) => server.close(resolve));
 }
-fs.writeFileSync(path.join(assets, 'gallery-evidence.json'), `${JSON.stringify({ schemaVersion: 1, capturedAt: new Date().toISOString(), totalCaptures: evidence.length, failureCount: 0, captures: evidence }, null, 2)}\n`);
+fs.writeFileSync(path.join(assets, 'gallery-evidence.json'), `${JSON.stringify({ schemaVersion: 1, capturedAt: new Date().toISOString(), sourceSha256: visualSourceSignature(root), totalCaptures: evidence.length, failureCount: 0, captures: evidence }, null, 2)}\n`);
 console.log(`Captured ${evidence.length} visuals with zero runtime or overflow failures.`);

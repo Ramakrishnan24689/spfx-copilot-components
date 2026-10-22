@@ -1,3 +1,4 @@
+import ts from 'typescript';
 import fs from 'node:fs';
 import path from 'node:path';
 import appManifestPackage from '@microsoft/app-manifest';
@@ -88,3 +89,44 @@ assertOnlyKeys(runtime.spec, new Set(['url']), 'RemoteMCPServer dynamic discover
 assert(Array.isArray(runtime.run_for_functions) && runtime.run_for_functions.length === 1 && runtime.run_for_functions[0] === '*', 'Dynamic discovery must route all discovered functions through the MCP runtime.');
 
 console.log('Verified generated API plugin v2.4 dynamic MCP tool discovery and published string limits.');
+
+function collectStarterToolNames(directory, names = new Set()) {
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) collectStarterToolNames(file, names);
+    else if (entry.name.endsWith('CopilotComponent.manifest.json')) {
+      const parsed = ts.parseConfigFileTextToJson(file, fs.readFileSync(file, 'utf8'));
+      assert(!parsed.error, `Invalid source manifest: ${file}`);
+      for (const tool of parsed.config.tools || []) {
+        assert(!names.has(tool.name), `Duplicate source tool: ${tool.name}`);
+        names.add(tool.name);
+      }
+    }
+  }
+  return names;
+}
+const canonicalStarters = JSON.parse(fs.readFileSync(path.join(root, 'config', 'conversation-starters.json'), 'utf8')).starters;
+const sourceAgent = JSON.parse(fs.readFileSync(path.join(root, 'copilot', 'declarativeAgent.json'), 'utf8'));
+const expectedStarters = canonicalStarters.map(({ title, text }) => ({ title, text }));
+assert(JSON.stringify(sourceAgent.conversation_starters) === JSON.stringify(expectedStarters), 'Source starters differ from canonical targets.');
+const declaredStarterTools = collectStarterToolNames(path.join(root, 'src', 'copilotComponents'));
+const starterTargets = canonicalStarters.map(starter => starter.tool || starter.targetName);
+assert(canonicalStarters.length === 6, 'Exactly six conversation starters are required.');
+const explorerTargets = [...declaredStarterTools].filter(name => /^ExploreAgentCapabilities(?:Tool)?$/.test(name));
+assert(explorerTargets.length === 1, 'Exactly one dedicated capability-explorer tool must be registered.');
+assert(starterTargets[5] === explorerTargets[0], 'Starter 6 must target the dedicated feature explorer.');
+assert(starterTargets.slice(0, 5).every(target => target !== explorerTargets[0]), 'Starters 1-5 must target operational components.');
+assert(new Set(canonicalStarters.map(starter => starter.title.trim().toLowerCase())).size === 6, 'Starter titles must be distinct.');
+assert(new Set(starterTargets).size === starterTargets.length, 'Starter targets must be distinct.');
+assert(new Set(canonicalStarters.map(starter => starter.text.toLowerCase().replace(/\s+/g, ' ').trim())).size === canonicalStarters.length, 'Starter prompts must be distinct.');
+const sourceInstructions = fs.readFileSync(path.join(root, 'copilot', 'instruction.txt'), 'utf8').replace(/\r\n/g, '\n').trim();
+for (const target of starterTargets) {
+  assert(declaredStarterTools.has(target), `Unknown starter target: ${target}`);
+  assert(sourceInstructions.includes(target), `Agent instructions do not name starter target: ${target}`);
+}
+const generatedAgentEntry = archive.files.find(entry => entry.path === 'declarativeAgent.json');
+assert(generatedAgentEntry, 'Generated declarative agent is missing.');
+const generatedAgent = JSON.parse((await generatedAgentEntry.buffer()).toString('utf8'));
+assert(JSON.stringify(generatedAgent.conversation_starters) === JSON.stringify(expectedStarters), 'Packaged starter prompts are stale.');
+assert(generatedAgent.instructions.replace(/\r\n/g, '\n').includes(sourceInstructions), 'Packaged instructions are stale.');
+console.log('Canonical starter ownership verified against source and packaged agent.');

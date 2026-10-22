@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-02T08:47:52.017Z",
+  "capturedAt": "2026-10-20T10:14:47.287Z",
   "captureMode": "rendered-element",
   "captures": [
     {
@@ -36,8 +36,8 @@
       },
       "width": 1600,
       "height": 5479,
-      "bytes": 2355621,
-      "sha256": "3cda85c4bae96a75fc9611e95a47cb144d5bcf3061fb57bea9ac4fc0811a62cd",
+      "bytes": 2357179,
+      "sha256": "c1a21a27bde1ceea3ee6c42b429c7b0e7beadb8ed68db29acbc2a2c1d6f113ae",
       "geometry": {
         "width": 1600,
         "height": 5479,
@@ -59,8 +59,8 @@
       },
       "width": 1600,
       "height": 3722,
-      "bytes": 620414,
-      "sha256": "851e352920185e09ee289974e2ea22e31c922284516079177c96acd20c11442c",
+      "bytes": 621264,
+      "sha256": "d7781db0b9c65436b5388e9cabf13c2db9f4220196a6bf491411525561393037",
       "geometry": {
         "width": 1600,
         "height": 3722,
@@ -82,8 +82,8 @@
       },
       "width": 1600,
       "height": 1289,
-      "bytes": 1224859,
-      "sha256": "43ba9371509209bc33bfbe3b8bcf7924d905f971b2318c2458202025943e42b3",
+      "bytes": 1224706,
+      "sha256": "b2f783a096c3ebf16e79a8251993af807b1209ac38233c73be9da760cdf4cd29",
       "geometry": {
         "width": 1600,
         "height": 1289,
@@ -151,8 +151,8 @@
       },
       "width": 720,
       "height": 716,
-      "bytes": 120328,
-      "sha256": "591c03c4e33d047d4876f9f3e75c4b74fcfc550efbce6518cda225ceb337224e",
+      "bytes": 120236,
+      "sha256": "9b62aafbc55dd1963019bf4af7c5c03000e2f9f46b7eb0daea764a676622bd4a",
       "geometry": {
         "width": 720,
         "height": 716,
@@ -174,8 +174,8 @@
       },
       "width": 720,
       "height": 660,
-      "bytes": 55064,
-      "sha256": "3aa8d7958cf0a307db541f58cce7aa12fca0ba6287d4cc0d0fb62ff0081a97f6",
+      "bytes": 55095,
+      "sha256": "efa8a9e3fdf86051ce80e3586a129781f86194da2bd39bc9b81dfd5d83e5a0ff",
       "geometry": {
         "width": 720,
         "height": 660,
@@ -197,8 +197,8 @@
       },
       "width": 720,
       "height": 632,
-      "bytes": 45869,
-      "sha256": "e21c03e8c6e72cef65abab5d0f8c924bff1f3d4e4c992e41006cd593d15d9f0f",
+      "bytes": 45887,
+      "sha256": "cb8d12971a2dc411b4fd451d0590285724a17a88d457de3845132589ca5b5688",
       "geometry": {
         "width": 720,
         "height": 632,
@@ -220,8 +220,8 @@
       },
       "width": 720,
       "height": 490,
-      "bytes": 27341,
-      "sha256": "bd27a370fced6ec1073601e2321c91052ad41e4b35b2fc5ca1822524fa18ef6a",
+      "bytes": 27342,
+      "sha256": "c50f13b374a6bbf495fe1c16eb778b7fb28a5c673af2f15f063d7c9014fbf70c",
       "geometry": {
         "width": 720,
         "height": 490,
@@ -243,8 +243,8 @@
       },
       "width": 720,
       "height": 590,
-      "bytes": 34348,
-      "sha256": "972abb7f9bf73759bdc855fc26e91699489542a86fee6f6ae6815df35c23810e",
+      "bytes": 34399,
+      "sha256": "35ed469ff6736a0935b2579d8787845eaa649d242a9fbf2a4f45934ebb9e0de8",
       "geometry": {
         "width": 720,
         "height": 590,
@@ -266,8 +266,8 @@
       },
       "width": 720,
       "height": 586,
-      "bytes": 46424,
-      "sha256": "952ba565110b56681c3489c3afedcbb4e208c23dcbe9493f9395d36fd73f15e4",
+      "bytes": 46476,
+      "sha256": "e3b956ce816859bc5cd9a7c52269e30e5bd17682b9d9cf8f55ad730ee5e09c9a",
       "geometry": {
         "width": 720,
         "height": 586,

@@ -58,6 +58,17 @@ Each sample folder contains its own `README.md` with the exact prerequisites, bu
 
 ## Contributing
 
+### Zava RC0 readiness
+
+The [RC0 upgrade report](./RC0-updates.md) tracks eight Zava samples contributed by Vesa Juvonen and My Day:
+SPFx 1.24 RC0 / React 18, source and deployment-package validation, intent/starter ownership, refreshed
+visuals, and remaining authenticated release gates. Other contributors' samples retain their own
+documented framework versions.
+
+Source builds of these prereleases require an approved Microsoft RC0 npm registry; public npm did not
+provide the requested SDK version during validation. See the report for provenance and release gates.
+Ready-built sample packages do not require a local source restore.
+
 These samples come directly from Microsoft and the broader community. We welcome your contributions, issue reports, and suggestions for new samples.
 
 Before submitting a pull request, please review the [Contribution Guidance](./CONTRIBUTING.md) so we can process your contribution as quickly as possible. You can use the assets in the [`templates`](./templates) folder as a starting point for your own sample.
