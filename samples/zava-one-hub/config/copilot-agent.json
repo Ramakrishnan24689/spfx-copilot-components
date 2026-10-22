@@ -47,7 +47,7 @@
         "01cf651a-7b63-4315-b6f1-cc5c210f0d4f",
         "08cc8263-2ccb-427e-a1da-cfd5f0a03cb1"
       ],
-      "toolDiscovery": "static"
+      "toolDiscovery": "dynamic"
     }
   ]
 }

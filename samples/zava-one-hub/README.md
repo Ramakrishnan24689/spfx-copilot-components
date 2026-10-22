@@ -1,6 +1,6 @@
 # Zava One
 
-![SPFx](https://img.shields.io/badge/SPFx-1.24.0--beta.5-yellow.svg)
+![SPFx](https://img.shields.io/badge/SPFx-1.24.0--rc.0-yellow.svg)
 ![React](https://img.shields.io/badge/React-18.3.1-149eca.svg)
 ![Fluent UI](https://img.shields.io/badge/Fluent_UI-9.74.9-0f6cbd.svg)
 ![Data](https://img.shields.io/badge/data-offline_fixtures-008272.svg)
@@ -8,7 +8,7 @@
 
 ## Applies To
 
-- SharePoint Framework `1.24.0-beta.5` Copilot Components
+- SharePoint Framework `1.24.0-rc.0` Copilot Components
 - Microsoft Copilot declarative agents
 - SharePoint Online and Microsoft Teams
 - React `18.3.1`, Fluent UI React v9, and Node.js 22
@@ -28,12 +28,19 @@ The same shared React capability powers:
 
 ![Explore Zava One capability explorer](./assets/preview.png)
 
-> **Current status:** the demo is locally validated with 46 passing tests, 4,080 responsive browser states, 39 recaptured engineering
+> **Current status:** the demo has a passing local test suite (exact RC0 totals are in the
+> [readiness report](../../RC0-updates.md)), 4,080 responsive browser states, 39 captured engineering
 > screenshots, 15 reviewed publication images, and a committed production SPPKG. The sample author
 > confirmed all three Teams personal apps work and supplied authenticated screenshots.
 > Modern SharePoint host checks and complete host accessibility validation remain open.
-> SPFx 1.24 beta.5 Copilot Components remain preview technology and are not presented
+> SPFx 1.24 RC0 Copilot Components remain prerelease technology and are not presented
 > as production-ready.
+
+This release uses React/ReactDOM **18.3.1**, React types **18.3.31 / 18.3.7**, and SPFx **1.24.0-rc.0**.
+Use Node.js 22 (22.14 or later), 24, or 26. The [RC0 readiness report](../../RC0-updates.md) records
+current build/package checks separately from historical authenticated screenshots.
+The six starters have explicit [component targets](config/conversation-starters.json); policy lookup,
+news, praise, sales, office discovery, and capability exploration remain independent tools.
 
 ## Highlights
 
@@ -219,7 +226,7 @@ page picker. Existing pages can be converted with PnP PowerShell using
 `Set-PnPPage -Identity "Page" -LayoutType SingleWebPartAppPage` after adding the selected workspace.
 
 The combined workspace can choose its Company or Personal start tab; fixed Company and Personal
-workspaces deliberately omit that setting. Top Actions use `@microsoft/sp-top-actions@1.24.0-beta.5`
+workspaces deliberately omit that setting. Top Actions use `@microsoft/sp-top-actions@1.24.0-rc.0`
 and require a live modern SharePoint page for host-level verification because they do not render in
 the hosted Workbench. Copilot Components bypass this publisher configuration entirely and continue to
 accept only intent-specific tool parameters.
@@ -249,7 +256,7 @@ embedded module so keynote rendering remains offline.
 | Copilot Workbench | 37/37 Ready baseline; 8/8 changed Personal workflows revalidated |
 | Complete screenshot gallery | 39 PNGs |
 | Bundled media | 28 provenance-checked assets |
-| Production package | `1.0.0.16` / `6,208,176` bytes / 110 entries |
+| Production package | `1.0.0.18` / `6,205,975` bytes / 110 entries |
 | Responsive regression | 4,080 passing states; phone/tablet/desktop, narrow desktop columns, dark mode, and submission journeys |
 | Publication gallery | `assets/sample.json` / 15 reviewed PNGs, including three authenticated Teams views |
 
@@ -322,7 +329,7 @@ Prerequisites:
 
 - Node.js `>=22.14.0 <23.0.0`
 - npm and the repository lockfile
-- Yeoman `5.1.0` plus `@microsoft/generator-sharepoint@1.24.0-beta.5` only when generating components
+- Yeoman `5.1.0` plus `@microsoft/generator-sharepoint@1.24.0-rc.0` only when generating components
 
 ```bash
 npm ci

@@ -1,22 +1,128 @@
 import * as React from 'react';
-import { Button, Input, Slider, makeStyles, mergeClasses, shorthands, tokens } from '@fluentui/react-components';
-import { ArrowExpand20Regular, CheckmarkCircle20Filled, ChevronRight20Regular, CompassNorthwest20Regular, DocumentSearch20Regular, MoneyCalculator20Regular, PeopleTeam20Regular, ShieldCheckmark20Regular } from '@fluentui/react-icons';
-import type { IIntentDefinition, IProcurementProperties, ProcurementLens } from './catalog';
-import { INTENTS, OPERATIONAL_LENSES } from './catalog';
-import { DEFAULT_WEIGHTS, POLICY_RULES, invoiceVariance, money, splitAward } from './domain';
+import { Button, Dialog, DialogActions, DialogBody, DialogContent, DialogSurface, DialogTitle, makeStyles, mergeClasses, tokens } from '@fluentui/react-components';
+import type { IIntentDefinition, IProcurementProperties, ProcurementIntentKey, ProcurementLens } from './catalog';
+import { getIntent, OPERATIONAL_LENSES } from './catalog';
+import { DEFAULT_WEIGHTS, EVENTS, money } from './domain';
 import { SupplierLandscape, ValueRiver } from './ProcurementCharts';
+import { ProcurementInlineExperience, type IProcurementSnapshot } from './ProcurementInlineExperiences';
+import { contracts, getReceipts, leakageOpportunities, purchaseQueue, resetProcurementSession, subscribeReceipts, supplierRecords } from './operations';
 
-export interface IModelContextSnapshot extends Record<string,unknown> {readonly intent:string;readonly route:string;readonly stage:string;readonly summary:string;}
-interface IProps {readonly definition:IIntentDefinition;readonly properties:IProcurementProperties;readonly currentUserName:string;readonly displayMode?:string;readonly onRequestFullscreen?:()=>Promise<void>;readonly onUpdateModelContext?:(value:IModelContextSnapshot)=>Promise<void>;readonly onSendFollowUp?:(message:string)=>Promise<boolean>;}
-type Stage='draft'|'review'|'receipt';
-const labels:Record<ProcurementLens,string>={'my-requests':'My Requests','sourcing':'Sourcing Workbench','supplier-360':'Supplier 360','spend-command':'Spend Command','education':'Capabilities'};
-const useStyles=makeStyles({root:{minWidth:0,color:tokens.colorNeutralForeground1,fontFamily:tokens.fontFamilyBase,backgroundColor:tokens.colorNeutralBackground2,letterSpacing:'0',...shorthands.borderRadius(tokens.borderRadiusMedium),overflow:'hidden'},inline:{maxWidth:'980px'},shell:{display:'grid',gridTemplateColumns:'220px minmax(0,1fr)',minHeight:'720px','@media(max-width:760px)':{gridTemplateColumns:'1fr'}},nav:{backgroundImage:`linear-gradient(155deg,${tokens.colorBrandBackground},${tokens.colorNeutralBackgroundInverted} 72%,${tokens.colorPaletteBlueBackground2})`,color:tokens.colorNeutralForegroundOnBrand,padding:'24px 16px',display:'flex',flexDirection:'column',gap:'8px','@media(max-width:760px)':{flexDirection:'row',overflowX:'auto',padding:'12px'}},brand:{fontSize:tokens.fontSizeBase500,fontWeight:800,padding:'8px 10px 24px','@media(max-width:760px)':{padding:'8px 14px'}},navButton:{color:tokens.colorNeutralForegroundOnBrand,justifyContent:'flex-start',...shorthands.borderRadius(tokens.borderRadiusSmall)},activeNav:{backgroundColor:tokens.colorPaletteMarigoldBackground3,color:tokens.colorNeutralForeground1},main:{minWidth:0,padding:'24px','@media(max-width:520px)':{padding:'14px'}},top:{display:'flex',justifyContent:'space-between',alignItems:'center',gap:'12px',marginBottom:'18px'},hero:{backgroundImage:`linear-gradient(120deg,${tokens.colorBrandBackground},${tokens.colorPaletteBlueBackground2} 58%,${tokens.colorPaletteMarigoldBackground3})`,color:tokens.colorNeutralForegroundOnBrand,padding:'24px',...shorthands.borderRadius(tokens.borderRadiusMedium),position:'relative',overflow:'hidden'},eyebrow:{fontSize:tokens.fontSizeBase100,fontWeight:700,textTransform:'uppercase'},title:{fontSize:tokens.fontSizeHero700,lineHeight:1.04,margin:'5px 0',letterSpacing:'0','@media(max-width:520px)':{fontSize:tokens.fontSizeBase600}},subtitle:{maxWidth:'720px',margin:0},grid:{display:'grid',gridTemplateColumns:'minmax(0,1.7fr) minmax(260px,.8fr)',gap:'14px',marginTop:'14px','@media(max-width:760px)':{gridTemplateColumns:'1fr'}},region:{backgroundColor:tokens.colorNeutralBackground1,...shorthands.border('1px','solid',tokens.colorNeutralStroke2),...shorthands.borderRadius(tokens.borderRadiusMedium),padding:'16px',minWidth:0},unframed:{padding:'16px 0',minWidth:0},heading:{fontSize:tokens.fontSizeBase500,margin:'0 0 4px'},muted:{color:tokens.colorNeutralForeground3},metrics:{display:'grid',gridTemplateColumns:'repeat(4,minmax(0,1fr))',gap:'1px',backgroundColor:tokens.colorNeutralStroke2,marginTop:'14px','@media(max-width:520px)':{gridTemplateColumns:'repeat(2,1fr)'}},metric:{backgroundColor:tokens.colorNeutralBackground1,padding:'13px'},metricValue:{fontSize:tokens.fontSizeBase600,fontWeight:800,fontVariantNumeric:'tabular-nums'},rows:{display:'grid',gap:'8px'},row:{display:'grid',gridTemplateColumns:'auto minmax(0,1fr) auto',gap:'10px',alignItems:'center',padding:'10px 0',borderBottom:`1px solid ${tokens.colorNeutralStroke2}`},actions:{display:'flex',flexWrap:'wrap',gap:'8px',marginTop:'16px'},stage:{display:'flex',gap:'6px',fontSize:tokens.fontSizeBase200,color:tokens.colorNeutralForeground3,marginBottom:'12px'},current:{color:tokens.colorBrandForeground1,fontWeight:700},control:{display:'grid',gridTemplateColumns:'1fr auto',gap:'8px',alignItems:'center',margin:'12px 0'},capabilities:{display:'grid',gridTemplateColumns:'repeat(2,minmax(0,1fr))',gap:'10px','@media(max-width:520px)':{gridTemplateColumns:'1fr'}},capability:{textAlign:'left',padding:'14px',backgroundColor:tokens.colorNeutralBackground1,...shorthands.border('1px','solid',tokens.colorNeutralStroke2),...shorthands.borderRadius(tokens.borderRadiusSmall)},receipt:{backgroundColor:tokens.colorPaletteGreenBackground1,borderLeft:`4px solid ${tokens.colorPaletteGreenBorderActive}`,padding:'16px'}});
+export type IModelContextSnapshot = IProcurementSnapshot;
+interface IProps {
+  readonly definition: IIntentDefinition;
+  readonly properties: IProcurementProperties;
+  readonly currentUserName: string;
+  readonly displayMode?: string;
+  readonly onRequestFullscreen?: () => Promise<void>;
+  readonly onUpdateModelContext?: (snapshot: IModelContextSnapshot) => Promise<void>;
+  readonly onSendFollowUp?: (message: string) => Promise<boolean>;
+}
+type OpenTask = (intent: ProcurementIntentKey, properties?: IProcurementProperties) => void;
+const labels: Record<ProcurementLens, string> = {
+  'my-requests': 'My Requests', sourcing: 'Sourcing Workbench', 'supplier-360': 'Supplier 360',
+  'spend-command': 'Spend Command', education: 'Capabilities'
+};
+const useStyles = makeStyles({
+  root: { minWidth: 0, color: tokens.colorNeutralForeground1, backgroundColor: tokens.colorNeutralBackground2, fontFamily: tokens.fontFamilyBase, borderRadius: tokens.borderRadiusMedium, overflow: 'hidden' },
+  fullscreen: { display: 'grid', gridTemplateColumns: '190px minmax(0,1fr)', '@media(max-width:760px)': { gridTemplateColumns: '1fr' } },
+  nav: { display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: '8px', padding: '16px', backgroundColor: tokens.colorNeutralBackground1, '@media(max-width:760px)': { flexDirection: 'row', flexWrap: 'wrap' } },
+  hidden: { display: 'none' },
+  main: { minWidth: 0, padding: '18px', '@media(max-width:520px)': { padding: '12px' } },
+  top: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap' },
+  hero: { padding: '16px', marginTop: '12px', marginBottom: '16px', backgroundColor: tokens.colorBrandBackground2, borderLeft: `4px solid ${tokens.colorBrandStroke1}`, borderRadius: tokens.borderRadiusMedium },
+  title: { margin: '4px 0', fontSize: tokens.fontSizeBase600, lineHeight: tokens.lineHeightBase600 },
+  muted: { color: tokens.colorNeutralForeground3, fontSize: tokens.fontSizeBase200 },
+  panel: { padding: '16px', marginBottom: '16px', minWidth: 0, border: `1px solid ${tokens.colorNeutralStroke2}`, borderRadius: tokens.borderRadiusMedium, backgroundColor: tokens.colorNeutralBackground1 },
+  grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,220px),1fr))', gap: '12px' },
+  actions: { display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' },
+  error: { padding: '12px', borderLeft: `3px solid ${tokens.colorPaletteRedBorderActive}` },
+  field: { display: 'grid', gap: '6px', marginBottom: '12px' },
+  input: { minHeight: '34px', boxSizing: 'border-box', minWidth: 0, width: '100%', color: tokens.colorNeutralForeground1, backgroundColor: tokens.colorNeutralBackground1, border: `1px solid ${tokens.colorNeutralStroke1}`, borderRadius: tokens.borderRadiusMedium }
+});
 
-const Metrics:React.FC<{lens:ProcurementLens}>=({lens})=>{const data=lens==='my-requests'?[['3','Active outcomes'],['1','Evidence action'],['€1.2m','Committed'],['18 Sep','Next promise']]:lens==='sourcing'?[['€4.8m','Event value'],['7','Live events'],['92%','Evidence ready'],['€286k','Opportunity']]:lens==='supplier-360'?[['€6.4m','Relationship spend'],['4','Active contracts'],['44','Risk score'],['2','Open obligations']]:[['€42.6m','Addressable spend'],['€1.8m','Leakage'],['€186k','Realized'],['71%','Compliant']];return <div className={useStyles().metrics}>{data.map(x=><div className={useStyles().metric} key={x[1]}><div className={useStyles().metricValue}>{x[0]}</div><div>{x[1]}</div></div>)}</div>;};
-const PolicyLedger:React.FC=()=>{const s=useStyles();return <div className={s.rows}>{POLICY_RULES.map(r=><div className={s.row} key={r.id}><ShieldCheckmark20Regular/><div><strong>{r.title}</strong><div className={s.muted}>{r.detail} · v{r.version} · {r.owner}</div></div><strong>{r.state}</strong></div>)}</div>;};
-const LensContent:React.FC<{lens:ProcurementLens}>=({lens})=>{const s=useStyles();const [riskWeight,setRiskWeight]=React.useState(DEFAULT_WEIGHTS.risk);if(lens==='sourcing')return <><div className={s.region}><h2 className={s.heading}>Total-value field · ZPC-RFP-31</h2><p className={s.muted}>Change the decision weights, then inspect exact evidence before award.</p><div className={s.control}><label>Risk weight: {riskWeight}%</label><Slider min={5} max={60} value={riskWeight} onChange={(_,d)=>setRiskWeight(d.value)}/></div><SupplierLandscape weights={{...DEFAULT_WEIGHTS,risk:riskWeight,price:DEFAULT_WEIGHTS.price+DEFAULT_WEIGHTS.risk-riskWeight}}/></div><div className={s.grid}><div className={s.region}><h2 className={s.heading}>Award readiness</h2><PolicyLedger/></div><div className={s.region}><h2 className={s.heading}>Milestones</h2><div className={s.rows}>{['Evaluation complete','Risk review active','Award committee · 3 Sep'].map(x=><div className={s.row} key={x}><CheckmarkCircle20Filled/><span>{x}</span><ChevronRight20Regular/></div>)}</div></div></div></>;if(lens==='supplier-360')return <div className={s.grid}><div className={s.region}><h2 className={s.heading}>Dependency weave · Fabrikam Devices</h2><div className={s.hero}><div className={s.eyebrow}>Tier 1 · Gdansk assembly</div><h3 className={s.heading}>One corridor touches 44% of launch volume</h3><p>Fabrikam → Baltic logistics → two battery sub-tiers → EMEA launch commitments</p></div><PolicyLedger/></div><div className={s.region}><h2 className={s.heading}>Relationship ledger</h2>{['Contract notice · 42 days','Quality · 98.2% accepted','Cyber evidence · current','Owner · Nestor Wilke'].map(x=><div className={s.row} key={x}><PeopleTeam20Regular/><span>{x}</span></div>)}</div></div>;if(lens==='spend-command')return <><div className={s.region}><h2 className={s.heading}>From opportunity to verified value</h2><ValueRiver/></div><div className={s.grid}><div className={s.region}><h2 className={s.heading}>Interventions</h2>{['Off-contract devices · €164k','Price variance · €91k','Fragmented freight · €76k'].map(x=><div className={s.row} key={x}><MoneyCalculator20Regular/><span>{x}</span><ChevronRight20Regular/></div>)}</div><div className={s.region}><h2 className={s.heading}>Invoice evidence</h2><p><strong>ZPC-8831</strong></p><p>{money(invoiceVariance.freightVariance)} freight outside award terms.</p></div></div></>;return <div className={s.grid}><div className={s.region}><h2 className={s.heading}>Rugged Device Expansion</h2><p>600 devices · 9 countries · needed before store launch</p><div className={s.rows}>{['Outcome captured','Sourcing route selected','Budget review complete','Delivery promise · 18 Sep'].map((x,i)=><div className={s.row} key={x}><CheckmarkCircle20Filled/><span>{x}</span><strong>{i<3?'Done':'Next'}</strong></div>)}</div></div><div className={s.region}><h2 className={s.heading}>Compliant route</h2><p><strong>Aggregate and source</strong></p><p className={s.muted}>420 similar units create €286k opportunity while preserving launch timing.</p><PolicyLedger/></div></div>;};
+function RequestsDashboard({ open }: { open: OpenTask }): React.ReactElement {
+  const s = useStyles();
+  const receipts = React.useSyncExternalStore(subscribeReceipts, getReceipts, getReceipts);
+  return <section className={s.panel} aria-label="My Requests dashboard"><h2>Outcomes in motion</h2><p>Review source demand and its exact budget commitment. Session decisions remain visible.</p><div className={s.grid}>{purchaseQueue.map(request => <article className={s.panel} key={request.id}><h3>{request.id}</h3><p>{request.category} · {request.quantity} units</p><strong>{money(request.budget)}</strong><p>{receipts.some(receipt => receipt.recordId === request.id) ? 'Processed in this session' : 'Awaiting budget-owner judgment'}</p><Button onClick={() => open('ReviewPurchaseRequest', { requestId: request.id })}>Review {request.id}</Button></article>)}</div><Button onClick={() => open('CreatePurchaseIntent')}>Create a purchase intent</Button></section>;
+}
+function SourcingDashboard({ open }: { open: OpenTask }): React.ReactElement {
+  const s = useStyles();
+  const [risk, setRisk] = React.useState(20);
+  const [selected, setSelected] = React.useState(supplierRecords[0].bidId);
+  const supplier = supplierRecords.find(item => item.bidId === selected);
+  return <section className={s.panel} aria-label="Sourcing Workbench dashboard"><h2>Total-value field · {EVENTS[0].id}</h2><p>Change risk weighting, inspect supplier evidence, and keep analysis separate from award authority.</p><label className={s.field}>Workbench risk weight: {risk}%<input aria-label="Workbench risk weight" type="range" min={5} max={45} value={risk} onChange={event => setRisk(Number(event.target.value))} /></label><SupplierLandscape weights={{ ...DEFAULT_WEIGHTS, risk, price: 48 - risk }} onSelect={setSelected} /><p>Selected evidence: {supplier?.supplier} · {supplier?.confidence}% confidence · {supplier?.lead}-day lead.</p><div className={s.actions}><Button onClick={() => open('CompareSupplierBids', { eventId: EVENTS[0].id, riskWeight: risk, supplierId: supplier?.id })}>Compare event bids</Button><Button onClick={() => open('ReviewSupplierAward', { eventId: EVENTS[0].id, splitPercent: 65 })}>Review split award</Button><Button onClick={() => open('BuildSourcingEvent')}>Draft a sourcing event</Button></div></section>;
+}
+function SupplierDashboard({ open }: { open: OpenTask }): React.ReactElement {
+  const s = useStyles();
+  const [selected, setSelected] = React.useState(supplierRecords[0].id);
+  const supplier = supplierRecords.find(item => item.id === selected);
+  const related = contracts.filter(contract => contract.supplierId === selected);
+  return <section className={s.panel} aria-label="Supplier 360 dashboard"><h2>Obligations meet dependency</h2><label className={s.field}>Relationship supplier<select className={s.input} value={selected} onChange={event => setSelected(event.target.value)}>{supplierRecords.map(item => <option value={item.id} key={item.id}>{item.supplier}</option>)}</select></label><div className={s.grid}><article><h3>Continuity evidence</h3><p>{supplier?.supplier} · risk {supplier?.risk}/100 · {supplier?.region}</p><p>Lead {supplier?.lead} days; accepted quality {supplier?.quality}%.</p><Button onClick={() => open('TrackSupplierRisk', { supplierId: selected })}>Model supplier exposure</Button></article><article><h3>Contract notice and ownership</h3>{related.map(contract => <p key={contract.id}>{contract.id}: {contract.noticeDays}-day notice, {money(contract.annualValue)} annual baseline.</p>)}{related.length === 0 && <p>No curated renewal contract for this supplier.</p>}<Button disabled={related.length === 0} onClick={() => open('ReviewContractRenewal', { supplierId: selected, contractId: related[0]?.id })}>Review contract renewal</Button></article></div></section>;
+}
+function SpendDashboard({ open }: { open: OpenTask }): React.ReactElement {
+  const s = useStyles();
+  const [category, setCategory] = React.useState('All categories');
+  const records = leakageOpportunities.filter(item => category === 'All categories' || item.category === category);
+  const stages = ['identified', 'negotiated', 'contracted', 'realized'] as const;
+  const values = stages.map(stage => ({ stage, value: records.reduce((sum, item) => sum + item[stage], 0) }));
+  return <section className={s.panel} aria-label="Spend Command dashboard"><h2>Trace spend into verified value</h2><label className={s.field}>Spend category<select className={s.input} value={category} onChange={event => setCategory(event.target.value)}>{['All categories', ...leakageOpportunities.map(item => item.category)].map(item => <option key={item}>{item}</option>)}</select></label><ValueRiver stages={values} /><div className={s.grid}>{records.map(record => <article key={record.id}><h3>{record.label}</h3><p>{money(record.identified)} identified; {money(record.realized)} realized.</p><p>{money(record.disputed)} disputed and excluded.</p><Button onClick={() => open('TrackLeakageRecovery', { opportunityId: record.id })}>Review recovery {record.id}</Button></article>)}</div><div className={s.actions}><Button onClick={() => open('DetectSpendLeakage', { category })}>Find addressable leakage</Button><Button onClick={() => open('ExploreSpendPerformance', { category })}>Inspect realized value</Button></div></section>;
+}
 
-const InlineBody:React.FC<{definition:IIntentDefinition;stage:Stage;setStage:(s:Stage)=>void}>=({definition,stage,setStage})=>{const s=useStyles();const [riskWeight,setRiskWeight]=React.useState(DEFAULT_WEIGHTS.risk);const [split,setSplit]=React.useState(65);const scenario=splitAward(split);if(definition.operation==='education')return <div className={s.capabilities}>{INTENTS.filter(i=>i.operation!=='education').map(i=><button className={s.capability} key={i.key}><strong>{i.title}</strong><div className={s.muted}>{i.question}</div></button>)}</div>;if(stage==='receipt')return <div className={s.receipt}><h2 className={s.heading}>Session receipt created</h2><p><strong>{definition.title}</strong> recorded for this offline demo. No external system was changed.</p><Button onClick={()=>setStage('draft')}>Reset scenario</Button></div>;return <><div className={s.stage}><span className={stage==='draft'?s.current:''}>Draft</span><span>→</span><span className={stage==='review'?s.current:''}>Review</span><span>→</span><span>Confirm</span></div>{definition.key==='CompareSupplierBids'?<><div className={s.control}><label>Risk weight: {riskWeight}%</label><Slider min={5} max={60} value={riskWeight} onChange={(_,d)=>setRiskWeight(d.value)}/></div><SupplierLandscape weights={{...DEFAULT_WEIGHTS,risk:riskWeight,price:DEFAULT_WEIGHTS.price+DEFAULT_WEIGHTS.risk-riskWeight}}/></>:definition.key==='ExploreSpendPerformance'?<ValueRiver/>:definition.key==='ReviewSupplierAward'?<><div className={s.control}><label>Primary award: {split}%</label><Slider min={50} max={85} value={split} onChange={(_,d)=>setSplit(d.value)}/></div><div className={s.metrics}><div className={s.metric}><strong>{money(scenario.cost)}</strong><div>Total award</div></div><div className={s.metric}><strong>{scenario.risk}/100</strong><div>Blended risk</div></div><div className={s.metric}><strong>{scenario.onTime}%</strong><div>On-time confidence</div></div><div className={s.metric}><strong>{100-split}%</strong><div>Resilient share</div></div></div><PolicyLedger/></>:definition.key==='CheckPurchasePolicy'?<PolicyLedger/>:definition.key==='ResolveInvoiceException'?<div className={s.rows}>{[['PO',invoiceVariance.po],['Receipt',invoiceVariance.receipt],['Invoice',invoiceVariance.invoice],['Outside tolerance',invoiceVariance.freightVariance]].map(x=><div className={s.row} key={String(x[0])}><DocumentSearch20Regular/><strong>{x[0]}</strong><span>{money(Number(x[1]))}</span></div>)}</div>:<><p>{definition.outcome}</p><div className={s.region}><strong>Rugged Device Expansion</strong><p className={s.muted}>ZPC-RFP-31 · 600 units · EMEA · {definition.role}</p><Input aria-label={`${definition.title} working note`} defaultValue={definition.prompt}/></div></>} {definition.operation!=='information'&&<div className={s.actions}>{stage==='draft'?<Button appearance="primary" onClick={()=>setStage('review')}>Review decision</Button>:<><Button onClick={()=>setStage('draft')}>Edit</Button><Button appearance="primary" onClick={()=>setStage('receipt')}>Confirm session-only action</Button></>}</div>}</>;};
-
-const ProcurementApp:React.FC<IProps>=({definition,currentUserName,displayMode,onRequestFullscreen,onUpdateModelContext})=>{const s=useStyles(),full=displayMode==='fullscreen';const [lens,setLens]=React.useState<ProcurementLens>(definition.lens==='education'?'education':definition.lens);const [stage,setStage]=React.useState<Stage>('draft');React.useEffect(()=>{onUpdateModelContext?.({intent:definition.key,route:definition.route,stage,summary:`${definition.title}: ${definition.outcome}`}).catch(()=>undefined);},[definition,stage,onUpdateModelContext]);if(full&&lens!=='education')return <div className={mergeClasses(s.root,s.shell)} data-layout={`${lens}-command`}><nav className={s.nav}><div className={s.brand}>Zava Procurement</div>{OPERATIONAL_LENSES.map(item=><Button className={mergeClasses(s.navButton,lens===item?s.activeNav:undefined)} appearance="transparent" key={item} onClick={()=>setLens(item)} icon={item==='my-requests'?<CompassNorthwest20Regular/>:item==='sourcing'?<DocumentSearch20Regular/>:item==='supplier-360'?<PeopleTeam20Regular/>:<MoneyCalculator20Regular/>}>{labels[item]}</Button>)}</nav><main className={s.main}><div className={s.top}><span>Offline operating picture</span><strong>{currentUserName}</strong></div><header className={s.hero}><div className={s.eyebrow}>{definition.role} · {labels[lens]}</div><h1 className={s.title}>{lens==='my-requests'?'Outcomes in motion':lens==='sourcing'?'Shape demand. Award total value.':lens==='supplier-360'?'Obligations meet dependency.':'Trace spend into value.'}</h1><p className={s.subtitle}>{definition.question}</p></header><Metrics lens={lens}/><LensContent lens={lens}/></main></div>;return <div className={mergeClasses(s.root,s.inline)} data-layout={`${definition.key}-${stage}`}><main className={s.main}><div className={s.top}><strong>Zava Procurement · {definition.title}</strong>{onRequestFullscreen&&<Button icon={<ArrowExpand20Regular/>} onClick={()=>onRequestFullscreen().catch(()=>undefined)}>Expand</Button>}</div><header className={s.hero}><div className={s.eyebrow}>{definition.role} · {labels[definition.lens]}</div><h1 className={s.title}>{definition.title}</h1><p className={s.subtitle}>{definition.question}</p></header><div className={s.unframed}><InlineBody definition={definition} stage={stage} setStage={setStage}/></div></main></div>;};
-export default ProcurementApp;
+function Invocation(props: IProps): React.ReactElement {
+  const s = useStyles();
+  const full = props.displayMode === 'fullscreen';
+  const [lens, setLens] = React.useState(props.definition.lens);
+  const [active, setActive] = React.useState(props.definition.key);
+  const [workingProperties, setWorkingProperties] = React.useState(props.properties);
+  const [reset, setReset] = React.useState(0);
+  const [error, setError] = React.useState('');
+  const [pending, setPending] = React.useState<{ intent: ProcurementIntentKey; properties: IProcurementProperties }>();
+  const initialDraft = React.useRef<string>();
+  const dirty = React.useRef(false);
+  const task = React.useRef<HTMLElement>(null);
+  const focusTask = React.useRef(false);
+  const live = React.useRef(true);
+  React.useEffect(() => { live.current = true; return () => { live.current = false; }; }, []);
+  const publish = React.useCallback((snapshot: IProcurementSnapshot): void => {
+    if (initialDraft.current === undefined) initialDraft.current = snapshot.summary;
+    dirty.current = snapshot.stage === 'review' || (snapshot.stage === 'draft' && snapshot.summary !== initialDraft.current);
+    props.onUpdateModelContext?.({ ...snapshot, invokedIntent: props.definition.key, workspace: lens }).catch(reason => {
+      if (live.current) setError(`Copilot context could not be updated: ${String(reason)}`);
+    });
+  }, [props.onUpdateModelContext, props.definition.key, lens]);
+  const applyOpen: OpenTask = (intent, properties = {}) => {
+    initialDraft.current = undefined;
+    dirty.current = false;
+    focusTask.current = true;
+    setActive(intent);
+    setWorkingProperties(properties);
+    setLens(getIntent(intent).lens);
+  };
+  const open: OpenTask = (intent, properties = {}) => {
+    if (dirty.current) setPending({ intent, properties });
+    else applyOpen(intent, properties);
+  };
+  const definition = getIntent(active);
+  const key = JSON.stringify([active, Object.keys(workingProperties).sort().map(name => [name, workingProperties[name as keyof IProcurementProperties]]), reset]);
+  React.useEffect(() => {
+    if (focusTask.current) { task.current?.focus(); focusTask.current = false; }
+  }, [active, key]);
+  return <div key={reset} className={mergeClasses(s.root, full ? s.fullscreen : undefined)} data-layout={full ? `${lens}-command` : `${active}-inline`}>
+    <nav className={mergeClasses(s.nav, !full ? s.hidden : undefined)} aria-label="Procurement workspaces" hidden={!full}>{OPERATIONAL_LENSES.map(item => <Button key={item} appearance={lens === item ? 'primary' : 'subtle'} onClick={() => setLens(item)}>{labels[item]}</Button>)}<Button onClick={() => open('ExploreAgentCapabilities')}>Browse scenarios</Button></nav>
+    <main className={s.main}>
+      <div className={s.top}><strong>Zava Procurement</strong><span>{props.currentUserName}</span>{!full && props.onRequestFullscreen && <Button onClick={() => { props.onRequestFullscreen?.().catch(reason => { if (live.current) setError(`Full screen was not available: ${String(reason)}`); }); }}>Expand procurement workspace</Button>}</div>
+      <header className={s.hero}><span className={s.muted}>{definition.role} · {labels[full ? lens : definition.lens]}</span><h1 className={s.title}>{full ? labels[lens] : definition.title}</h1><p>{definition.question}</p></header>
+      {error && <p className={s.error} role="alert">{error}</p>}
+      {full && <div>{lens === 'my-requests' ? <RequestsDashboard open={open} /> : lens === 'sourcing' ? <SourcingDashboard open={open} /> : lens === 'supplier-360' ? <SupplierDashboard open={open} /> : lens === 'spend-command' ? <SpendDashboard open={open} /> : null}</div>}
+      <section ref={task} tabIndex={-1} className={s.panel} aria-label="Current procurement task">{full && <h2>Continue: {definition.title}</h2>}<ProcurementInlineExperience key={key} definition={definition} properties={workingProperties} onContext={publish} onSendFollowUp={props.onSendFollowUp} /></section>
+      <div className={s.actions}><Button onClick={() => { resetProcurementSession(); applyOpen(props.definition.key, props.properties); setReset(value => value + 1); }}>Reset demo session</Button></div><p className={s.muted}>Deterministic offline evidence. Confirmations affect this browser session only.</p>
+      <Dialog open={Boolean(pending)} onOpenChange={(_, data) => { if (!data.open) setPending(undefined); }}>
+        <DialogSurface><DialogBody><DialogTitle>Discard unconfirmed draft?</DialogTitle><DialogContent>Your current edits have not been confirmed. Keep the draft, or explicitly discard it before opening another task.</DialogContent><DialogActions><Button onClick={() => setPending(undefined)}>Keep current draft</Button><Button appearance="primary" onClick={() => { if (pending) applyOpen(pending.intent, pending.properties); setPending(undefined); }}>Discard draft and open task</Button></DialogActions></DialogBody></DialogSurface>
+      </Dialog>
+    </main>
+  </div>;
+}
+export default function ProcurementApp(props: IProps): React.ReactElement {
+  const signature = JSON.stringify([props.definition.key, Object.keys(props.properties).sort().map(name => [name, props.properties[name as keyof IProcurementProperties]])]);
+  return <Invocation key={signature} {...props} />;
+}

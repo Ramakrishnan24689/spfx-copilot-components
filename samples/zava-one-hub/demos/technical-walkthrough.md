@@ -31,9 +31,9 @@ Target duration: 10-15 minutes.
 
 ## 4. Routing and agent behavior
 
-- The API plugin exposes 37 unique functions with positive **Use when** and nearest-sibling
+- RC0 dynamically discovers 37 unique source tools with positive **Use when** and nearest-sibling
   **Do not use when** boundaries.
-- Agent instructions name all 37 functions and select the narrowest matching tool.
+- Agent instructions name all 37 source tools and select the narrowest matching tool.
 - Six conversation starters demonstrate news, verified knowledge, praise, sales, offices, and the
   capability explorer. Explorer remains last.
 - Tool parameters filter or prefill an experience; they never authorize or submit an action.

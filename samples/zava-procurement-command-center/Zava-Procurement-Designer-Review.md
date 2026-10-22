@@ -8,9 +8,9 @@ cards. The first frame names the decision, evidence, accountable role, and next 
 
 ## Visual language
 
-- Forest and mineral establish operational structure; cobalt carries analysis; saffron focuses decisions;
-  berry marks exposure; green remains reserved for validated success.
-- Multi-stop gradients belong to navigation and decision context, not decorative background blobs.
+- Host-provided Fluent tokens establish brand and operational structure; semantic risk and success
+  colors always have text/table equivalents.
+- Compact context strips identify the task; avoid decorative background blobs.
 - Analytical regions are wide and unframed or singly bounded. Cards represent real records and forms.
 - Financial values use tabular figures; headings remain compact inside operational surfaces.
 - D3 geometry answers a decision question and always has exact-value and accessible alternatives.
@@ -37,7 +37,7 @@ cards. The first frame names the decision, evidence, accountable role, and next 
 
 ## Publication acceptance
 
-- All 28 captures have current hashes and zero runtime, overflow, label, layout, or focus failures.
+- All 84 captures have current hashes and zero runtime, overflow, label, image, layout, or focus failures.
 - `assets/sample.json` references only current evidence with descriptive alt text.
 - The routing matrix contains all 22 catalog-owned tools and explicit sibling exclusions.
 - The `.sppkg` contains one current agent ZIP and one shared JavaScript asset.

@@ -17,7 +17,6 @@ export interface IRevenueProperties {
   readonly proposalId?: string;
   readonly period?: string;
   readonly region?: string;
-  readonly focus?: string;
   readonly query?: string;
   readonly selectedId?: string;
   readonly quantity?: number;
@@ -25,6 +24,7 @@ export interface IRevenueProperties {
   readonly discount?: number;
   readonly services?: number;
   readonly probability?: number;
+  readonly ramp?: readonly number[];
 }
 
 export interface IIntentDefinition {

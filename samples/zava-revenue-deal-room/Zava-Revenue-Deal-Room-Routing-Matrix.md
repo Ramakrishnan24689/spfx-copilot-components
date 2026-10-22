@@ -32,7 +32,7 @@ Generated from configured component manifests and the canonical starter configur
 
 | # | Title | Prompt | Expected inline component |
 | ---: | --- | --- | --- |
-| 1 | Advance a deal | Help me get Contoso's global expansion deal to signature this quarter. | `GetDealRisk` |
+| 1 | Deal risks | Show the risks threatening Contoso's global expansion deal this quarter. | `GetDealRisk` |
 | 2 | Buying committee | Map the buying committee for the Contoso expansion. | `MapBuyingCommittee` |
 | 3 | Commercial scenario | Model a three-year ramped offer that protects 68% margin. | `SimulateCommercialOffer` |
 | 4 | Meeting preparation | Prepare me for tomorrow's Contoso steering meeting. | `PrepareCustomerMeeting` |

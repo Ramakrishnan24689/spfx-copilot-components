@@ -12,12 +12,24 @@
       "The sample is deterministic, offline, responsive, and explicit that confirmed actions are session-only demonstrations. Buyer facts, seller judgment, stale evidence, deterministic output, contrary evidence, and inference remain visibly distinct."
     ],
     "creationDateTime": "2026-08-31",
-    "updateDateTime": "2026-08-31",
-    "products": ["SharePoint", "Copilot"],
+    "updateDateTime": "2026-10-20",
+    "products": [
+      "SharePoint",
+      "Copilot"
+    ],
     "metadata": [
-      { "key": "SAMPLE-TYPE", "value": "SPFx-CopilotComponent" },
-      { "key": "CLIENT-SIDE-DEV", "value": "React" },
-      { "key": "SPFX-VERSION", "value": "1.24.0-beta.3" }
+      {
+        "key": "SAMPLE-TYPE",
+        "value": "SPFx-CopilotComponent"
+      },
+      {
+        "key": "CLIENT-SIDE-DEV",
+        "value": "React"
+      },
+      {
+        "key": "SPFX-VERSION",
+        "value": "1.24.0-rc.0"
+      }
     ],
     "thumbnails": [
       {

@@ -12,17 +12,18 @@ const expectedDependencies = {
   '@fluentui/react-components': '9.74.9',
   '@fluentui/react-icons': '2.0.314',
   '@griffel/react': '1.7.8',
-  '@microsoft/sp-component-base': '1.24.0-beta.5',
-  '@microsoft/sp-copilot-component': '1.24.0-beta.5',
-  '@microsoft/sp-core-library': '1.24.0-beta.5',
-  '@microsoft/sp-webpart-base': '1.24.0-beta.5'
+  '@microsoft/sp-component-base': '1.24.0-rc.0',
+  '@microsoft/sp-copilot-component': '1.24.0-rc.0',
+  '@microsoft/sp-core-library': '1.24.0-rc.0',
+  '@microsoft/sp-webpart-base': '1.24.0-rc.0'
 };
 
 for (const [name, version] of Object.entries(expectedDependencies)) {
   if (packageJson.dependencies?.[name] !== version) errors.push(`Expected ${name}@${version}, found ${packageJson.dependencies?.[name] || 'missing'}.`);
 }
 if (packageJson.dependencies?.['@fluentui/react']) errors.push('Direct Fluent UI v8 dependency is not allowed.');
-if (packageJson.engines?.node !== '>=22.14.0 < 23.0.0') errors.push(`Unexpected Node engine: ${packageJson.engines?.node}.`);
+if (packageJson.engines?.node !== '>=22.14.0 <23.0.0 || >=24.0.0 <25.0.0 || >=26.0.0 <27.0.0') errors.push(`Unexpected Node engine: ${packageJson.engines?.node}.`);
+if (packageJson.devDependencies?.['@types/react'] !== '18.3.31' || packageJson.devDependencies?.['@types/react-dom'] !== '18.3.7') errors.push('React types must match the RC0 baseline.');
 
 const allowedReactPaths = new Set([
   'node_modules/react',
@@ -78,4 +79,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Validated SPFx beta.5 / React 18 baseline with ${reactPaths.length} allowed application/framework React package paths.`);
+console.log(`Validated SPFx RC0 / React 18 baseline with ${reactPaths.length} allowed application/framework React package paths.`);

@@ -1,5 +1,11 @@
 # Zava Revenue Deal Room - Creation Plan
 
+## RC0 update - October 20, 2026
+
+The current application baseline is SPFx 1.24.0-rc.0, React/ReactDOM 18.3.1, React types 18.3.31/18.3.7, and Heft 1.3.2. Current validation, exact packages, starter targets, findings, and external release gates are recorded in the [repository RC0 readiness report](../../RC0-updates.md). The local creation guide is synchronized byte-for-byte with the assets golden guide.
+
+Earlier entries below retain their implementation history. Old framework versions, test totals, byte counts, and hashes in that history are not current RC0 release evidence.
+
 This is the implementation tracker for the product and UX brief in [README.md](README.md). The
 sample follows [agentic-creation-rules.md](agentic-creation-rules.md). No feature implementation,
 dependency changes, component generation, or identity replacement begins until Phase 0 is approved.
@@ -13,17 +19,46 @@ dependency changes, component generation, or identity replacement begins until P
 
 ## Progress (latest)
 
-> Tracker reconciled after the premium UX redesign on 31 August 2026. All 21 final identities were generated
-> through Yeoman and validate in one shared React 18 bundle. The deterministic graph contains 80 accounts,
-> 260 contacts, and 120 opportunities; 6 focused domain/D3 geometry tests pass with zero warnings.
-> Thirteen Playwright captures
-> pass with no runtime or horizontal-overflow failures. Seven bundled portraits pass source/runtime
-> provenance checks and ship as seven unique hashed media assets with no duplicates. The audited
-> 341,417-byte `.sppkg` contains one 398,994-byte hashed JavaScript asset and one current agent ZIP.
-> Purpose-specific lifecycle depth for
-> every non-keynote intent, exhaustive all-intent accessibility evidence, session-store propagation, and
-> authenticated tenant-host checks remain open and are not claimed complete. After this reconciliation,
-> the tracker contains 87 validated items, 84 open items, and 2 external blockers.
+> October 20, 2026 specialist completion supersedes the August baseline. All 21 immutable tools now
+> resolve to specific working business UX: 10 analyses, 5 submissions, 5 reviews and 1 explorer.
+> Current evidence is 87 Jest tests, 13 curated visuals and 105 supplementary visuals (118 total),
+> with zero test/runtime/console/image/overflow failures. Exact current package bytes/hashes are
+> generated in `assets/release-evidence.json`, not copied from historical build output.
+
+### Current completion checklist
+
+- [x] Remove generic information and operation fallbacks; retain the four rich reference dashboards.
+- [x] Scope known accounts/opportunities/meetings/proposals/exceptions; preserve unknown, empty and
+  conflicting IDs as no-match, including model context with no substituted hero facts.
+- [x] Consume only advertised optional schema fields; validate portable source/compiled schemas and
+  retain RC0 dynamic MCP discovery rather than inventing static plugin functions.
+- [x] Bind selection, capability search, quarter/region/status filters and exact portfolio chart values.
+- [x] Bind quantity, term, discount, services, probability and annual ramps to actual commercial math;
+  charge subscription cost for every licensed year and prorate partial years.
+- [x] Implement ten domain-field workflows with validation, review, explicit unchecked confirmation,
+  actual-value receipt, edit/reset and session-only semantics.
+- [x] Block unsupported positive qualification, forecast, exception and release decisions while
+  permitting legitimate return/decline and supported meeting-commitment acceptance.
+- [x] Preserve drafts, selection and stages on passive rerenders, mode changes and theme flips; reset
+  on changed invocation arguments or a new mounted instance. Remove the theme-provider remount.
+- [x] Publish committed scope, visible records, filters, inputs, validation and receipt context; surface
+  context/follow-up/expansion failures without silent success.
+- [x] Verify all 21 actual content bodies and all ten review/confirmation/receipt/reset lifecycles with
+  React 18 DOM tests, plus scope, threshold, ramp, payback and D3 geometry tests (87 total).
+- [x] Capture all 21 inline experiences at standard/narrow/dark, four dashboards, ten reviews,
+  ten receipts and eighteen changed/filtered/no-match/gated states (105 supplementary).
+- [x] Preserve the thirteen curated filenames, metadata and portrait provenance; bind both visual
+  evidence sets to runtime source hashes and reject stale evidence during the canonical build.
+- [x] Regenerate the production `.sppkg`, matching embedded/Teams agent ZIP and release evidence
+  through the full `npm run build` gate with zero warnings.
+- [ ] External: authenticated tenant natural-language routing, Workbench CSP, focus restoration,
+  forced-colors and screen-reader host validation.
+- [ ] External: final persona redistribution/media-rights review.
+
+**Deliberate boundaries:** no live CRM/CPQ writes, customer contact, real approvals, cross-tool state
+propagation or persistence across reloads. Those are integrations, not unimplemented local controls.
+The historical phases below preserve the original broader design backlog; their old counts and
+unchecked aspirations are not the current release contract or completion checklist.
 
 ## Validated milestones (latest)
 
@@ -151,7 +186,7 @@ order from the README.
 ### Pin the supported stack
 
 - [x] Align all `@microsoft/sp-*` dependencies to the exact approved Beta 3 generator output.
-- [x] Pin React/ReactDOM `18.3.1`, React types `18.2.79`/`18.2.25`, Fluent React Components `9.74.6`,
+- [x] Pin React/ReactDOM `18.3.1`, React types `18.3.31`/`18.3.7`, Fluent React Components `9.74.6`,
   Fluent Icons `2.0.314`, and Griffel React `1.7.7` exactly.
 - [x] Remove direct `@fluentui/react` v8 after proving no active v8 imports remain.
 - [x] Install Jest and only the focused D3 modules/types selected for the signature visuals.

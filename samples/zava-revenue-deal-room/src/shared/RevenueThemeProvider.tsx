@@ -40,17 +40,11 @@ export interface IRevenueThemeProviderProps {
   readonly children?: React.ReactNode;
 }
 
-export default function RevenueThemeProvider(props: IRevenueThemeProviderProps): React.ReactElement {
-  const renderer = React.useMemo(() => createDOMRenderer(props.targetDocument), [props.targetDocument]);
-  const [generation, setGeneration] = React.useState(0);
+function RevenueThemeSurface(props: IRevenueThemeProviderProps): React.ReactElement {
   const styles = useStyles();
-  React.useEffect(() => setGeneration(1), []);
-
   return (
-    <RendererProvider renderer={renderer} targetDocument={props.targetDocument}>
       <IdPrefixProvider value="zdr-">
         <FluentProvider
-          key={generation}
           theme={props.theme === 'dark' ? darkTheme : lightTheme}
           targetDocument={props.targetDocument}
           className={styles.provider}
@@ -58,6 +52,10 @@ export default function RevenueThemeProvider(props: IRevenueThemeProviderProps):
           {props.children}
         </FluentProvider>
       </IdPrefixProvider>
-    </RendererProvider>
   );
+}
+
+export default function RevenueThemeProvider(props: IRevenueThemeProviderProps): React.ReactElement {
+  const renderer = React.useMemo(() => createDOMRenderer(props.targetDocument), [props.targetDocument]);
+  return <RendererProvider renderer={renderer} targetDocument={props.targetDocument}><RevenueThemeSurface {...props} /></RendererProvider>;
 }

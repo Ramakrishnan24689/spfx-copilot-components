@@ -82,13 +82,14 @@ export const buildCommercialGeometry = (
   selectedMargin: number,
   quantity: number
 ): ICommercialGeometry => {
-  const points: ICommercialPoint[] = [0, 5, 10, 15, 20, 25, 30].map((discount) => ({
+  const maximumDiscount = Math.max(30, selectedDiscount);
+  const points: ICommercialPoint[] = [0, 1, 2, 3, 4, 5, 6].map(index => index * maximumDiscount / 6).map((discount) => ({
     discount,
-    margin: Math.max(48, Math.min(88, selectedMargin + (selectedDiscount - discount) * 0.72)),
+    margin: selectedMargin + (selectedDiscount - discount) * 0.72,
     customerValue: Math.min(100, 34 + quantity / 24 + discount * 0.85)
   }));
-  const x = scaleLinear().domain([0, 30]).range([LEFT, RIGHT]);
-  const y = scaleLinear().domain([45, 90]).range([BOTTOM, TOP]);
+  const x = scaleLinear().domain([0, maximumDiscount]).range([LEFT, RIGHT]);
+  const y = scaleLinear().domain([Math.min(45, ...points.map(point => point.margin)) - 2, Math.max(90, ...points.map(point => point.margin)) + 2]).range([BOTTOM, TOP]);
   const curve = line<ICommercialPoint>().x((point) => x(point.discount)).y((point) => y(point.margin)).curve(curveMonotoneX);
   const field = area<ICommercialPoint>().x((point) => x(point.discount)).y0(BOTTOM).y1((point) => y(point.margin)).curve(curveMonotoneX);
   const selectedPoint = {

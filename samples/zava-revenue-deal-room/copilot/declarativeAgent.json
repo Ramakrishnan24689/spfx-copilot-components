@@ -6,8 +6,8 @@
   "instructions": "$[file('instruction.txt')]",
   "conversation_starters": [
     {
-      "title": "Advance a deal",
-      "text": "Help me get Contoso's global expansion deal to signature this quarter."
+      "title": "Deal risks",
+      "text": "Show the risks threatening Contoso's global expansion deal this quarter."
     },
     {
       "title": "Buying committee",

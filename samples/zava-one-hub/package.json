@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": ">=22.14.0 < 23.0.0"
+    "node": ">=22.14.0 <23.0.0 || >=24.0.0 <25.0.0 || >=26.0.0 <27.0.0"
   },
   "scripts": {
-    "build": "npm run validate && heft test --clean --production && heft package-solution --production && npm run check:generated-plugin && npm run check:package-output",
+    "build": "npm run validate && heft test --clean --production && heft package-solution --production && npm run check:generated-plugin && npm run check:package-output && npm run update:release-evidence && npm run check:release-evidence && npm run check:visual-evidence",
     "build:ux-review": "node scripts/build-ux-review.mjs",
     "capture:publication": "node scripts/capture-publication.mjs",
     "capture:gallery": "node scripts/capture-publication.mjs --gallery",
@@ -32,7 +32,7 @@
     "generate:agent-icons": "node scripts/generate-agent-icons.mjs",
     "start": "heft start --clean",
     "start:ux-review": "node scripts/serve-ux-review.mjs",
-    "validate": "npm run check:reference-hosts && npm run check:react-baseline && npm run check:routing-collisions && npm run check:agent-icons && npm run check:media && npm run check:visual-evidence && npm run check:publication && npm run check:teams-apps && npm run check:release-evidence && npm run build:ux-review && heft test --clean"
+    "validate": "npm run check:reference-hosts && npm run check:react-baseline && npm run check:routing-collisions && npm run check:agent-icons && npm run check:media && npm run check:publication && npm run check:teams-apps && npm run build:ux-review && heft test --clean"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",
@@ -41,15 +41,15 @@
     "@fluentui/react-components": "9.74.9",
     "@fluentui/react-icons": "2.0.314",
     "@griffel/react": "1.7.8",
-    "@microsoft/sp-component-base": "1.24.0-beta.5",
-    "@microsoft/sp-copilot-component": "1.24.0-beta.5",
-    "@microsoft/sp-core-library": "1.24.0-beta.5",
-    "@microsoft/sp-http": "1.24.0-beta.5",
-    "@microsoft/sp-lodash-subset": "1.24.0-beta.5",
-    "@microsoft/sp-office-ui-fabric-core": "1.24.0-beta.5",
-    "@microsoft/sp-property-pane": "1.24.0-beta.5",
-    "@microsoft/sp-top-actions": "1.24.0-beta.5",
-    "@microsoft/sp-webpart-base": "1.24.0-beta.5",
+    "@microsoft/sp-component-base": "1.24.0-rc.0",
+    "@microsoft/sp-copilot-component": "1.24.0-rc.0",
+    "@microsoft/sp-core-library": "1.24.0-rc.0",
+    "@microsoft/sp-http": "1.24.0-rc.0",
+    "@microsoft/sp-lodash-subset": "1.24.0-rc.0",
+    "@microsoft/sp-office-ui-fabric-core": "1.24.0-rc.0",
+    "@microsoft/sp-property-pane": "1.24.0-rc.0",
+    "@microsoft/sp-top-actions": "1.24.0-rc.0",
+    "@microsoft/sp-webpart-base": "1.24.0-rc.0",
     "d3-array": "3.2.4",
     "d3-geo": "3.1.1",
     "d3-scale": "4.0.2",
@@ -63,19 +63,19 @@
     "zod-to-json-schema": "3.24.1"
   },
   "devDependencies": {
-    "@microsoft/eslint-config-spfx": "1.24.0-beta.5",
-    "@microsoft/eslint-plugin-spfx": "1.24.0-beta.5",
-    "@microsoft/sp-module-interfaces": "1.24.0-beta.5",
-    "@microsoft/spfx-heft-plugins": "1.24.0-beta.5",
-    "@microsoft/spfx-web-build-rig": "1.24.0-beta.5",
-    "@rushstack/heft": "1.2.22",
+    "@microsoft/eslint-config-spfx": "1.24.0-rc.0",
+    "@microsoft/eslint-plugin-spfx": "1.24.0-rc.0",
+    "@microsoft/sp-module-interfaces": "1.24.0-rc.0",
+    "@microsoft/spfx-heft-plugins": "1.24.0-rc.0",
+    "@microsoft/spfx-web-build-rig": "1.24.0-rc.0",
+    "@rushstack/heft": "1.3.2",
     "@types/d3-array": "3.2.2",
     "@types/d3-geo": "3.1.1",
     "@types/d3-scale": "4.0.9",
     "@types/d3-shape": "3.2.0",
     "@types/jest": "30.0.0",
-    "@types/react": "18.2.79",
-    "@types/react-dom": "18.2.25",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
     "@types/topojson-client": "3.1.5",
     "@types/webpack-env": "~1.15.2",
     "css-loader": "~7.1.2",
@@ -83,14 +83,15 @@
     "eslint": "9.37.0",
     "eslint-plugin-react-hooks": "5.2.0",
     "playwright": "1.63.0",
-    "typescript": "~5.8.0"
+    "typescript": "~5.8.0",
+    "unzipper": "0.12.3"
   },
   "overrides": {
-    "@rushstack/heft": "1.2.22",
+    "@rushstack/heft": "1.3.2",
     "qs": ">=6.15.2",
     "uuid": ">=11.1.1"
   },
   "resolutions": {
-    "@types/react": "18.2.79"
+    "@types/react": "18.3.31"
   }
 }

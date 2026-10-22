@@ -7,6 +7,7 @@ This folder contains SPFx Copilot component samples. Each sample lives in its ow
 | Apps directory - Workplace Application Catalogue | [`apps-directory`](./apps-directory) |
 | Choice Relay | [`choice-relay`](./choice-relay) |
 | Copilot Readiness Action Centre | [`copilot-readiness-action-centre`](./copilot-readiness-action-centre) |
+| CosmoPolite - multilingual story card | [`multilingual-story-card`](./multilingual-story-card) |
 | SharePoint Events Copilot Agent | [`events`](./events) |
 | Holiday Planner | [`holiday-planner`](./holiday-planner) |
 | Executive Sales & Revenue Dashboard | [`executive-sales-dashboard`](./executive-sales-dashboard) |

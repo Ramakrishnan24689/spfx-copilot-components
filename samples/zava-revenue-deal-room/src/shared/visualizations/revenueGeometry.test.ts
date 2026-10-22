@@ -15,6 +15,14 @@ describe('D3 revenue geometry', () => {
     expect(base.selectedX).not.toBe(protectedMargin.selectedX);
     expect(base.selectedY).not.toBe(protectedMargin.selectedY);
   });
+  it('keeps extreme but valid commercial scenarios within the plotted domain', () => {
+    const geometry = buildCommercialGeometry(100, -200, 100000);
+    expect(geometry.selectedX).toBeLessThanOrEqual(494);
+    expect(geometry.selectedX).toBeGreaterThanOrEqual(48);
+    expect(geometry.selectedY).toBeLessThanOrEqual(154);
+    expect(geometry.selectedY).toBeGreaterThanOrEqual(24);
+    expect(geometry.linePath).not.toContain('NaN');
+  });
 
   it('builds signed forecast bridge geometry', () => {
     const bars = buildForecastBridge([

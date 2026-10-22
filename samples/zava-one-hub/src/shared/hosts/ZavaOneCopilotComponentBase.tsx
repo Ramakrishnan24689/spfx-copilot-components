@@ -48,8 +48,9 @@ export abstract class ZavaOneCopilotComponentBase<TProperties> extends BaseCopil
     }));
   }
 
-  protected async onTeardown(): Promise<void> {
+  protected async onTeardown(reason?: string): Promise<void> {
     this._root?.unmount();
     this._root = undefined;
+    await super.onTeardown(reason);
   }
 }
