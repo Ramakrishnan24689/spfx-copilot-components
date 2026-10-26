@@ -2,17 +2,17 @@
   {
     "name": "pnp-sp-dev-spfx-copilot-components-zava-revenue-deal-room",
     "source": "pnp",
-    "title": "Zava Revenue Deal Room",
-    "shortDescription": "An evidence-led revenue Copilot App with 21 intent-routed components and four connected workspaces.",
+    "title": "ZavaMesh Revenue Deal Room",
+    "shortDescription": "A ZavaMesh-branded revenue Copilot App with global analytics, guided deal intake and human-governed approvals.",
     "url": "https://github.com/pnp/spfx-copilot-components/tree/main/samples/zava-revenue-deal-room",
     "downloadUrl": "https://pnp.github.io/download-partial/?url=https://github.com/pnp/spfx-copilot-components/tree/main/samples/zava-revenue-deal-room",
     "longDescription": [
-      "Zava Revenue Deal Room turns natural-language sales intent into focused, inspectable work across account discovery, qualification, buyer influence, risk, commitments, proposals, commercial scenarios, exceptions, forecast, and customer success handoff.",
+      "ZavaMesh Revenue Deal Room turns natural-language sales intent into focused, inspectable work across account discovery, qualification, buyer influence, risk, commitments, proposals, commercial scenarios, exceptions, forecast, and customer success handoff.",
       "Twenty operational components and one capability explorer continue into My Deals, Deal Room, Commercial Desk, and Revenue Command. The connected Contoso story preserves evidence and decisions from relationship access through defensible commit.",
       "The sample is deterministic, offline, responsive, and explicit that confirmed actions are session-only demonstrations. Buyer facts, seller judgment, stale evidence, deterministic output, contrary evidence, and inference remain visibly distinct."
     ],
     "creationDateTime": "2026-08-31",
-    "updateDateTime": "2026-10-20",
+    "updateDateTime": "2026-10-26",
     "products": [
       "SharePoint",
       "Copilot"

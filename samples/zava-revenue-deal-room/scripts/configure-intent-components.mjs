@@ -101,7 +101,7 @@ fs.writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
 
 const agentPath = path.join(root, 'config', 'copilot-agent.json');
 const agent = JSON.parse(fs.readFileSync(agentPath, 'utf8'));
-agent.agents[0].name.default = 'Zava Revenue Deal Room';
+agent.agents[0].name.default = 'ZavaMesh Revenue Deal Room';
 agent.agents[0].description.default = 'Turn buyer evidence into coordinated deal action and a defensible forecast.';
 agent.agents[0].components = componentIds;
 fs.writeFileSync(agentPath, `${JSON.stringify(agent, null, 2)}\n`);

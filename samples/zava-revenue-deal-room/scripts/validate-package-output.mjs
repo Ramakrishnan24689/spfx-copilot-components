@@ -15,7 +15,7 @@ const media = archive.files.filter((entry) => /ClientSideAssets\/.*\.(?:jpg|jpeg
 const stale = javascript.filter((entry) => /copilot-component\.js$/i.test(entry.path) || !/_[a-f0-9]{8,}\.js$/i.test(entry.path));
 if (!javascript.length) throw new Error('No production JavaScript found in the package.');
 if (stale.length) throw new Error(`Stale or unhashed JavaScript found: ${stale.map((entry) => entry.path).join(', ')}`);
-if (agentPackages.length !== 1 || !agentPackages[0].path.endsWith('/zava-revenue-deal-room.zip')) throw new Error(`Expected one current embedded agent ZIP, found: ${agentPackages.map((entry) => entry.path).join(', ')}`);
+if (agentPackages.length !== 1 || !agentPackages[0].path.endsWith('/zavamesh-revenue-deal-room.zip')) throw new Error(`Expected one current embedded agent ZIP, found: ${agentPackages.map((entry) => entry.path).join(', ')}`);
 if (javascript.length !== 1) throw new Error(`Expected one shared production bundle, found ${javascript.length}`);
 const releaseAssets = path.join(root, 'release', 'assets');
 const releaseJavaScript = fs.readdirSync(releaseAssets).filter(file => file.endsWith('.js')).sort();
@@ -23,12 +23,14 @@ if (JSON.stringify(releaseJavaScript) !== JSON.stringify(javascript.map(entry =>
 for (const entry of javascript) {
   if (!(await entry.buffer()).equals(fs.readFileSync(path.join(releaseAssets, path.basename(entry.path))))) throw new Error(`Packaged JavaScript bytes are stale: ${entry.path}`);
 }
-if (!(await agentPackages[0].buffer()).equals(fs.readFileSync(path.join(root, 'teams', 'zava-revenue-deal-room.zip')))) throw new Error('Embedded and Teams agent ZIP bytes differ');
-if (media.length !== 7 || media.some((entry) => !/_[a-f0-9]{8,}\.(?:jpg|jpeg|png|webp)$/i.test(entry.path))) throw new Error(`Expected seven hashed persona assets, found: ${media.map((entry) => entry.path).join(', ')}`);
+if (!(await agentPackages[0].buffer()).equals(fs.readFileSync(path.join(root, 'teams', 'zavamesh-revenue-deal-room.zip')))) throw new Error('Embedded and Teams agent ZIP bytes differ');
+const brand = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'brand-provenance.json'), 'utf8').replace(/^\uFEFF/, ''));
+const provenance = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'asset-provenance.json'), 'utf8'));
+const expectedMediaHashes = new Set([...provenance.assets, ...brand.assets].map(asset => asset.sha256));
+if (media.length !== expectedMediaHashes.size || media.some((entry) => !/_[a-f0-9]{8,}\.(?:jpg|jpeg|png|webp)$/i.test(entry.path))) throw new Error(`Expected ${expectedMediaHashes.size} hashed persona/brand assets, found: ${media.map((entry) => entry.path).join(', ')}`);
 const mediaHashes = await Promise.all(media.map(async (entry) => crypto.createHash('sha256').update(await entry.buffer()).digest('hex')));
-const expectedMediaHashes = new Set(JSON.parse(fs.readFileSync(path.join(root, 'assets', 'asset-provenance.json'), 'utf8')).assets.map((asset) => asset.sha256));
 if (new Set(mediaHashes).size !== media.length) throw new Error('Duplicate substantial media binaries found in the package.');
-if (!mediaHashes.every((hash) => expectedMediaHashes.has(hash))) throw new Error('Packaged persona media does not match approved provenance.');
+if (!mediaHashes.every((hash) => expectedMediaHashes.has(hash))) throw new Error('Packaged persona/brand media does not match approved provenance.');
 const sizes = javascript.map((entry) => entry.uncompressedSize || entry.compressedSize || 0);
 const report = { packageBytes: bytes, productionJavaScriptFiles: javascript.length, productionJavaScriptBytes: sizes.reduce((sum, size) => sum + size, 0), largestJavaScriptBytes: Math.max(...sizes), staleJavaScript: stale.length, embeddedAgentPackages: agentPackages.length, packagedMedia: media.length, duplicateMedia: media.length - new Set(mediaHashes).size, sharedBundle: javascript.length === 1, exactReleaseJavaScriptBytes: true, matchingAgentArchives: true };
 if (bytes > 10 * 1024 * 1024) report.packageInvestigation = true;

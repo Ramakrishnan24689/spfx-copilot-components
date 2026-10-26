@@ -8,7 +8,7 @@ export function visualSourceSignature(root) {
     for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
       const file = path.join(directory, entry.name);
       if (entry.isDirectory()) walk(file);
-      else if (/\.(tsx?|jpg)$/i.test(entry.name) && !/\.(test\.tsx?|d\.ts)$/.test(entry.name)) files.push(file);
+      else if (/\.(tsx?|jpg|png)$/i.test(entry.name) && !/\.(test\.tsx?|d\.ts)$/.test(entry.name)) files.push(file);
     }
   }
   walk(path.join(root, 'src', 'shared'));

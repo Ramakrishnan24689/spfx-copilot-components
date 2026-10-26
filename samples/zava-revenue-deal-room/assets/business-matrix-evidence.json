@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-10-20T14:05:39.523Z",
-  "sourceSha256": "a2e9273031b9901b2348ffe972b03cd7a2277a704c5663bd2eb05e1141f8cb9d",
+  "capturedAt": "2026-10-26T11:47:00.536Z",
+  "sourceSha256": "2e1109f6e212588a719b0e641e1a48c35d25e686221b04ab46a511c4db1cf353",
   "totalCaptures": 105,
   "failureCount": 0,
   "inlineMatrixCount": 63,
@@ -13,10 +13,10 @@
       "intent": "BuildAccountBrief",
       "variant": "standard",
       "name": "BuildAccountBrief-standard.png",
-      "bytes": 289148,
-      "sha256": "6854f46ad5e1dfff788c5272f47b4164a4f0b986b5ca5c3bd04accfa6dce2649",
+      "bytes": 266979,
+      "sha256": "740fd6b93801bc95c5fbd77b21084c7015ca0b290cc49c0b3a4b4f763f2fa393",
       "width": 760,
-      "height": 999,
+      "height": 1039,
       "layouts": [
         "BuildAccountBrief-inline",
         "BuildAccountBrief-business-draft"
@@ -28,10 +28,10 @@
       "intent": "BuildAccountBrief",
       "variant": "narrow",
       "name": "BuildAccountBrief-narrow.png",
-      "bytes": 203815,
-      "sha256": "cdb5601af4e3d331dc799ae681db13d2703ab82aa3b7545f3d994c84fbc8bbf5",
+      "bytes": 182936,
+      "sha256": "8d77284d14b08fb855deb99f5c68107595f950ea7bcaadac52b463c36dccc1f4",
       "width": 390,
-      "height": 1105,
+      "height": 1145,
       "layouts": [
         "BuildAccountBrief-inline",
         "BuildAccountBrief-business-draft"
@@ -43,10 +43,10 @@
       "intent": "BuildAccountBrief",
       "variant": "dark",
       "name": "BuildAccountBrief-dark.png",
-      "bytes": 211792,
-      "sha256": "b960e34679be6b55359d54c67a4226675c5244a36a4e6dd6d0feb7d16d71f6d2",
+      "bytes": 217734,
+      "sha256": "5c5f18a881c3bcc334f917aea3b04ce33ee947a44d7418ed7b32486806f7e772",
       "width": 760,
-      "height": 999,
+      "height": 1039,
       "layouts": [
         "BuildAccountBrief-inline",
         "BuildAccountBrief-business-draft"
@@ -58,8 +58,8 @@
       "intent": "QualifyOpportunity",
       "variant": "standard",
       "name": "QualifyOpportunity-standard.png",
-      "bytes": 218088,
-      "sha256": "d4240e27c624ca690e2e8b3f32a1601088b6731eefdf44eafb81b0f50dcb4f0d",
+      "bytes": 188125,
+      "sha256": "45f21525f465d4709de59bdb19eee5950f5ae53c8b684f4d463eaef056b0b371",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -73,8 +73,8 @@
       "intent": "QualifyOpportunity",
       "variant": "narrow",
       "name": "QualifyOpportunity-narrow.png",
-      "bytes": 165866,
-      "sha256": "9a1a11fcc75faa3a4125795b13bb50ef78b312fc352cc8d65ff4f24bab8b2358",
+      "bytes": 143862,
+      "sha256": "4bd8671c14e733f97d6cd2ae1962ad0a2bee99855b74a74a0cfcfd1655dddf91",
       "width": 390,
       "height": 980,
       "layouts": [
@@ -88,8 +88,8 @@
       "intent": "QualifyOpportunity",
       "variant": "dark",
       "name": "QualifyOpportunity-dark.png",
-      "bytes": 175944,
-      "sha256": "9ea30bedce6d63a8f0b6a8fca2065289170b2b4e6f12c8ef55f9c58c474a919d",
+      "bytes": 166291,
+      "sha256": "288fbb3de0523f8508da852062dfee3b903ccb78601d05ad578ff0b7d0664892",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -103,10 +103,10 @@
       "intent": "MapBuyingCommittee",
       "variant": "standard",
       "name": "MapBuyingCommittee-standard.png",
-      "bytes": 414313,
-      "sha256": "57a362543f7f2a0f9fb28d15afc7fcb6267cfc1e636a0eb2805ef1d0aa740390",
+      "bytes": 370444,
+      "sha256": "8328653e349eae118efc95da23f85da88198be1efe025f5b77c6b8c6ae711d23",
       "width": 760,
-      "height": 1662,
+      "height": 1699,
       "layouts": [
         "MapBuyingCommittee-inline",
         "MapBuyingCommittee-business-draft"
@@ -118,10 +118,10 @@
       "intent": "MapBuyingCommittee",
       "variant": "narrow",
       "name": "MapBuyingCommittee-narrow.png",
-      "bytes": 293185,
-      "sha256": "42b67ece728223987683cd66b8b41d94c03a13c47e6211fcf444aafd04186bcc",
+      "bytes": 254875,
+      "sha256": "d18a1b1b106351da81ff268327907261f498c8179bc38653682338a8afdd35e9",
       "width": 390,
-      "height": 1800,
+      "height": 1837,
       "layouts": [
         "MapBuyingCommittee-inline",
         "MapBuyingCommittee-business-draft"
@@ -133,10 +133,10 @@
       "intent": "MapBuyingCommittee",
       "variant": "dark",
       "name": "MapBuyingCommittee-dark.png",
-      "bytes": 340335,
-      "sha256": "862204944949cc2e465dab5c482649ec108326dd376e76b9e99d11ede7e765fe",
+      "bytes": 324484,
+      "sha256": "336bc1f8e32d1d9813fb87a3f99b00369f33deddf25fc0ddd88f1505cce2b972",
       "width": 760,
-      "height": 1662,
+      "height": 1699,
       "layouts": [
         "MapBuyingCommittee-inline",
         "MapBuyingCommittee-business-draft"
@@ -148,10 +148,10 @@
       "intent": "GetDealRisk",
       "variant": "standard",
       "name": "GetDealRisk-standard.png",
-      "bytes": 313602,
-      "sha256": "36cdcea470f10acfa3d36c826d9e23d0664eb16d194b57a29c2ea2bf0d673fdd",
+      "bytes": 293222,
+      "sha256": "2800c5bfd8f26d2ca34a77c53f3b69c18acc15186654f77db97324dfe2dfbc84",
       "width": 760,
-      "height": 1055,
+      "height": 1095,
       "layouts": [
         "GetDealRisk-inline",
         "GetDealRisk-business-draft"
@@ -163,10 +163,10 @@
       "intent": "GetDealRisk",
       "variant": "narrow",
       "name": "GetDealRisk-narrow.png",
-      "bytes": 216867,
-      "sha256": "228b223e1a2b4b4d0b5155164ddf1bb47d2d26ffe86d0af9293d9e790282b4d4",
+      "bytes": 196165,
+      "sha256": "38125ee3e8ee322ac47a3d3c21b7550c4778561b2c482e331bf7c442c007a92c",
       "width": 390,
-      "height": 1153,
+      "height": 1193,
       "layouts": [
         "GetDealRisk-inline",
         "GetDealRisk-business-draft"
@@ -178,10 +178,10 @@
       "intent": "GetDealRisk",
       "variant": "dark",
       "name": "GetDealRisk-dark.png",
-      "bytes": 230919,
-      "sha256": "c3e7b5669454f0d6a0202b9cb36dde69fac67ae71c957b5ac33989749b0c6bf1",
+      "bytes": 240251,
+      "sha256": "e9a55f84acb4f50126518225ea3286a883fb785476380c135bf65b404ae1b20c",
       "width": 760,
-      "height": 1055,
+      "height": 1095,
       "layouts": [
         "GetDealRisk-inline",
         "GetDealRisk-business-draft"
@@ -193,10 +193,10 @@
       "intent": "PrepareCustomerMeeting",
       "variant": "standard",
       "name": "PrepareCustomerMeeting-standard.png",
-      "bytes": 303519,
-      "sha256": "1f22cf7d6a98dfd545fb00b26940f9a316b10246d1e8ef2ef858d4c81059f965",
+      "bytes": 280690,
+      "sha256": "f727f63ced79147577dc40b78096268a447a4ca13b8c104dfbb81f8bd39c7a6b",
       "width": 760,
-      "height": 999,
+      "height": 1039,
       "layouts": [
         "PrepareCustomerMeeting-inline",
         "PrepareCustomerMeeting-business-draft"
@@ -208,10 +208,10 @@
       "intent": "PrepareCustomerMeeting",
       "variant": "narrow",
       "name": "PrepareCustomerMeeting-narrow.png",
-      "bytes": 211429,
-      "sha256": "5678f63d485e87db1d1e791924c226ffdbccd64a94407e9581525dc0666f435e",
+      "bytes": 189606,
+      "sha256": "6e8885d5042af352c180734b6f99a9f23ce6c8e0c3abd311fe1f890efa4096a1",
       "width": 390,
-      "height": 1105,
+      "height": 1145,
       "layouts": [
         "PrepareCustomerMeeting-inline",
         "PrepareCustomerMeeting-business-draft"
@@ -223,10 +223,10 @@
       "intent": "PrepareCustomerMeeting",
       "variant": "dark",
       "name": "PrepareCustomerMeeting-dark.png",
-      "bytes": 224555,
-      "sha256": "3f19845a9e6549e150f7ebc0f4a47dfc616a00a6387c42a544bba959a4806edd",
+      "bytes": 230159,
+      "sha256": "0d1bd36e9c5a07bec8264b2d31c51e1ba46a03e1c01cf1e2381ddbecbabd9bd1",
       "width": 760,
-      "height": 999,
+      "height": 1039,
       "layouts": [
         "PrepareCustomerMeeting-inline",
         "PrepareCustomerMeeting-business-draft"
@@ -238,8 +238,8 @@
       "intent": "BuildMutualActionPlan",
       "variant": "standard",
       "name": "BuildMutualActionPlan-standard.png",
-      "bytes": 236387,
-      "sha256": "8b39a9e5883585a4111c9e3bf419cde31bf708deadb52c0c40ad40c8017aecfb",
+      "bytes": 209818,
+      "sha256": "eda31b2ad888a202a80c0f5087d4b5b01bd9a4081864f59a6e4956f6725f5c85",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -253,10 +253,10 @@
       "intent": "BuildMutualActionPlan",
       "variant": "narrow",
       "name": "BuildMutualActionPlan-narrow.png",
-      "bytes": 186658,
-      "sha256": "5a0a5500e07642b92ef973de7402fe4825f57cd2b3b7efcd827fde4590afa518",
+      "bytes": 165130,
+      "sha256": "bd4bcad187c46b476a8e568b641aa3d152e791741f7e07f92421cb12280af463",
       "width": 390,
-      "height": 1073,
+      "height": 1113,
       "layouts": [
         "BuildMutualActionPlan-inline",
         "BuildMutualActionPlan-business-draft"
@@ -268,8 +268,8 @@
       "intent": "BuildMutualActionPlan",
       "variant": "dark",
       "name": "BuildMutualActionPlan-dark.png",
-      "bytes": 188290,
-      "sha256": "fd146cfe035ebcbd85ae8546cf20851d76fc335be41d6d363853eaf47c1fcc3d",
+      "bytes": 182644,
+      "sha256": "a3315247cf967e3b72f6cf5b20631a5a93c3349a1323b023b7a2d7fe5f2486e5",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -283,8 +283,8 @@
       "intent": "ReviewMeetingCommitments",
       "variant": "standard",
       "name": "ReviewMeetingCommitments-standard.png",
-      "bytes": 219587,
-      "sha256": "1cbbb5afe25229c90de534aa59ebcb18f6b9bf915c04ad99683307a5bf765dbe",
+      "bytes": 188580,
+      "sha256": "ae58d4d10e2b4cefd6f2c43cd7a83575bea0c6cf9460a0fe1dbdd198f51d6ee8",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -298,10 +298,10 @@
       "intent": "ReviewMeetingCommitments",
       "variant": "narrow",
       "name": "ReviewMeetingCommitments-narrow.png",
-      "bytes": 177645,
-      "sha256": "429cfc16edff9c4fba36d174da239dde64e131d0c6a195dced209b3fb186754e",
+      "bytes": 155720,
+      "sha256": "1874b44b76c2553fa50355f835cf5c4ba39c37d6eecd32263bc2028be17a8461",
       "width": 390,
-      "height": 983,
+      "height": 1023,
       "layouts": [
         "ReviewMeetingCommitments-inline",
         "ReviewMeetingCommitments-business-draft"
@@ -313,8 +313,8 @@
       "intent": "ReviewMeetingCommitments",
       "variant": "dark",
       "name": "ReviewMeetingCommitments-dark.png",
-      "bytes": 178965,
-      "sha256": "988dde34cb68337300f10573f5e7f78c35d6d4bb50fd5752d8bfefa6b70b6aa6",
+      "bytes": 168027,
+      "sha256": "7e78b1bca307d1112a39fc5737f018d7bbcd44d84dd41d6072925c39f44c7087",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -328,8 +328,8 @@
       "intent": "ShapeSolutionProposal",
       "variant": "standard",
       "name": "ShapeSolutionProposal-standard.png",
-      "bytes": 229912,
-      "sha256": "96738b76dbce80cb11e2cbbaca76953d86713b8c0b5a379e6997086c28d6e96c",
+      "bytes": 201813,
+      "sha256": "6549c1546d0722939563a694c00a7b0cd570872dabd1ac1a75be0e13ac9bcc0c",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -343,10 +343,10 @@
       "intent": "ShapeSolutionProposal",
       "variant": "narrow",
       "name": "ShapeSolutionProposal-narrow.png",
-      "bytes": 187691,
-      "sha256": "f2062f8758e68c7d54c926828373fca78f27e43edd4775e63f07aa79797c969b",
+      "bytes": 161879,
+      "sha256": "7faaeec67fd644ebb7428b2d410ac90674c65c7504d727584199a2fe3b350d83",
       "width": 390,
-      "height": 1073,
+      "height": 1113,
       "layouts": [
         "ShapeSolutionProposal-inline",
         "ShapeSolutionProposal-business-draft"
@@ -358,8 +358,8 @@
       "intent": "ShapeSolutionProposal",
       "variant": "dark",
       "name": "ShapeSolutionProposal-dark.png",
-      "bytes": 184503,
-      "sha256": "7c95af4676818d645726d9d359b1d72eb643d9ebcd45915e18164daf2bb6f48e",
+      "bytes": 177710,
+      "sha256": "a2d6c778d3587497e6dc092cb2c561f40cb5ad525a16056b4ebf2e22f95c35ed",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -373,10 +373,10 @@
       "intent": "SimulateCommercialOffer",
       "variant": "standard",
       "name": "SimulateCommercialOffer-standard.png",
-      "bytes": 364791,
-      "sha256": "8e88b928d2879a5a01d21a33e81dd5b34968a2129c3fdc31bcaba10f186e1ce4",
+      "bytes": 342818,
+      "sha256": "21506773aa6fe5126e900568be172019ac3e09c9ccfea9fefc733da9e268ce54",
       "width": 760,
-      "height": 1325,
+      "height": 1365,
       "layouts": [
         "SimulateCommercialOffer-inline",
         "SimulateCommercialOffer-business-draft"
@@ -388,10 +388,10 @@
       "intent": "SimulateCommercialOffer",
       "variant": "narrow",
       "name": "SimulateCommercialOffer-narrow.png",
-      "bytes": 289238,
-      "sha256": "c43c641fb26b16d704cccbc09427ebcde2a589a2dfc8c41049212ca6c6ca7db1",
+      "bytes": 265105,
+      "sha256": "c7498c689b0b02b4301866550b730c685496b7db9fcec53bfbf5a4c802ce3c96",
       "width": 390,
-      "height": 1819,
+      "height": 1859,
       "layouts": [
         "SimulateCommercialOffer-inline",
         "SimulateCommercialOffer-business-draft"
@@ -403,10 +403,10 @@
       "intent": "SimulateCommercialOffer",
       "variant": "dark",
       "name": "SimulateCommercialOffer-dark.png",
-      "bytes": 283201,
-      "sha256": "0ffa0081ad426d7c388a50bd3c9aba631acd2c8767c7182910fbd82344e45608",
+      "bytes": 292912,
+      "sha256": "f16598b1cfea6590678dda9d219c8e24da68683160165c1c7d44863516da4583",
       "width": 760,
-      "height": 1325,
+      "height": 1365,
       "layouts": [
         "SimulateCommercialOffer-inline",
         "SimulateCommercialOffer-business-draft"
@@ -418,8 +418,8 @@
       "intent": "ReviewDealException",
       "variant": "standard",
       "name": "ReviewDealException-standard.png",
-      "bytes": 231212,
-      "sha256": "59cbcde61072f8a36d87f3d3c3bae9b7254ee8636ad9403fb7a28ece9138ac9e",
+      "bytes": 204997,
+      "sha256": "4c1826b5947d1c52cb897f91aefbd4c2a9d1b9244770ae0a1dde138cb64cde68",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -433,10 +433,10 @@
       "intent": "ReviewDealException",
       "variant": "narrow",
       "name": "ReviewDealException-narrow.png",
-      "bytes": 189088,
-      "sha256": "60b0a08ffc72293034addd97cde339002f207e6e5b05f4d1d8368f880c41e465",
+      "bytes": 163711,
+      "sha256": "7c0c929b2e1845014842f22e132c8baa7a86af69d83112f3e735a09fa05ea886",
       "width": 390,
-      "height": 1040,
+      "height": 1080,
       "layouts": [
         "ReviewDealException-inline",
         "ReviewDealException-business-draft"
@@ -448,8 +448,8 @@
       "intent": "ReviewDealException",
       "variant": "dark",
       "name": "ReviewDealException-dark.png",
-      "bytes": 186534,
-      "sha256": "5a01e91ed7874dd6651f133da982e4e73eaaf5ea6345f4630a6f9005d6391e0d",
+      "bytes": 179520,
+      "sha256": "0231f31e80947787dcbbe8c3ea3357aac802c57de06a79764106e135eab0807c",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -463,8 +463,8 @@
       "intent": "InspectForecastCommit",
       "variant": "standard",
       "name": "InspectForecastCommit-standard.png",
-      "bytes": 227595,
-      "sha256": "5a5df6a4a9f2c4a049b572fdd6e6c450c0584f076621bae08b610628ccf53a3e",
+      "bytes": 200360,
+      "sha256": "2f122a8c47c0824720606e285aa7df1610cfe136e840b4ece9311c2ca5c122a9",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -478,10 +478,10 @@
       "intent": "InspectForecastCommit",
       "variant": "narrow",
       "name": "InspectForecastCommit-narrow.png",
-      "bytes": 188602,
-      "sha256": "7445fa2f5e7f2f86ce2cf03b0f92d69b65308eaa2ac4cffcc0c3e5ab33a52e52",
+      "bytes": 166499,
+      "sha256": "ef994001c963acd88b5d25cfb56cdde9529b901f58d30a8e92f15469454818b7",
       "width": 390,
-      "height": 1048,
+      "height": 1088,
       "layouts": [
         "InspectForecastCommit-inline",
         "InspectForecastCommit-business-draft"
@@ -493,8 +493,8 @@
       "intent": "InspectForecastCommit",
       "variant": "dark",
       "name": "InspectForecastCommit-dark.png",
-      "bytes": 184041,
-      "sha256": "a74f4ae42b6b3aeca650995cdb46a4d9e3ec1f00eb394a3307a23453e044ab31",
+      "bytes": 176215,
+      "sha256": "b0763360a8d827603318f542a7f66e44390aa444350e23019542ab310ba4c42b",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -508,10 +508,10 @@
       "intent": "ExplorePipelineQuality",
       "variant": "standard",
       "name": "ExplorePipelineQuality-standard.png",
-      "bytes": 425530,
-      "sha256": "08b9457eead244dc0a7273280aef817da075ef17115f7a6ef8e5e5c75df8b8f3",
+      "bytes": 406215,
+      "sha256": "8cf6896dc4e9cf26bf4c84940fd873145398a272420dfac4198b293a2cfdc9db",
       "width": 760,
-      "height": 1526,
+      "height": 1586,
       "layouts": [
         "ExplorePipelineQuality-inline",
         "ExplorePipelineQuality-business-draft"
@@ -523,10 +523,10 @@
       "intent": "ExplorePipelineQuality",
       "variant": "narrow",
       "name": "ExplorePipelineQuality-narrow.png",
-      "bytes": 298942,
-      "sha256": "d1004eb735a808359e5846157414a68d209cdc391f97cd1a0f48ff27e4b22cba",
+      "bytes": 286583,
+      "sha256": "6a095a001765fb4c6ec4f00cd5f501cef99bf4113805cdaf0ad703c9df8ed7d7",
       "width": 390,
-      "height": 1767,
+      "height": 1875,
       "layouts": [
         "ExplorePipelineQuality-inline",
         "ExplorePipelineQuality-business-draft"
@@ -538,10 +538,10 @@
       "intent": "ExplorePipelineQuality",
       "variant": "dark",
       "name": "ExplorePipelineQuality-dark.png",
-      "bytes": 308641,
-      "sha256": "7d7478b1f03dda38d6a741069a6b121075c4a2f5e2ea715fabf720a1b4f1b22e",
+      "bytes": 339034,
+      "sha256": "27b3adb2a293ef0ff2c5bc10073e7c7c168f736a10374ced38f187617d50dfcd",
       "width": 760,
-      "height": 1526,
+      "height": 1586,
       "layouts": [
         "ExplorePipelineQuality-inline",
         "ExplorePipelineQuality-business-draft"
@@ -553,10 +553,10 @@
       "intent": "DiscoverAccountOpportunity",
       "variant": "standard",
       "name": "DiscoverAccountOpportunity-standard.png",
-      "bytes": 416739,
-      "sha256": "902ce7b7119d3e5d024d790aca99cdceb7b53f1360197a9d9876523b5b986e70",
+      "bytes": 406576,
+      "sha256": "b5d5fa1c18cca6b0dfc96bce648b61261baa2caeaca08c8bb050962d0800ccfc",
       "width": 760,
-      "height": 1392,
+      "height": 1516,
       "layouts": [
         "DiscoverAccountOpportunity-inline",
         "DiscoverAccountOpportunity-business-draft"
@@ -568,10 +568,10 @@
       "intent": "DiscoverAccountOpportunity",
       "variant": "narrow",
       "name": "DiscoverAccountOpportunity-narrow.png",
-      "bytes": 287927,
-      "sha256": "e4b55f1367271ba72cc24b462dc720e7f1b9b07ecceefcbabd43cd615e772d89",
+      "bytes": 277457,
+      "sha256": "62213a8b7361f3b8ecd2afa872a9531b28c096893656a88133ef172ca462bfb6",
       "width": 390,
-      "height": 1569,
+      "height": 1693,
       "layouts": [
         "DiscoverAccountOpportunity-inline",
         "DiscoverAccountOpportunity-business-draft"
@@ -583,10 +583,10 @@
       "intent": "DiscoverAccountOpportunity",
       "variant": "dark",
       "name": "DiscoverAccountOpportunity-dark.png",
-      "bytes": 397073,
-      "sha256": "23e8c0f3c02d6da459638556142834f07b36e001877fac3ed86a148e2b3d263e",
+      "bytes": 406801,
+      "sha256": "070437fbd61e3261f8508a2de439f9644225f91e0485907c665a4bfd10554cd4",
       "width": 760,
-      "height": 1392,
+      "height": 1516,
       "layouts": [
         "DiscoverAccountOpportunity-inline",
         "DiscoverAccountOpportunity-business-draft"
@@ -598,10 +598,10 @@
       "intent": "ResearchCompetitivePosition",
       "variant": "standard",
       "name": "ResearchCompetitivePosition-standard.png",
-      "bytes": 307884,
-      "sha256": "f80bfbd9c90ec669d1e7ac7c579a4e8da0e0e90862819295d8c523a776dc64f9",
+      "bytes": 279988,
+      "sha256": "c223e024e9e367fb0560e2946c3076fcb6c14ed69797b15d6edc178f37f8a3c0",
       "width": 760,
-      "height": 1019,
+      "height": 1059,
       "layouts": [
         "ResearchCompetitivePosition-inline",
         "ResearchCompetitivePosition-business-draft"
@@ -613,10 +613,10 @@
       "intent": "ResearchCompetitivePosition",
       "variant": "narrow",
       "name": "ResearchCompetitivePosition-narrow.png",
-      "bytes": 210738,
-      "sha256": "bc9e6787db70d672b878cc41043ede3ae00067c1b14801357406fdcf322117c2",
+      "bytes": 185813,
+      "sha256": "064bfa6b243a4e9bed96b39e20bfabaf6f4a738827a9f00f8a4e3374b638fffa",
       "width": 390,
-      "height": 1125,
+      "height": 1165,
       "layouts": [
         "ResearchCompetitivePosition-inline",
         "ResearchCompetitivePosition-business-draft"
@@ -628,10 +628,10 @@
       "intent": "ResearchCompetitivePosition",
       "variant": "dark",
       "name": "ResearchCompetitivePosition-dark.png",
-      "bytes": 225931,
-      "sha256": "2a542773097cbe8e9f85e3e252c1b9baf57e30c746db3f2bec7e75d9f2465257",
+      "bytes": 230020,
+      "sha256": "0fe89ca94909817b682ec36468e6f97a826b369278c1a0b20511f702c3d2abf4",
       "width": 760,
-      "height": 1019,
+      "height": 1059,
       "layouts": [
         "ResearchCompetitivePosition-inline",
         "ResearchCompetitivePosition-business-draft"
@@ -643,10 +643,10 @@
       "intent": "CoachDealStrategy",
       "variant": "standard",
       "name": "CoachDealStrategy-standard.png",
-      "bytes": 300839,
-      "sha256": "616e533b9aa81f803ae8255465382e2c98dae1d35cf9fe7b8d2aec99f5d30c34",
+      "bytes": 278843,
+      "sha256": "a7fd153474b6e478469ea68da30c6335a7b515d9a48be506d0272aef9603f70d",
       "width": 760,
-      "height": 999,
+      "height": 1039,
       "layouts": [
         "CoachDealStrategy-inline",
         "CoachDealStrategy-business-draft"
@@ -658,10 +658,10 @@
       "intent": "CoachDealStrategy",
       "variant": "narrow",
       "name": "CoachDealStrategy-narrow.png",
-      "bytes": 210107,
-      "sha256": "d012bf920a7430e41281e7e596fff0decd964b1121816d8643728fd4679bff08",
+      "bytes": 185102,
+      "sha256": "c8fb945d5ec764f1270b6ac827fa9b80b024ab31fa9d3982720221351580f5c1",
       "width": 390,
-      "height": 1097,
+      "height": 1137,
       "layouts": [
         "CoachDealStrategy-inline",
         "CoachDealStrategy-business-draft"
@@ -673,10 +673,10 @@
       "intent": "CoachDealStrategy",
       "variant": "dark",
       "name": "CoachDealStrategy-dark.png",
-      "bytes": 222186,
-      "sha256": "2ac9b37c5608ce02a6cd362ea301390e5d3462b2575f9086dfa375b299c3be0a",
+      "bytes": 228118,
+      "sha256": "eca759c1fc9a9a1cc15aecd9fb9ec3e7e0eb7fac02a68431f6fb44368b9489e9",
       "width": 760,
-      "height": 999,
+      "height": 1039,
       "layouts": [
         "CoachDealStrategy-inline",
         "CoachDealStrategy-business-draft"
@@ -688,8 +688,8 @@
       "intent": "CreateExecutiveEngagementPlan",
       "variant": "standard",
       "name": "CreateExecutiveEngagementPlan-standard.png",
-      "bytes": 227061,
-      "sha256": "ff65ec47466585741fcca5d1e47e16fcaf8938d371e983a1d716cc648a899d39",
+      "bytes": 199059,
+      "sha256": "2c4a149bf678ac712be5c9f6c5f4a406d2c8d02e53e45e8a29263d0a072c205d",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -703,10 +703,10 @@
       "intent": "CreateExecutiveEngagementPlan",
       "variant": "narrow",
       "name": "CreateExecutiveEngagementPlan-narrow.png",
-      "bytes": 182709,
-      "sha256": "aece964cbe326c615df1b0ed4e8b72b1ad8c8577f773b5d33660aacfd5d2411d",
+      "bytes": 160856,
+      "sha256": "b496af36eaf6d4b8dcae7680086d783bf5aa0943145e52e4787512945840fd4b",
       "width": 390,
-      "height": 1033,
+      "height": 1073,
       "layouts": [
         "CreateExecutiveEngagementPlan-inline",
         "CreateExecutiveEngagementPlan-business-draft"
@@ -718,8 +718,8 @@
       "intent": "CreateExecutiveEngagementPlan",
       "variant": "dark",
       "name": "CreateExecutiveEngagementPlan-dark.png",
-      "bytes": 183220,
-      "sha256": "c3a86b268986ed34c50405fda864287bbd41c4614006f383d4322cdd874ffa0a",
+      "bytes": 176135,
+      "sha256": "fb8c7c850111afdecb2efdb1f2b1c1efeb7c2c28bfcc9225d0c939701387d999",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -733,10 +733,10 @@
       "intent": "TrackMeetingFollowUp",
       "variant": "standard",
       "name": "TrackMeetingFollowUp-standard.png",
-      "bytes": 310424,
-      "sha256": "3882bc73a36a0f4b0f4fb2b02552afae0b8a696339eaacab322b1e9b24e1c147",
+      "bytes": 288354,
+      "sha256": "f8a3ddd7f19a67c5d08506e430e82428471fdcc0b6943e10ceaa167d5575855d",
       "width": 760,
-      "height": 1066,
+      "height": 1106,
       "layouts": [
         "TrackMeetingFollowUp-inline",
         "TrackMeetingFollowUp-business-draft"
@@ -748,10 +748,10 @@
       "intent": "TrackMeetingFollowUp",
       "variant": "narrow",
       "name": "TrackMeetingFollowUp-narrow.png",
-      "bytes": 218183,
-      "sha256": "021b86073f1d2be176f6b368562a861a4be5b8e6263cb9e190c327c1e0f1d6f4",
+      "bytes": 196627,
+      "sha256": "d7d639bba12780c85a03bf4a4752311389d769e852eb2a791d616f698bbb0b5f",
       "width": 390,
-      "height": 1172,
+      "height": 1212,
       "layouts": [
         "TrackMeetingFollowUp-inline",
         "TrackMeetingFollowUp-business-draft"
@@ -763,10 +763,10 @@
       "intent": "TrackMeetingFollowUp",
       "variant": "dark",
       "name": "TrackMeetingFollowUp-dark.png",
-      "bytes": 229813,
-      "sha256": "5223e21374e6458812906cb02074589fbe86cb973833f1078ea401b734c74f3c",
+      "bytes": 236567,
+      "sha256": "df60d0e75c6aeea2d0fc76430728d3602e6459edbed7a3748b074fe0ef15b50f",
       "width": 760,
-      "height": 1066,
+      "height": 1106,
       "layouts": [
         "TrackMeetingFollowUp-inline",
         "TrackMeetingFollowUp-business-draft"
@@ -778,8 +778,8 @@
       "intent": "BuildValueCase",
       "variant": "standard",
       "name": "BuildValueCase-standard.png",
-      "bytes": 241259,
-      "sha256": "d66a7f7a4172cdc58144d9929e119b25d40751d0d4350e768fdcc2c60887a29e",
+      "bytes": 215099,
+      "sha256": "bf5dccd83aeeb9d8cf7e6eb50dcd15ddfdb6a60160f32b2e0b23372a3d58bc87",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -793,10 +793,10 @@
       "intent": "BuildValueCase",
       "variant": "narrow",
       "name": "BuildValueCase-narrow.png",
-      "bytes": 203021,
-      "sha256": "49aaad792cafc6c4f9a5f283130bbcab63a93dd2364e3043e01b4b3318de4491",
+      "bytes": 178288,
+      "sha256": "43cf3d2da7a2ffb82d0e36715b9cf055475ffab039eb5bfd5bdd6311006a423c",
       "width": 390,
-      "height": 1217,
+      "height": 1257,
       "layouts": [
         "BuildValueCase-inline",
         "BuildValueCase-business-draft"
@@ -808,8 +808,8 @@
       "intent": "BuildValueCase",
       "variant": "dark",
       "name": "BuildValueCase-dark.png",
-      "bytes": 192799,
-      "sha256": "84e60a54923c56bd3069f866bbfb598c2e4c9dcc57ef3221a35cce7f84f0ffa1",
+      "bytes": 188114,
+      "sha256": "0bd9912e78d58ae1f8253952e12496efafb1be412856fe9e8db7d615be407045",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -823,8 +823,8 @@
       "intent": "ReviewProposalReadiness",
       "variant": "standard",
       "name": "ReviewProposalReadiness-standard.png",
-      "bytes": 219872,
-      "sha256": "93628ad100993ec6d1253ef6b6686ab10f4511b8aa23ee25c7bc734741e38b3c",
+      "bytes": 188371,
+      "sha256": "406b0371996f16f2495cf6b974268378daddba8f9b2f5cbcc876d739e1e38bee",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -838,8 +838,8 @@
       "intent": "ReviewProposalReadiness",
       "variant": "narrow",
       "name": "ReviewProposalReadiness-narrow.png",
-      "bytes": 170838,
-      "sha256": "3c8eaa7fafffeb14efcda4cd9b9996b280f4468bd334c792ea37f0623e6920a7",
+      "bytes": 143810,
+      "sha256": "013354a169154efd21e0c342fd1a2d706a6e7d57e37f0395c0a79d31cc1bce69",
       "width": 390,
       "height": 980,
       "layouts": [
@@ -853,8 +853,8 @@
       "intent": "ReviewProposalReadiness",
       "variant": "dark",
       "name": "ReviewProposalReadiness-dark.png",
-      "bytes": 177577,
-      "sha256": "3ac549e28dc18addadd9da97ec0f0192dae2d24903c68c4f97618f7c5b3023c5",
+      "bytes": 166944,
+      "sha256": "a401eb48dd0ff649d795114dcc920d3794d32ce4618dc6a8f1513c2e5fb2154d",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -868,8 +868,8 @@
       "intent": "PlanCustomerSuccessHandoff",
       "variant": "standard",
       "name": "PlanCustomerSuccessHandoff-standard.png",
-      "bytes": 234394,
-      "sha256": "52440e4cb5b5571607a1e1058dd365def14fb223477056cdcaed5f302b02761b",
+      "bytes": 207291,
+      "sha256": "9491238b0f8d0197fd45bfcb4df363595530de4e6fae3a06bfd30493e4e81d60",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -883,10 +883,10 @@
       "intent": "PlanCustomerSuccessHandoff",
       "variant": "narrow",
       "name": "PlanCustomerSuccessHandoff-narrow.png",
-      "bytes": 188550,
-      "sha256": "48169538d74797099781279f0b88daf670199000677a3c48f757bc59cda3ea8f",
+      "bytes": 166505,
+      "sha256": "4376e9d550cd8b8302b811fbf9b9c709b067efd0c2e832b54cd3a11dac849c57",
       "width": 390,
-      "height": 1073,
+      "height": 1113,
       "layouts": [
         "PlanCustomerSuccessHandoff-inline",
         "PlanCustomerSuccessHandoff-business-draft"
@@ -898,8 +898,8 @@
       "intent": "PlanCustomerSuccessHandoff",
       "variant": "dark",
       "name": "PlanCustomerSuccessHandoff-dark.png",
-      "bytes": 187838,
-      "sha256": "066bfa99675d732badc41310d43931f8b316f2ddc82bf2f5133c0d43210e38da",
+      "bytes": 181308,
+      "sha256": "2bf7344c694e8816b924160e6159ab6ba6f1f590d936eeb5241db076ff4608b4",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -913,10 +913,10 @@
       "intent": "ExploreAgentCapabilities",
       "variant": "standard",
       "name": "ExploreAgentCapabilities-standard.png",
-      "bytes": 306841,
-      "sha256": "10a0345eb7775613831b0a195d5c241e55668d762c78fae78c0c529844674903",
+      "bytes": 315110,
+      "sha256": "3dd04565eb20146137b6a5126fd735753d36022d537f8c6ade71f194ef8d0d4b",
       "width": 760,
-      "height": 1027,
+      "height": 1141,
       "layouts": [
         "ExploreAgentCapabilities-inline",
         "ExploreAgentCapabilities-business-draft"
@@ -928,10 +928,10 @@
       "intent": "ExploreAgentCapabilities",
       "variant": "narrow",
       "name": "ExploreAgentCapabilities-narrow.png",
-      "bytes": 210441,
-      "sha256": "ff279bf77e054e32a5c0fa219462a4f6ca2deca9b0108e21cd59390b80951030",
+      "bytes": 217426,
+      "sha256": "753e4aee83b76663d26948d812b5518ade87d2a29220b3bf9995b2aeaf4af207",
       "width": 390,
-      "height": 1125,
+      "height": 1299,
       "layouts": [
         "ExploreAgentCapabilities-inline",
         "ExploreAgentCapabilities-business-draft"
@@ -943,10 +943,10 @@
       "intent": "ExploreAgentCapabilities",
       "variant": "dark",
       "name": "ExploreAgentCapabilities-dark.png",
-      "bytes": 226395,
-      "sha256": "af85feee3a8aa3c6234c5f02ae14fb6c6b831326074c493003465e25f9edfd76",
+      "bytes": 260259,
+      "sha256": "0d680911adcf9332919e2ad9512058df8738b8e67c7a7ad8c048018b9a3c2cc4",
       "width": 760,
-      "height": 1027,
+      "height": 1141,
       "layouts": [
         "ExploreAgentCapabilities-inline",
         "ExploreAgentCapabilities-business-draft"
@@ -958,14 +958,15 @@
       "intent": "DiscoverAccountOpportunity",
       "variant": "dashboard",
       "name": "DiscoverAccountOpportunity-dashboard.png",
-      "bytes": 1242536,
-      "sha256": "254c337d7946257d7451135656ab695af4c56c8f00631cd1dcc8f36afdf24f00",
+      "bytes": 1203747,
+      "sha256": "06c46813617372802fc7e5b850c787556420b2648d579722a137279e9c057165",
       "width": 1440,
-      "height": 3012,
+      "height": 3348,
       "layouts": [
         "DiscoverAccountOpportunity-fullscreen",
-        "DiscoverAccountOpportunity-business-draft",
-        "my-deals-dashboard"
+        "my-deals-dashboard",
+        "deal-operations-seller-queue",
+        "DiscoverAccountOpportunity-business-draft"
       ],
       "workflowStage": "analysis",
       "selectedEntityId": "ZDR-2042"
@@ -974,14 +975,14 @@
       "intent": "MapBuyingCommittee",
       "variant": "dashboard",
       "name": "MapBuyingCommittee-dashboard.png",
-      "bytes": 1057791,
-      "sha256": "186453ee7a518ad80614b7886a6c1e493a078f1ac8037bd95e42bdb3db631179",
+      "bytes": 1118815,
+      "sha256": "b30ee896f03b3d214345464e346e2996eae1d7df070e9b9e8f62267c5a7bb046",
       "width": 1440,
-      "height": 2906,
+      "height": 2582,
       "layouts": [
         "MapBuyingCommittee-fullscreen",
-        "MapBuyingCommittee-business-draft",
-        "deal-room-dashboard"
+        "deal-room-dashboard",
+        "MapBuyingCommittee-business-draft"
       ],
       "workflowStage": "analysis",
       "selectedEntityId": "ZDR-2042"
@@ -990,14 +991,15 @@
       "intent": "SimulateCommercialOffer",
       "variant": "dashboard",
       "name": "SimulateCommercialOffer-dashboard.png",
-      "bytes": 917146,
-      "sha256": "b90bb5d099e28714cfbb08cca5f1088689b275d26b0e961a541f78cf9fb192d0",
+      "bytes": 1195065,
+      "sha256": "88302e48c777d46acdb30dd73bceaca1524f562fc768fe0ec9989caf77a3a35a",
       "width": 1440,
-      "height": 2245,
+      "height": 3462,
       "layouts": [
         "SimulateCommercialOffer-fullscreen",
-        "SimulateCommercialOffer-business-draft",
-        "commercial-desk-dashboard"
+        "commercial-desk-dashboard",
+        "deal-operations-reviewer-queue",
+        "SimulateCommercialOffer-business-draft"
       ],
       "workflowStage": "analysis",
       "selectedEntityId": "ZDR-2042"
@@ -1006,14 +1008,14 @@
       "intent": "InspectForecastCommit",
       "variant": "dashboard",
       "name": "InspectForecastCommit-dashboard.png",
-      "bytes": 1013280,
-      "sha256": "42ae863ca2488b82ba7710b43c9c4da8652ee9e1c5659a0c794aba740cea3066",
+      "bytes": 1060385,
+      "sha256": "f898f5497835945992d942781dbe857608bad455ab09cdd488e162ed8ed0db7d",
       "width": 1440,
-      "height": 2424,
+      "height": 2602,
       "layouts": [
         "InspectForecastCommit-fullscreen",
-        "InspectForecastCommit-business-draft",
-        "revenue-command-dashboard"
+        "revenue-command-dashboard",
+        "InspectForecastCommit-business-draft"
       ],
       "workflowStage": "draft",
       "selectedEntityId": "ZDR-2042"
@@ -1022,8 +1024,8 @@
       "intent": "QualifyOpportunity",
       "variant": "review",
       "name": "QualifyOpportunity-review.png",
-      "bytes": 243389,
-      "sha256": "afc6bacb3a8e855564005565c97e942102192d9fdd8eab4e528d914b4791517b",
+      "bytes": 217661,
+      "sha256": "fa3b806cd061eae17f01e70abe8055b7dfa64b42d373b531349cf550ed810f1b",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1037,14 +1039,15 @@
       "intent": "QualifyOpportunity",
       "variant": "receipt",
       "name": "QualifyOpportunity-receipt.png",
-      "bytes": 764771,
-      "sha256": "7b78dc4c76d64d693f0bd49ac3720dd4737535a9ee03960978098d24c6a40e43",
+      "bytes": 701376,
+      "sha256": "cfc2eaa76f318664635da0f0c474247be9f1c938684840a4846a1e4c8dc7b2c1",
       "width": 760,
-      "height": 2983,
+      "height": 3695,
       "layouts": [
         "QualifyOpportunity-fullscreen",
-        "QualifyOpportunity-business-receipt",
-        "my-deals-dashboard"
+        "my-deals-dashboard",
+        "deal-operations-seller-queue",
+        "QualifyOpportunity-business-receipt"
       ],
       "workflowStage": "receipt",
       "selectedEntityId": "ZDR-2042"
@@ -1053,8 +1056,8 @@
       "intent": "BuildMutualActionPlan",
       "variant": "review",
       "name": "BuildMutualActionPlan-review.png",
-      "bytes": 265807,
-      "sha256": "cde08471cf02da9851afd836eccb22a53af1196647f0c0b7fe64ba35203049ec",
+      "bytes": 240596,
+      "sha256": "0f37afae95b467c62916641c159e610bc6e483e08e80687afc455dbcb99bbbc1",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1068,14 +1071,14 @@
       "intent": "BuildMutualActionPlan",
       "variant": "receipt",
       "name": "BuildMutualActionPlan-receipt.png",
-      "bytes": 741485,
-      "sha256": "fe52570133f1feeeef20752e490276a41c09032e19c80e6dd41993f5542b5e7d",
+      "bytes": 827016,
+      "sha256": "130ceaf5eb48e6bdee590aede9c558503a16c3c620d3c9cf9b76b02a40cf52b1",
       "width": 760,
-      "height": 3462,
+      "height": 3503,
       "layouts": [
         "BuildMutualActionPlan-fullscreen",
-        "BuildMutualActionPlan-business-receipt",
-        "deal-room-dashboard"
+        "deal-room-dashboard",
+        "BuildMutualActionPlan-business-receipt"
       ],
       "workflowStage": "receipt",
       "selectedEntityId": "ZDR-2042"
@@ -1084,8 +1087,8 @@
       "intent": "ReviewMeetingCommitments",
       "variant": "review",
       "name": "ReviewMeetingCommitments-review.png",
-      "bytes": 254467,
-      "sha256": "a6dc01f9ee295d1b747499f5e8daf71104bdc402162da57857e71fe6091818ba",
+      "bytes": 228013,
+      "sha256": "06055f435ac46fbd5f9c80eb15b01c3cb76bcddd95bc14293f9100c111c4277f",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1099,14 +1102,15 @@
       "intent": "ReviewMeetingCommitments",
       "variant": "receipt",
       "name": "ReviewMeetingCommitments-receipt.png",
-      "bytes": 777438,
-      "sha256": "49d5ea51a0b88e4d1c7fc0da7073c0d04a593a0eac6d7f3e85de5f0145c3f3a9",
+      "bytes": 710931,
+      "sha256": "91cf9574df42d07e77e4d97f02c6533a9717b66c6d9dbf6611de82ee6da987a3",
       "width": 760,
-      "height": 3031,
+      "height": 3723,
       "layouts": [
         "ReviewMeetingCommitments-fullscreen",
-        "ReviewMeetingCommitments-business-receipt",
-        "my-deals-dashboard"
+        "my-deals-dashboard",
+        "deal-operations-seller-queue",
+        "ReviewMeetingCommitments-business-receipt"
       ],
       "workflowStage": "receipt",
       "selectedEntityId": "ZDR-2042"
@@ -1115,8 +1119,8 @@
       "intent": "ShapeSolutionProposal",
       "variant": "review",
       "name": "ShapeSolutionProposal-review.png",
-      "bytes": 262392,
-      "sha256": "ce22641eb2a7c862841bff7115f63a1f66dbd6adf7f3fbaa765392f47cc5dde4",
+      "bytes": 235068,
+      "sha256": "55eb32fca1de493d943d925bbce3d9569bef741699bd7d0b7c09a56633240090",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1130,14 +1134,14 @@
       "intent": "ShapeSolutionProposal",
       "variant": "receipt",
       "name": "ShapeSolutionProposal-receipt.png",
-      "bytes": 740657,
-      "sha256": "26140cf0aefd971ed4ae19e3607d213ed71b3ebdb976d4132c80733e34daf9b6",
+      "bytes": 822136,
+      "sha256": "56547f9f0bf189712ac4386dc82f4fa979434753f06ec46e680ce348fdfc3fc0",
       "width": 760,
-      "height": 3434,
+      "height": 3475,
       "layouts": [
         "ShapeSolutionProposal-fullscreen",
-        "ShapeSolutionProposal-business-receipt",
-        "deal-room-dashboard"
+        "deal-room-dashboard",
+        "ShapeSolutionProposal-business-receipt"
       ],
       "workflowStage": "receipt",
       "selectedEntityId": "ZDR-2042"
@@ -1146,8 +1150,8 @@
       "intent": "ReviewDealException",
       "variant": "review",
       "name": "ReviewDealException-review.png",
-      "bytes": 264694,
-      "sha256": "d48b0d4a17eb25f4136f789b3aa57f6213713a3876023b6ffa2f47801ffab5e2",
+      "bytes": 237707,
+      "sha256": "dd63f6354aa966d19d2d293985fc0d8f7d73341f144cb7ae3008737667af5bbc",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1161,14 +1165,15 @@
       "intent": "ReviewDealException",
       "variant": "receipt",
       "name": "ReviewDealException-receipt.png",
-      "bytes": 622222,
-      "sha256": "996d7e9f555a48409b75b01086731a0f11873c27821dd3f36975cf382d9100c3",
+      "bytes": 809448,
+      "sha256": "01b64377c017b0eaed8865c5413be40335dd6f6e57d9025d92beb15e17819026",
       "width": 760,
-      "height": 2419,
+      "height": 4058,
       "layouts": [
         "ReviewDealException-fullscreen",
-        "ReviewDealException-business-receipt",
-        "commercial-desk-dashboard"
+        "commercial-desk-dashboard",
+        "deal-operations-reviewer-queue",
+        "ReviewDealException-business-receipt"
       ],
       "workflowStage": "receipt",
       "selectedEntityId": "ZDR-2042"
@@ -1177,8 +1182,8 @@
       "intent": "InspectForecastCommit",
       "variant": "review",
       "name": "InspectForecastCommit-review.png",
-      "bytes": 259741,
-      "sha256": "d965a09e22acd46fcd2aedf6909cad6fd5a767821a76211ae6d91f06fc8dfc5f",
+      "bytes": 233605,
+      "sha256": "29c9240fbed33289b923d409e42156070fb0451683ce23f8c95af21ebfd2d68e",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1192,14 +1197,14 @@
       "intent": "InspectForecastCommit",
       "variant": "receipt",
       "name": "InspectForecastCommit-receipt.png",
-      "bytes": 790490,
-      "sha256": "d6497a89a15ae1a4185efe4d405c9471b9aa0bde5274ef876ce6d50a41caf1d5",
+      "bytes": 911920,
+      "sha256": "404a7d40f1b01d70f85fc6f2c5c001c871bf64064056ea98048637983aa58079",
       "width": 760,
-      "height": 3133,
+      "height": 4125,
       "layouts": [
         "InspectForecastCommit-fullscreen",
-        "InspectForecastCommit-business-receipt",
-        "revenue-command-dashboard"
+        "revenue-command-dashboard",
+        "InspectForecastCommit-business-receipt"
       ],
       "workflowStage": "receipt",
       "selectedEntityId": "ZDR-2042"
@@ -1208,8 +1213,8 @@
       "intent": "CreateExecutiveEngagementPlan",
       "variant": "review",
       "name": "CreateExecutiveEngagementPlan-review.png",
-      "bytes": 262039,
-      "sha256": "8e75e4b397b2e5d0affea8152faa8b0632480659cb82e8f20f7d952e787dbdf2",
+      "bytes": 235692,
+      "sha256": "fb45d1b1b2ee2e864ced781b40f1e0bbc7d8c58a563b1f3179a6f3d7b94012dd",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1223,14 +1228,14 @@
       "intent": "CreateExecutiveEngagementPlan",
       "variant": "receipt",
       "name": "CreateExecutiveEngagementPlan-receipt.png",
-      "bytes": 741004,
-      "sha256": "11a276eb72e09200536d4b10f58c760e08b35db4dcaa551c98a17ce85a87036e",
+      "bytes": 822637,
+      "sha256": "28087021dd768584957c1f5cd8855b056598120bf27ef4daed13537e570fc54a",
       "width": 760,
-      "height": 3434,
+      "height": 3475,
       "layouts": [
         "CreateExecutiveEngagementPlan-fullscreen",
-        "CreateExecutiveEngagementPlan-business-receipt",
-        "deal-room-dashboard"
+        "deal-room-dashboard",
+        "CreateExecutiveEngagementPlan-business-receipt"
       ],
       "workflowStage": "receipt",
       "selectedEntityId": "ZDR-2042"
@@ -1239,8 +1244,8 @@
       "intent": "BuildValueCase",
       "variant": "review",
       "name": "BuildValueCase-review.png",
-      "bytes": 275213,
-      "sha256": "ff0783e100d90aa5dd6f17158f0703bc5832aec6ecc480fa2b19f434d9ce7e26",
+      "bytes": 250758,
+      "sha256": "190f3226ac65c24ca59ce133342787826cfc7c6304c889a0fb9295a825a678b9",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1254,14 +1259,14 @@
       "intent": "BuildValueCase",
       "variant": "receipt",
       "name": "BuildValueCase-receipt.png",
-      "bytes": 747265,
-      "sha256": "4f4a5fb7182e91eeb99cac28691f11e1e228dd3dd83af49030fac4b878c46099",
+      "bytes": 834034,
+      "sha256": "2f5a7007a8079ee8231099269bb9fe1f98ec2e56845de9588b52acb9f7415d7e",
       "width": 760,
-      "height": 3510,
+      "height": 3551,
       "layouts": [
         "BuildValueCase-fullscreen",
-        "BuildValueCase-business-receipt",
-        "deal-room-dashboard"
+        "deal-room-dashboard",
+        "BuildValueCase-business-receipt"
       ],
       "workflowStage": "receipt",
       "selectedEntityId": "ZDR-2042"
@@ -1270,8 +1275,8 @@
       "intent": "ReviewProposalReadiness",
       "variant": "review",
       "name": "ReviewProposalReadiness-review.png",
-      "bytes": 243442,
-      "sha256": "c39cdad3e788b931a483fe6ffcf1b743bbb6675beb79ce05e5f8316b5610ed23",
+      "bytes": 216059,
+      "sha256": "5775b5c4d6a23642cbaa970983015605825ef8f2adb7cbc0969a611a69a4535b",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1285,14 +1290,15 @@
       "intent": "ReviewProposalReadiness",
       "variant": "receipt",
       "name": "ReviewProposalReadiness-receipt.png",
-      "bytes": 606734,
-      "sha256": "8c7910e2f5fb1654bfa8b20bedca6abc34889d479899d2614372f07c5cadb5b0",
+      "bytes": 789754,
+      "sha256": "bdb23611d02bc35c2515b8d4bf6af5cf3485fbdafcb1b85c90265bc4bffce92b",
       "width": 760,
-      "height": 2343,
+      "height": 3982,
       "layouts": [
         "ReviewProposalReadiness-fullscreen",
-        "ReviewProposalReadiness-business-receipt",
-        "commercial-desk-dashboard"
+        "commercial-desk-dashboard",
+        "deal-operations-reviewer-queue",
+        "ReviewProposalReadiness-business-receipt"
       ],
       "workflowStage": "receipt",
       "selectedEntityId": "ZDR-2042"
@@ -1301,8 +1307,8 @@
       "intent": "PlanCustomerSuccessHandoff",
       "variant": "review",
       "name": "PlanCustomerSuccessHandoff-review.png",
-      "bytes": 269378,
-      "sha256": "498145f0c022f7d3dc715ef7dfc901d71c171ea227ed0140bd61cb4162d11190",
+      "bytes": 243175,
+      "sha256": "c8be0ccd295876c8d127c4aa9efd4b31390b064604f0ed2700932d91cb53d359",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1316,14 +1322,14 @@
       "intent": "PlanCustomerSuccessHandoff",
       "variant": "receipt",
       "name": "PlanCustomerSuccessHandoff-receipt.png",
-      "bytes": 744332,
-      "sha256": "1afeb59ae4b48a5110fb0e71cae2e4cbdf6bfc36f5397053e02edc400c349023",
+      "bytes": 828735,
+      "sha256": "17b77a2e0e1e1f4a2b80cdb2d452990a5952385f334e3a4e17cd43fe125a5a00",
       "width": 760,
-      "height": 3462,
+      "height": 3503,
       "layouts": [
         "PlanCustomerSuccessHandoff-fullscreen",
-        "PlanCustomerSuccessHandoff-business-receipt",
-        "deal-room-dashboard"
+        "deal-room-dashboard",
+        "PlanCustomerSuccessHandoff-business-receipt"
       ],
       "workflowStage": "receipt",
       "selectedEntityId": "ZDR-2042"
@@ -1332,10 +1338,10 @@
       "intent": "SimulateCommercialOffer",
       "variant": "changed",
       "name": "SimulateCommercialOffer-changed.png",
-      "bytes": 368157,
-      "sha256": "3b975d2eb74c3067ec740bad89e507dec208a8b7e317a9bf2bcc65e4425c81f8",
+      "bytes": 346147,
+      "sha256": "ca145f7ba481a145c754e65ee16f4eb30929906110559a377e2b27ea42b4184c",
       "width": 760,
-      "height": 1325,
+      "height": 1365,
       "layouts": [
         "SimulateCommercialOffer-inline",
         "SimulateCommercialOffer-business-draft"
@@ -1347,8 +1353,8 @@
       "intent": "SimulateCommercialOffer",
       "variant": "invalid",
       "name": "SimulateCommercialOffer-invalid.png",
-      "bytes": 267131,
-      "sha256": "11d4548b6505d0010d80005a95eab400fdbcc170627fdee4f38ef70c31612e78",
+      "bytes": 240138,
+      "sha256": "cb8e5ab8c3107e72202176da97c14384209abe93f6227dce1664e57c387c4775",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1362,10 +1368,10 @@
       "intent": "SimulateCommercialOffer",
       "variant": "ramped",
       "name": "SimulateCommercialOffer-ramped.png",
-      "bytes": 362440,
-      "sha256": "6665832fc8be5fd5ee7ac04cdd0c0951d35813b31c0f54dd86cb4e2d44ef8246",
+      "bytes": 340617,
+      "sha256": "41cc288b55acca2d045d2bf73ac60cdafe656dacd3015834baaedc1e872323a3",
       "width": 760,
-      "height": 1325,
+      "height": 1365,
       "layouts": [
         "SimulateCommercialOffer-inline",
         "SimulateCommercialOffer-business-draft"
@@ -1377,10 +1383,10 @@
       "intent": "SimulateCommercialOffer",
       "variant": "zero-subscription",
       "name": "SimulateCommercialOffer-zero-subscription.png",
-      "bytes": 353868,
-      "sha256": "1d137325731ec832b1033993d1075d6b17e4bb48746ebe2e955eb1b2eecc001e",
+      "bytes": 332137,
+      "sha256": "0ba3ed688530c3106f42afde348629416cb3db998af094414065d1c2203510f3",
       "width": 760,
-      "height": 1325,
+      "height": 1365,
       "layouts": [
         "SimulateCommercialOffer-inline",
         "SimulateCommercialOffer-business-draft"
@@ -1392,8 +1398,8 @@
       "intent": "QualifyOpportunity",
       "variant": "blocked-positive",
       "name": "QualifyOpportunity-blocked-positive.png",
-      "bytes": 226239,
-      "sha256": "aeb71f7278acdb8971454ca12f8918c2874698a2ff758305eaf658f1ad64a76e",
+      "bytes": 200284,
+      "sha256": "9496ff936e78b6941fce22193896a4dcc4a464df941ee5537f2565811d9a30a4",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1407,8 +1413,8 @@
       "intent": "ReviewDealException",
       "variant": "blocked-positive",
       "name": "ReviewDealException-blocked-positive.png",
-      "bytes": 226553,
-      "sha256": "16cd040b72495c6dbf90a7ca741b4f49184e1ccbc91a51b7b345747d5badab3a",
+      "bytes": 199078,
+      "sha256": "2f98aeb7528bad8000cd0b47c5464073dc83de3e2a29585ff680d3ee364d9c5c",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1422,8 +1428,8 @@
       "intent": "InspectForecastCommit",
       "variant": "blocked-positive",
       "name": "InspectForecastCommit-blocked-positive.png",
-      "bytes": 226060,
-      "sha256": "0824ea184fb2beeccc600ffb6ea93965de89a4f68e613b9da58af58d2e9b723e",
+      "bytes": 198902,
+      "sha256": "05d80475a5764300648f16ab2425ed4708284716fa582a2c6905d131addce2ae",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1437,8 +1443,8 @@
       "intent": "ReviewProposalReadiness",
       "variant": "blocked-positive",
       "name": "ReviewProposalReadiness-blocked-positive.png",
-      "bytes": 228170,
-      "sha256": "34192f15fa9218e4bbd0770de6ad7f2447272a78276aadbb92d2b5fa5b480923",
+      "bytes": 201368,
+      "sha256": "60216bbe24ed22ff8c035f5caf4fe73e4de9e5fb366f835299fb35ce2e41a98b",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1452,8 +1458,8 @@
       "intent": "BuildAccountBrief",
       "variant": "alternate-account",
       "name": "BuildAccountBrief-alternate-account.png",
-      "bytes": 260403,
-      "sha256": "6d247515fc993f628d92fde6f8d67f0f83d9cd39e0cf3d44e6b84e57376c2153",
+      "bytes": 235326,
+      "sha256": "65630cf9f4e98a3cccea3b2663d635e12df0bbcb0eae069d511a8226c5f511ab",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1467,8 +1473,8 @@
       "intent": "PrepareCustomerMeeting",
       "variant": "alternate-meeting",
       "name": "PrepareCustomerMeeting-alternate-meeting.png",
-      "bytes": 272790,
-      "sha256": "86cb398e3042869fbb14f9bace7a32bc8d658abddf4d6172415ce750b7d37a5e",
+      "bytes": 247054,
+      "sha256": "bb5043024d845a5e87cb458b8f9e476329a856e86eca2c6a5b7152899913796e",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1482,8 +1488,8 @@
       "intent": "ReviewProposalReadiness",
       "variant": "alternate-proposal",
       "name": "ReviewProposalReadiness-alternate-proposal.png",
-      "bytes": 221027,
-      "sha256": "31d07cda19fdb3092512fc4dfd4a848ca4c6b3d0d90b8a6af42b5bfabea40e11",
+      "bytes": 189746,
+      "sha256": "e82b4e24d77bcb8ddf43886cdc8e14c05431b316aab18873684f36b3b0461d40",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1497,8 +1503,8 @@
       "intent": "ReviewDealException",
       "variant": "alternate-exception",
       "name": "ReviewDealException-alternate-exception.png",
-      "bytes": 232276,
-      "sha256": "19888774855a4591a3721e4ecf902abb6cb88835b3c7ed9c940436eb27ae3e88",
+      "bytes": 206080,
+      "sha256": "8deef54be9107e41a0183aac664955ccc1a501d0f0c655a6e9862a5c07bc6449",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1512,8 +1518,8 @@
       "intent": "GetDealRisk",
       "variant": "no-match",
       "name": "GetDealRisk-no-match.png",
-      "bytes": 160552,
-      "sha256": "432f0c7bfd65176adff24470f1dfa115003bbccc2510bce53e22fc460328b274",
+      "bytes": 129582,
+      "sha256": "6b2f96d882204c33e73dbd36d0be26a8c531c03ab38dfd52da81951fc5e8558b",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1527,10 +1533,10 @@
       "intent": "GetDealRisk",
       "variant": "unknown-selection",
       "name": "GetDealRisk-unknown-selection.png",
-      "bytes": 308783,
-      "sha256": "6f3f029a05fe139f6e7581e1cf9b44b57396cb7dc0c3e5360ac0e50d364811a2",
+      "bytes": 289091,
+      "sha256": "22fbadf11391a0a940bf8a9fc71f2dc3fa990f98c3ffeca06edc7c06eef2460a",
       "width": 760,
-      "height": 1055,
+      "height": 1095,
       "layouts": [
         "GetDealRisk-inline",
         "GetDealRisk-business-draft"
@@ -1542,10 +1548,10 @@
       "intent": "ExplorePipelineQuality",
       "variant": "filtered",
       "name": "ExplorePipelineQuality-filtered.png",
-      "bytes": 290096,
-      "sha256": "1c48f7e75ca0a577c8b156379db37702e7d61a80255661e5d16b0a385cc0e92d",
+      "bytes": 404395,
+      "sha256": "284b4a98c84c62c0b8b524e9a99a54677a7ffa1ffad0154ec2696d6251390434",
       "width": 760,
-      "height": 1014,
+      "height": 1586,
       "layouts": [
         "ExplorePipelineQuality-inline",
         "ExplorePipelineQuality-business-draft"
@@ -1557,10 +1563,10 @@
       "intent": "DiscoverAccountOpportunity",
       "variant": "filtered",
       "name": "DiscoverAccountOpportunity-filtered.png",
-      "bytes": 467157,
-      "sha256": "ee89e3fb37e2fa4b4d2a6ce9ad0adefac4d54a27e89fce731347318f22e608a1",
+      "bytes": 457981,
+      "sha256": "5fbb4419713470ace7f6ed68358bd907dd10282e2179d31dec903d7d411a7d44",
       "width": 760,
-      "height": 1599,
+      "height": 1723,
       "layouts": [
         "DiscoverAccountOpportunity-inline",
         "DiscoverAccountOpportunity-business-draft"
@@ -1572,8 +1578,8 @@
       "intent": "ExploreAgentCapabilities",
       "variant": "searched",
       "name": "ExploreAgentCapabilities-searched.png",
-      "bytes": 224703,
-      "sha256": "5458650d82c65cda85eb84953b232690c46797267e58a925ebeba67e1ca78f2a",
+      "bytes": 228970,
+      "sha256": "e537dcc179ef3ae1d60614818fd91c072bd206d46b1fbe2a71096efb67a2d44b",
       "width": 760,
       "height": 980,
       "layouts": [
@@ -1587,10 +1593,10 @@
       "intent": "GetDealRisk",
       "variant": "selected-inference",
       "name": "GetDealRisk-selected-inference.png",
-      "bytes": 290960,
-      "sha256": "16709e418a4a3178c7037131687fe61e9152fc0818dcd4b90c2eed0c9eccfb4f",
+      "bytes": 269404,
+      "sha256": "7983976de06e1a8fd0817f2dcfd255671f1678a6f4fbc1050fb3bf208960f931",
       "width": 760,
-      "height": 1055,
+      "height": 1095,
       "layouts": [
         "GetDealRisk-inline",
         "GetDealRisk-business-draft"

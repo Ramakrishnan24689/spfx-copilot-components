@@ -1,4 +1,47 @@
-# Zava Revenue Deal Room
+# ZavaMesh Revenue Deal Room
+
+## ZavaMesh experience
+
+The sample uses the supplied ZavaMesh woven identity, green/lime visual language and locally bundled
+brand imagery. All 21 Copilot tool names and package identities remain stable.
+
+The global revenue journey connects **portfolio insight -> deal submission -> independent commercial
+review -> explicit decision -> session receipt**. Global investment means illustrative regional
+go-to-market investment, not securities or realized investment returns. Pipeline and weighted values
+are calculated from the filtered offline opportunity catalog; investment assumptions are labeled.
+
+The redesign is informed by public enterprise revenue patterns from
+[Salesforce Revenue Cloud](https://www.salesforce.com/sales/revenue-lifecycle-management/) (guided
+quoting and human governance), [DealHub](https://dealhub.io/platform/) (commercial orchestration),
+[Clari / Salesloft](https://www.salesloft.com/platform/sales-forecasting-software) (risk-to-action
+forecasting) and [Dynamics 365 Sales](https://www.microsoft.com/en-us/dynamics-365/products/sales)
+(connected seller workflow). These are category benchmarks, not a worldwide market ranking.
+
+### Global competitor benchmark and design choices
+
+Public product descriptions were reviewed on October 26, 2026. The comparison considers globally
+available offerings; it is not a hands-on certification, exhaustive competitive audit or market ranking.
+
+| Offering / primary source | Relevant pattern | ZavaMesh response |
+| --- | --- | --- |
+| [Salesforce Revenue Cloud](https://www.salesforce.com/sales/revenue-lifecycle-management/) | Guided quoting, pricing rules and human-controlled revenue governance | Live commercial math followed by visible policy routing and explicit confirmation |
+| [DealHub](https://dealhub.io/platform/) | Context-led, traceable commercial orchestration | One canonical request inbox, independent role stages and matching audit receipts |
+| [Clari / Salesloft Forecast](https://www.salesloft.com/platform/sales-forecasting-software) | Period/region forecasting and risk-to-action visibility | Linked portfolio filters, seller-weighted outlook and evidence-aware interventions |
+| [Dynamics 365 Sales](https://www.microsoft.com/en-us/dynamics-365/products/sales) | Enterprise seller-workflow category benchmark | Separate seller, pursuit, commercial and leadership destinations rather than one universal dashboard |
+| [Zoho CRM](https://www.zoho.com/crm/) | Team-specific spaces, collaboration, forecasting and BI | Role-owned workspaces with a shared confirmed-request overlay, not duplicated workflow records |
+| [Pipedrive reporting](https://www.pipedrive.com/en/features/sales-reporting) | Clear KPI dashboards, pipeline visibility and actionable reporting | Readable value hierarchy, real filter-linked chart geometry, geographic focus and exact-value alternatives |
+
+**Sweet spot:** a focused conversational entry expands into an evidence-aware system of action:
+inspect the opportunity, shape the economics, submit the actual request, make an independent human
+decision, and inspect the result. The sample borrows workflow principles, not competitor UI or assets.
+
+The implementation contract and workspace boundaries are tracked in [todo.md](todo.md).
+
+**Brand redistribution:** ZavaMesh logos and imagery were supplied for this sample. Final public
+redistribution approval remains pending, alongside the existing persona-media review. Optimized
+runtime images and source hashes are recorded in [brand-provenance.json](assets/brand-provenance.json).
+To reimport approved originals, run
+`.\scripts\import-zavamesh-brand.ps1 -Source '<local ZavaMesh asset folder>'`.
 
 This release targets **SPFx 1.24.0-rc.0 and React 18.3.1**. Current validation and package hashes are
 recorded in the [RC0 readiness report](../../RC0-updates.md) and generated
@@ -19,7 +62,7 @@ recorded in the [RC0 readiness report](../../RC0-updates.md) and generated
 
 ## Summary
 
-Zava Revenue Deal Room demonstrates how an agent can become a precise system of action rather than a
+ZavaMesh Revenue Deal Room demonstrates how an agent can become a precise system of action rather than a
 chat response or sales dashboard. Twenty independently routed operational tools and one capability
 explorer share a React 18 application, one connected Contoso revenue graph, four full-screen workspaces,
 and human-controlled review and confirmation patterns.
@@ -55,7 +98,7 @@ different throughout the journey.
 1. Download and deploy [zava-revenue-deal-room.sppkg](sharepoint/solution/zava-revenue-deal-room.sppkg)
    to the tenant app catalog.
 2. Approve deployment for all sites when prompted.
-3. Add the packaged **Zava Revenue Deal Room** agent in Microsoft Copilot.
+3. Add the packaged **ZavaMesh Revenue Deal Room** agent in Microsoft Copilot.
 4. Start with “Show the risks threatening Contoso's global expansion deal this quarter.”
 
 To build locally:
@@ -68,6 +111,32 @@ npm run build
 Use `npm run capture:visual` to regenerate tenant-free publication screenshots and evidence.
 Use `npm run capture:matrix` for the supplementary all-intent/business-state matrix, and
 `npx tsc --project scripts/visual-harness/tsconfig.json` to typecheck the persistent-root harness.
+Use `npm run capture:journeys` to exercise intake, approvals, storage reload/reset, keyboard actions,
+200% page-scale emulation and all four workspaces at 340/760/1440/1920px in both themes.
+Current results for all three visual suites are included in [release-evidence.json](assets/release-evidence.json).
+
+### Try the connected deal journey
+
+1. Expand any operational component, then choose **My Deals -> Submit a deal**.
+2. Enter the account and outcome, model commercials, and explicitly attest sample evidence.
+3. Review the exact values. Submission stays disabled until the confirmation is checked.
+4. In **Commercial Desk**, select the same request, choose its assigned **simulated** reviewer role,
+   enter a 15-1,000-character rationale, and explicitly confirm the stage decision.
+5. The route always starts with Sales manager; discount above 10% adds Commercial director; discount
+   above 18% or margin below 68% adds Executive committee. Each stage requires independent authority.
+   Missing security or sponsor evidence blocks approval but permits a reasoned return/rejection.
+6. Inspect the matching receipt, decision trail and updated status filter. Returned requests can seed
+   a revised submission. **Reset demo data** explicitly restores the two canonical baseline requests.
+7. In **Revenue Command**, change quarter, region and opportunity/investment measure. KPIs, opportunity
+   records, D3 geometry and regional allocation respond to the same visible scope.
+
+Only confirmed demo requests and decisions are stored in browser-session storage. Drafts and review
+consent stay with the current invocation. If storage is denied, a visible warning explains that
+confirmed actions remain memory-only. The shared request overlay survives route changes/reloads in
+the same browser session, but does not mutate the separate specialist workflows or CRM catalog.
+Role switching is a demonstration affordance, not authentication or real delegated approval.
+The agent ZIP is [zavamesh-revenue-deal-room.zip](teams/zavamesh-revenue-deal-room.zip); the `.sppkg`
+filename and component GUIDs are unchanged.
 
 ## Current specialist experiences
 
@@ -241,8 +310,9 @@ mode; never use inferred sentiment or relationship strength as employee-performa
 
 - Tenant-authenticated model routing, Workbench CSP, iframe focus, forced colors, and screen-reader host
   output require a Microsoft 365 test tenant and remain external validation gates.
-- Cross-tool session propagation and live CRM/CPQ/approval integrations are deliberately absent;
-  each tool instance owns its own session-only state.
+- Specialist drafts/receipts remain tool-instance-local. The new full-screen request center shares
+  only confirmed demo requests/decisions through a session overlay; it never updates specialist
+  evidence or the opportunity baseline. Live CRM/CPQ/approval integrations are absent.
 - Persona redistribution is pending final media-rights review as recorded in
   [assets/asset-provenance.json](assets/asset-provenance.json).
 - For sample issues, use the repository issue tracker and include the component name, prompt, host mode,
@@ -252,6 +322,7 @@ mode; never use inferred sentiment or relationship strength as employee-performa
 
 | Version | Date | Notes |
 | --- | --- | --- |
+| 1.0.0.3 / agent 1.0.3 | 2026-10-26 | ZavaMesh branding, linked worldwide revenue/investment analytics, guided deal intake, sequential demo approvals and session audit receipts. Current test/visual totals are generated in release evidence. |
 | 1.0.0.1 / agent 1.0.1 | 2026-10-20 | RC0 specialist completion: 21 scoped experiences, 10 guarded workflows, 87 tests, 118 current visual captures. The SDK may append a fourth agent hotfix segment. |
 | 1.0.0 | 2026-08-31 | Initial GitHub candidate with 21 tools, four visualization-led workspaces, D3 charts/map, persona media, demo scripts, publication evidence, and audited `.sppkg`. |
 
