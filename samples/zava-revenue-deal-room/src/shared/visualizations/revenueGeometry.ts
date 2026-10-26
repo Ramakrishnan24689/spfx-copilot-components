@@ -147,10 +147,11 @@ export const buildPipelineBars = (stages: readonly IPipelineStage[]): readonly I
   }));
 };
 
-export const buildRegionMarks = (regions: readonly IRegionSignal[]): readonly IRegionMark[] => {
+export const buildRegionMarks = (regions: readonly IRegionSignal[], valueDomainMaximum?: number): readonly IRegionMark[] => {
   const x = scaleLinear().domain([-180, 180]).range([LEFT, RIGHT]);
   const y = scaleLinear().domain([90, -60]).range([TOP, BOTTOM]);
-  const radius = scaleSqrt().domain([0, max(regions, (region) => region.value) || 1]).range([7, 22]);
+  const maximum = Math.max(valueDomainMaximum ?? 0, max(regions, region => region.value) || 1);
+  const radius = scaleSqrt().domain([0, maximum]).range([0, 22]);
   return regions.map((region) => ({ ...region, x: x(region.longitude), y: y(region.latitude), radius: radius(region.value) }));
 };
 

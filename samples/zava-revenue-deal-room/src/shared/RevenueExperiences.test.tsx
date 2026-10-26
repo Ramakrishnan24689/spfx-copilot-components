@@ -88,7 +88,7 @@ describe('all-intent business UX with persistent React 18 roots', () => {
     expect(latest().workflowStage).toBe('review');
     expect(container.textContent).toContain('Reviewed business value');
     await act(async () => {
-      const checkbox = container.querySelector('input[type="checkbox"]');
+      const checkbox = container.querySelector('[aria-label="Specialist business experience"] input[type="checkbox"]');
       if (!(checkbox instanceof HTMLInputElement)) throw new Error('Missing explicit confirmation');
       checkbox.click();
     });

@@ -14,7 +14,6 @@ import {
   Money20Regular,
   PeopleTeam20Regular,
   ShieldCheckmark20Regular,
-  Sparkle20Regular,
   TargetArrow20Regular,
 } from "@fluentui/react-icons";
 import type {
@@ -31,14 +30,12 @@ import {
   type EvidenceKind,
 } from "./domain";
 import { PERSONA_MEDIA } from "./media";
+import { ZAVAMESH } from "./brand";
+import DealOperations, { useDealOperationsSession } from "./DealOperations";
+import RevenueDashboard from "./RevenueDashboard";
 import RevenueExperiences from "./RevenueExperiences";
 import { resolveScope } from "./operations";
-import {
-  D3CommercialContour,
-  D3ForecastBridge,
-  D3PipelineQuality,
-  D3RevenueMap,
-} from "./visualizations/RevenueCharts";
+import { D3ForecastBridge } from "./visualizations/RevenueCharts";
 
 export interface IModelContextSnapshot extends Record<string, unknown> {
   readonly intent: string;
@@ -63,6 +60,7 @@ export interface IRevenueAppProps {
   readonly visibleWorkspaceLens?: RevenueLens;
   readonly referenceEvidenceId?: string;
   readonly referenceRegion?: string;
+  readonly workspaceState?: Readonly<Record<string, unknown>>;
 }
 
 const fadeInUp = {
@@ -88,8 +86,8 @@ const useStyles = makeStyles({
   },
   full: { minHeight: "100vh" },
   brandLine: {
-    height: "7px",
-    backgroundImage: `linear-gradient(90deg, ${tokens.colorBrandBackground} 0%, ${tokens.colorPaletteRedBackground3} 48%, ${tokens.colorPaletteMarigoldBackground3} 76%, ${tokens.colorPaletteGreenBackground3} 100%)`,
+    height: "4px",
+    backgroundImage: `linear-gradient(90deg, ${tokens.colorBrandBackground} 0%, ${tokens.colorBrandBackgroundHover} 40%, ${tokens.colorPaletteLightGreenBackground3} 75%, ${tokens.colorPaletteYellowBackground3} 100%)`,
   },
   header: {
     display: "flex",
@@ -100,7 +98,7 @@ const useStyles = makeStyles({
     maxWidth: "100%",
     padding: `${tokens.spacingVerticalL} ${tokens.spacingHorizontalXL}`,
     borderBottom: `1px solid ${tokens.colorNeutralStroke2}`,
-    backgroundImage: `linear-gradient(115deg, ${tokens.colorNeutralBackground1} 0%, ${tokens.colorBrandBackground2} 100%)`,
+    backgroundColor: tokens.colorNeutralBackground1,
     "@media (max-width: 420px)": {
       padding: tokens.spacingVerticalM,
       flexDirection: "column",
@@ -119,7 +117,8 @@ const useStyles = makeStyles({
     fontFamily: "Aptos Display, Segoe UI, sans-serif",
     fontSize: tokens.fontSizeHero800,
     lineHeight: tokens.lineHeightHero800,
-    letterSpacing: "0",
+    letterSpacing: "-0.7px",
+    outlineStyle: "none",
     "@media (max-width: 420px)": {
       fontSize: tokens.fontSizeHero700,
       lineHeight: tokens.lineHeightHero700,
@@ -153,7 +152,7 @@ const useStyles = makeStyles({
     display: "grid",
     width: "100%",
     minWidth: 0,
-    gridTemplateColumns: "220px minmax(0, 1fr)",
+    gridTemplateColumns: "216px minmax(0, 1fr)",
     minHeight: "calc(100vh - 5px)",
     "@media (max-width: 760px)": { gridTemplateColumns: "minmax(0, 1fr)" },
   },
@@ -163,7 +162,10 @@ const useStyles = makeStyles({
     padding: tokens.spacingVerticalXL,
     color: tokens.colorNeutralForegroundOnBrand,
     backgroundColor: tokens.colorBrandBackground,
-    backgroundImage: `linear-gradient(180deg, ${tokens.colorBrandBackground} 0%, ${tokens.colorBrandBackgroundHover} 58%, ${tokens.colorPaletteRedBackground3} 118%)`,
+    backgroundImage: `url(${ZAVAMESH.meshWave}), linear-gradient(165deg, ${tokens.colorBrandBackgroundPressed} 0%, ${tokens.colorBrandBackgroundHover} 62%, ${tokens.colorBrandBackground} 100%)`,
+    backgroundSize: "auto 480px, cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center bottom, center",
     borderRight: `1px solid ${tokens.colorNeutralStrokeOnBrand2}`,
     boxShadow: tokens.shadow16,
     "@media (max-width: 760px)": {
@@ -178,7 +180,14 @@ const useStyles = makeStyles({
     gap: tokens.spacingHorizontalS,
     fontWeight: tokens.fontWeightBold,
     marginBottom: tokens.spacingVerticalXXL,
+    "@media (max-width: 760px)": { marginBottom: tokens.spacingVerticalM },
   },
+  wordmark: { width: "154px", height: "30px", objectFit: "contain", objectPosition: "left center" },
+  inlineWordmark: { width: "162px", height: "30px", objectFit: "contain", objectPosition: "left center", marginBottom: tokens.spacingVerticalS },
+  railCaption: { fontSize: tokens.fontSizeBase100, letterSpacing: "1.4px", opacity: 0.8, marginBottom: tokens.spacingVerticalM },
+  railFooter: { marginTop: tokens.spacingVerticalXXXL, paddingTop: tokens.spacingVerticalL, borderTop: `1px solid ${tokens.colorNeutralStrokeOnBrand2}`, fontSize: tokens.fontSizeBase200, lineHeight: tokens.lineHeightBase300, "@media (max-width: 760px)": { display: "none" } },
+  heroPhoto: { width: "78px", height: "96px", objectFit: "cover", objectPosition: "center 65%", borderRadius: tokens.borderRadiusMedium, gridRow: "1 / span 3" },
+  specialistHeading: { marginTop: tokens.spacingVerticalXXXL, paddingTop: tokens.spacingVerticalXL, borderTop: `1px solid ${tokens.colorNeutralStroke2}` },
   brandMark: {
     display: "grid",
     placeItems: "center",
@@ -207,13 +216,13 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForegroundOnBrand,
   },
   navActive: {
-    color: tokens.colorNeutralForeground1,
-    backgroundColor: tokens.colorPaletteMarigoldBackground2,
-    boxShadow: tokens.shadow8,
+    color: tokens.colorBrandForeground1,
+    backgroundColor: tokens.colorNeutralBackground1,
+    boxShadow: tokens.shadow4,
   },
   main: { width: "100%", minWidth: 0, maxWidth: "100%" },
   content: {
-    padding: `${tokens.spacingVerticalL} ${tokens.spacingHorizontalXL}`,
+    padding: `${tokens.spacingVerticalXL} ${tokens.spacingHorizontalXXL}`,
     animationName: fadeInUp,
     animationDuration: "240ms",
     animationTimingFunction: tokens.curveEasyEase,
@@ -228,7 +237,8 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForegroundOnBrand,
     borderRadius: tokens.borderRadiusLarge,
     backgroundColor: tokens.colorBrandBackground,
-    backgroundImage: `linear-gradient(120deg, ${tokens.colorBrandBackgroundPressed} 0%, ${tokens.colorBrandBackground} 48%, ${tokens.colorPaletteRedBackground3} 78%, ${tokens.colorPaletteMarigoldBackground3} 118%)`,
+    backgroundImage: `url(${ZAVAMESH.meshWave}), linear-gradient(120deg, ${tokens.colorBrandBackgroundPressed} 0%, ${tokens.colorBrandBackgroundHover} 60%, ${tokens.colorBrandBackground} 100%)`,
+    backgroundSize: "cover",
     border: `1px solid ${tokens.colorNeutralStrokeOnBrand2}`,
     boxShadow: tokens.shadow16,
     "@media (max-width: 760px)": { gridTemplateColumns: "1fr" },
@@ -253,9 +263,10 @@ const useStyles = makeStyles({
     marginTop: tokens.spacingVerticalM,
   },
   scoreBlock: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
+    display: "grid",
+    gridTemplateColumns: "78px minmax(0, 1fr)",
+    alignItems: "center",
+    columnGap: tokens.spacingHorizontalM,
     borderLeft: `1px solid ${tokens.colorNeutralStrokeOnBrand2}`,
     paddingLeft: tokens.spacingHorizontalXL,
     "@media (max-width: 760px)": {
@@ -266,8 +277,8 @@ const useStyles = makeStyles({
     },
   },
   score: {
-    fontSize: tokens.fontSizeHero1000,
-    lineHeight: tokens.lineHeightHero1000,
+    fontSize: tokens.fontSizeHero800,
+    lineHeight: tokens.lineHeightHero800,
     fontWeight: tokens.fontWeightBold,
     color: tokens.colorNeutralForegroundOnBrand,
     textShadow: tokens.shadow4,
@@ -307,6 +318,8 @@ const useStyles = makeStyles({
     "@media (max-width: 980px)": { gridTemplateColumns: "1fr" },
   },
   workspaceGridEqual: {
+    display: "grid",
+    gap: tokens.spacingHorizontalL,
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
     "@media (max-width: 980px)": { gridTemplateColumns: "1fr" },
   },
@@ -380,11 +393,9 @@ const useStyles = makeStyles({
     minWidth: 0,
     padding: tokens.spacingVerticalL,
     border: `1px solid ${tokens.colorNeutralStroke2}`,
-    borderTop: `4px solid ${tokens.colorBrandStroke1}`,
     borderRadius: tokens.borderRadiusMedium,
     backgroundColor: tokens.colorNeutralBackground1,
-    backgroundImage: `linear-gradient(180deg, ${tokens.colorNeutralBackground1}, ${tokens.colorNeutralBackground2})`,
-    boxShadow: tokens.shadow8,
+    boxShadow: tokens.shadow2,
     "@media (max-width: 420px)": { padding: tokens.spacingVerticalM },
   },
   panelWarm: { borderTopColor: tokens.colorPaletteRedBorder2 },
@@ -1026,7 +1037,7 @@ function CommercialStudio(): React.ReactElement {
         </div>
         <Money20Regular />
       </div>
-      <p className={styles.insight}>Reference only: 860 users · 36 months · 14% discount · $420,000 services · 72% probability. Edit the specialist scenario above for live economics.</p>
+      <p className={styles.insight}>Read-only baseline: 860 users · 36 months · 14% discount · $420,000 services · 72% probability. Compare with the editable specialist scenario below for live economics.</p>
       <div className={styles.metrics}>
         <div className={styles.metric}>
           <span className={styles.tiny}>CONTRACT VALUE</span>
@@ -1051,11 +1062,6 @@ function CommercialStudio(): React.ReactElement {
           <strong>{result.authority}</strong>
         </div>
       </div>
-      <D3CommercialContour
-        discount={discount}
-        margin={result.grossMargin}
-        quantity={quantity}
-      />
     </section>
   );
 }
@@ -1066,12 +1072,15 @@ interface IWorkspaceProps {
   readonly onSelectEvidence: (id: string) => void;
   readonly selectedRegion: string;
   readonly onSelectRegion: (id: string) => void;
+  readonly onWorkspaceStateChange: (state: Readonly<Record<string, unknown>>) => void;
+  readonly dealSession: ReturnType<typeof useDealOperationsSession>;
+  readonly dashboardState?: Readonly<Record<string, unknown>>;
 }
 
 function MyDealsDashboard(props: IWorkspaceProps): React.ReactElement {
   const styles = useStyles();
   const deals = [
-    { rank: "1", name: "Contoso Global Expansion", owner: "Megan Bowen", value: "$3.7M", signal: "Sponsor access", tone: "warning" as const },
+    { rank: "1", name: "Contoso Global Expansion", owner: "Megan Bowen", value: "$3.6M", signal: "Sponsor access", tone: "warning" as const },
     { rank: "2", name: "Fabrikam Service Cloud", owner: "Pradeep Gupta", value: "$2.1M", signal: "Proof ready", tone: "success" as const },
     { rank: "3", name: "Northwind Data Estate", owner: "Miriam Graham", value: "$1.4M", signal: "Terms due", tone: "informative" as const },
   ];
@@ -1090,11 +1099,12 @@ function MyDealsDashboard(props: IWorkspaceProps): React.ReactElement {
           <div className={styles.workspaceList}>
             <div className={styles.workspaceRow}><Avatar name="Nestor Wilke" /><span><strong>Contoso steering meeting</strong><span className={styles.tiny}>Tomorrow · economic sponsor access</span></span><Badge color="warning">Prep</Badge></div>
             <div className={styles.workspaceRow}><Avatar name="Pradeep Gupta" /><span><strong>Security proof review</strong><span className={styles.tiny}>Today · 2 controls unresolved</span></span><Badge color="danger">At risk</Badge></div>
-            <div className={styles.workspaceRow}><Avatar name="Miriam Graham" /><span><strong>Commercial desk</strong><span className={styles.tiny}>Thursday · ramp and payment terms</span></span><Badge>Review</Badge></div>
+            <div className={styles.workspaceRow}><Avatar name="Miriam Graham" /><span><strong>Commercial desk</strong><span className={styles.tiny}>Next checkpoint · ramp and payment terms</span></span><Badge>Review</Badge></div>
           </div>
         </section>
       </div>
-      <div className={styles.workspaceGridEqual}><D3RevenueMap selectedRegion={props.selectedRegion} onSelectRegion={props.onSelectRegion} /><D3ForecastBridge /></div>
+      <p className={styles.insight}>Illustrative seller priorities and customer moments, not live CRM assignments.</p>
+      <DealOperations mode="seller" session={props.dealSession} onStateChange={props.onWorkspaceStateChange} />
     </div>
   );
 }
@@ -1119,19 +1129,12 @@ function DealRoomDashboard(props: IWorkspaceProps): React.ReactElement {
 
 function CommercialDeskDashboard(props: IWorkspaceProps): React.ReactElement {
   const styles = useStyles();
-  const exceptions = [
-    { title: "Contoso payment terms", detail: "Net 60 · $3.7M TCV", owner: "Miriam Graham", status: "Needs conditions", color: "warning" as const },
-    { title: "Fabrikam ramp discount", detail: "18% year-one ramp", owner: "Joni Sherman", status: "Authority check", color: "danger" as const },
-    { title: "Northwind services mix", detail: "$280K fixed fee", owner: "Pradeep Gupta", status: "Evidence ready", color: "success" as const },
-  ];
   return (
     <div className={styles.workspace} data-layout="commercial-desk-dashboard">
+      <DealOperations mode="reviewer" session={props.dealSession} onStateChange={props.onWorkspaceStateChange} />
       <div className={styles.workspaceGrid}>
         <CommercialStudio />
-        <section className={mergeClasses(styles.panel, styles.panelWarm)} aria-labelledby="exception-queue-title">
-          <div className={styles.panelTitle}><div><span className={styles.tiny}>GOVERNED DECISIONS</span><h2 id="exception-queue-title" className={styles.heading}>Exception queue</h2></div><Badge color="warning">3 waiting</Badge></div>
-          <div className={styles.workspaceList}>{exceptions.map((item) => <div className={styles.workspaceRow} key={item.title}><Avatar name={item.owner} /><span><strong>{item.title}</strong><span className={styles.tiny}>{item.detail} · {item.owner}</span></span><Badge color={item.color}>{item.status}</Badge></div>)}</div>
-        </section>
+        <CommitmentRunway />
       </div>
       <section className={styles.policyBand} aria-label="Commercial policy position">
         <div className={styles.policyItem}><span className={styles.tiny}>MARGIN FLOOR</span><strong>68% required</strong><p className={styles.insight}>Reference scenario: {calculateCommercialOffer({ quantity: 860, termMonths: 36, discount: 14, services: 420000, probability: 0.72 }).grossMargin.toFixed(1)}% · review below floor</p></div>
@@ -1143,23 +1146,7 @@ function CommercialDeskDashboard(props: IWorkspaceProps): React.ReactElement {
 }
 
 function RevenueCommandDashboard(props: IWorkspaceProps): React.ReactElement {
-  const styles = useStyles();
-  return (
-    <div className={styles.workspace} data-layout="revenue-command-dashboard">
-      <div className={styles.workspaceGridEqual}><D3PipelineQuality /><D3ForecastBridge /></div>
-      <div className={styles.workspaceGrid}>
-        <D3RevenueMap selectedRegion={props.selectedRegion} onSelectRegion={props.onSelectRegion} />
-        <section className={styles.panel} aria-labelledby="interventions-title">
-          <div className={styles.panelTitle}><div><span className={styles.tiny}>LEADERSHIP ACCOUNTABILITY</span><h2 id="interventions-title" className={styles.heading}>Named interventions</h2></div><Badge color="danger">$4.2M exposed</Badge></div>
-          <div className={styles.workspaceList}>
-            <div className={styles.workspaceRow}><Avatar name="Joni Sherman" /><span><strong>Contoso executive access</strong><span className={styles.tiny}>Protect $1.3M expansion movement</span></span><Badge color="warning">Friday</Badge></div>
-            <div className={styles.workspaceRow}><Avatar name="Miriam Graham" /><span><strong>EMEA concentration</strong><span className={styles.tiny}>Resolve two term exceptions</span></span><Badge color="danger">$1.8M</Badge></div>
-            <div className={styles.workspaceRow}><Avatar name="Megan Bowen" /><span><strong>Late-stage proof quality</strong><span className={styles.tiny}>3 deals below evidence threshold</span></span><Badge>Assign</Badge></div>
-          </div>
-        </section>
-      </div>
-    </div>
-  );
+  return <RevenueDashboard onStateChange={props.onWorkspaceStateChange} initialState={props.dashboardState} />;
 }
 
 function WorkspaceDashboard(props: IWorkspaceProps): React.ReactElement {
@@ -1180,6 +1167,11 @@ function RevenueContent(
     "idle" | "sending" | "sent" | "error"
   >("idle");
   const [expandError, setExpandError] = React.useState(false);
+  const dealSession = useDealOperationsSession();
+  const [workspaceStates, setWorkspaceStates] = React.useState<Partial<Record<RevenueLens, Readonly<Record<string, unknown>>>>>({});
+  const onWorkspaceStateChange = React.useCallback((state: Readonly<Record<string, unknown>>): void => {
+    setWorkspaceStates(current => JSON.stringify(current[props.workspaceLens]) === JSON.stringify(state) ? current : { ...current, [props.workspaceLens]: state });
+  }, [props.workspaceLens]);
   const scope = resolveScope(props.properties);
   const showReferenceWorkspace = scope.errors.length === 0 && scope.opportunity?.id === "ZDR-2042";
 
@@ -1195,25 +1187,33 @@ function RevenueContent(
     }
   };
 
-  const profile = lensProfile[props.definition.lens];
+  const profile = lensProfile[props.fullScreen ? props.workspaceLens : props.definition.lens];
+  const workspaceDescriptions: Record<RevenueLens, string> = {
+    "my-deals": "Your next growth opportunity, from first proposal to accountable approval.",
+    "deal-room": "Bring buyer evidence, decision makers and the critical close path together.",
+    "commercial-desk": "Shape the economics. Protect the margin. Put authority behind every decision.",
+    "revenue-command": "Connect worldwide pipeline, regional investment and the decisions that move growth.",
+    education: props.definition.outcome,
+  };
   return (
     <>
       <header className={styles.header}>
         <div>
+          {!props.fullScreen && <img className={styles.inlineWordmark} src={ZAVAMESH.colorLogo} alt="ZavaMesh" />}
           <div className={styles.eyebrow}>
-            <Sparkle20Regular />
-            ZAVA REVENUE DEAL ROOM · {props.definition.role.toUpperCase()}
+            REVENUE DEAL ROOM · {props.fullScreen ? profile.role.toUpperCase() : props.definition.role.toUpperCase()}
           </div>
           <h1
             className={mergeClasses(
               styles.title,
               !props.fullScreen && styles.inlineTitle,
             )}
+            tabIndex={-1}
           >
-            {props.definition.title}
+            {props.fullScreen ? LENS_LABELS[props.workspaceLens] : props.definition.title}
           </h1>
           <p className={styles.subtitle}>
-            {props.definition.question} {props.definition.outcome}
+            {props.fullScreen ? workspaceDescriptions[props.workspaceLens] : `${props.definition.question} ${props.definition.outcome}`}
           </p>
         </div>
         <div className={styles.headerActions}>
@@ -1240,13 +1240,12 @@ function RevenueContent(
         {props.fullScreen && showReferenceWorkspace && (
           <section className={styles.heroBand}>
             <div>
-              <Badge appearance="filled" color="informative">
-                CONTOSO · ZDR-2042
+              <Badge appearance="filled" color="success">
+                ZAVAMESH / {props.workspaceLens === "deal-room" ? "CONTOSO · ZDR-2042" : "GLOBAL REVENUE"}
               </Badge>
-              <p className={styles.heroValue}>Global expansion</p>
+              <p className={styles.heroValue}>{props.workspaceLens === "deal-room" ? "Growth, woven together." : props.workspaceLens === "revenue-command" ? "A world of opportunity." : props.workspaceLens === "commercial-desk" ? "Confidence in every deal." : "Make your next move."}</p>
               <p className={styles.heroSubtitle}>
-                One connected pursuit from relationship access to defensible
-                commit.
+                {workspaceDescriptions[props.workspaceLens]}
               </p>
               <div className={styles.heroMeta}>
                 <AvatarStack
@@ -1258,22 +1257,39 @@ function RevenueContent(
                   ]}
                 />
                 <span className={styles.teamLabel}>4-person pursuit team</span>
-                <Badge appearance="tint">$3.7M value</Badge>
+                <Badge appearance="tint">{money(scope.opportunity?.value || 0)} Contoso reference</Badge>
                 <Badge appearance="tint" color="warning">
                   1 critical dependency
                 </Badge>
                 <Badge appearance="tint" color="success">
-                  72% evidence confidence
+                  72% seller probability
                 </Badge>
               </div>
             </div>
             <div className={styles.scoreBlock}>
-              <span className={styles.teamLabel}>CREDIBLE CLOSE RANGE</span>
-              <span className={styles.score}>21-28d</span>
+              <img className={styles.heroPhoto} src={ZAVAMESH.meshTextile} alt="ZavaMesh interwoven performance textile in green and lime" />
+              <span className={styles.teamLabel}>{props.workspaceLens === "deal-room" ? "CREDIBLE CLOSE RANGE" : props.workspaceLens === "revenue-command" ? "CONNECTED WORKSPACES" : props.workspaceLens === "commercial-desk" ? "INDEPENDENT AUTHORITY" : "GUIDED SUBMISSION"}</span>
+              <span className={styles.score}>{props.workspaceLens === "deal-room" ? "21-28d" : props.workspaceLens === "revenue-command" ? "4 lenses" : props.workspaceLens === "commercial-desk" ? "3 gates" : "3 steps"}</span>
               <span className={styles.teamLabel}>
-                Security evidence sets the path
+                {props.workspaceLens === "deal-room" ? "Security evidence sets the path" : "Evidence. Economics. Human decisions."}
               </span>
             </div>
+          </section>
+        )}
+        {props.fullScreen && showReferenceWorkspace && (
+          <section aria-label="Role workspace">
+            <WorkspaceDashboard
+              definition={{ ...props.definition, lens: props.workspaceLens }}
+              selectedEvidence={selectedEvidence}
+              onSelectEvidence={setSelectedEvidence}
+              selectedRegion={referenceRegion}
+              onSelectRegion={setReferenceRegion}
+              onWorkspaceStateChange={onWorkspaceStateChange}
+              dealSession={dealSession}
+              dashboardState={workspaceStates["revenue-command"]}
+            />
+            <h2 className={styles.specialistHeading}>Your Copilot task / {props.definition.title}</h2>
+            <p className={styles.subtitle}>The focused task below retains its own evidence, draft and confirmation. Reference visuals and regional budgets are illustrative.</p>
           </section>
         )}
         <RevenueExperiences
@@ -1283,20 +1299,9 @@ function RevenueContent(
           visibleWorkspaceLens={props.fullScreen && showReferenceWorkspace ? props.workspaceLens : undefined}
           referenceEvidenceId={props.fullScreen && showReferenceWorkspace ? selectedEvidence : undefined}
           referenceRegion={props.fullScreen && showReferenceWorkspace ? referenceRegion : undefined}
+          workspaceState={props.fullScreen && showReferenceWorkspace ? workspaceStates[props.workspaceLens] : undefined}
         />
         {expandError && <p role="alert">The host did not open full screen. Your draft is unchanged.</p>}
-        {props.fullScreen && showReferenceWorkspace && (
-          <section aria-label="Illustrative role workspace">
-          <p className={styles.notice}>Illustrative Contoso role workspace · fixed showcase reference metrics, not live CRM or the editable scenario above.</p>
-          <WorkspaceDashboard
-            definition={{ ...props.definition, lens: props.workspaceLens }}
-            selectedEvidence={selectedEvidence}
-            onSelectEvidence={setSelectedEvidence}
-            selectedRegion={referenceRegion}
-            onSelectRegion={setReferenceRegion}
-          />
-          </section>
-        )}
         <div className={styles.actions}>
           <Button
             icon={<Chat20Regular />}
@@ -1331,6 +1336,7 @@ export default function RevenueApp(
   const [activeLens, setActiveLens] = React.useState<RevenueLens>(
     props.definition.lens,
   );
+  const mainRef = React.useRef<HTMLElement>(null);
   if (!props.definition)
     return <Spinner className={styles.spinner} label="Preparing deal room" />;
   const lenses: RevenueLens[] = [
@@ -1348,15 +1354,14 @@ export default function RevenueApp(
       <div className={fullScreen ? styles.shell : undefined}>
         <aside className={styles.rail} hidden={!fullScreen}>
           <div className={styles.brand}>
-            <span className={styles.brandMark}>
-              <TargetArrow20Regular />
-            </span>
-            Zava Revenue
+            <img className={styles.wordmark} src={ZAVAMESH.whiteLogo} alt="ZavaMesh" />
           </div>
+          <p className={styles.railCaption}>REVENUE DEAL ROOM</p>
           <nav className={styles.nav} aria-label="Revenue workspaces">
             {lenses.map((lens) => (
               <Button
                 key={lens}
+                aria-current={activeLens === lens ? "page" : undefined}
                 appearance="subtle"
                 className={mergeClasses(
                   styles.navButton,
@@ -1373,14 +1378,15 @@ export default function RevenueApp(
                     <DataTrending20Regular />
                   )
                 }
-                onClick={() => setActiveLens(lens)}
+                onClick={() => { setActiveLens(lens); mainRef.current?.querySelector("h1")?.focus(); }}
               >
                 {LENS_LABELS[lens]}
               </Button>
             ))}
           </nav>
+          <div className={styles.railFooter}><ShieldCheckmark20Regular /><p>Built for momentum.<br />Governed by people.</p><p>Offline showcase<br />21 focused Copilot experiences</p></div>
         </aside>
-        <main className={styles.main}>
+        <main className={styles.main} ref={mainRef}>
           <RevenueContent
             key={`${props.definition.key}|${JSON.stringify(Object.keys(props.properties).sort().map(key => [key, props.properties[key as keyof IRevenueProperties]]))}`}
             {...props}

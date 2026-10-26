@@ -1,4 +1,4 @@
-# Zava Revenue Deal Room - 10-minute business demo
+# ZavaMesh Revenue Deal Room - 10-minute business demo
 
 ## Audience and setup
 
@@ -79,11 +79,19 @@ Expected component: `InspectForecastCommit`.
 
 Retain commit is blocked by missing buyer proof. Review moving to best case or removing from the
 period; removal explicitly contributes $0. Change scenario probability and show the recalculation.
-Expand into Revenue Command: rich reference dashboards are labeled illustrative, not live CRM.
+Expand into Revenue Command: change dashboard quarter, region and opportunity/investment map measure.
+Pipeline and seller-weighted KPIs use the filtered catalog; regional GTM plans remain clearly labeled
+illustrative, not investment returns or production budgets.
 In `ExplorePipelineQuality`, quarter/region filters rebuild actual graph counts, values and verified
 buyer-proof coverage; unknown/filtered selections remain visible as no-match.
 
 ## 9. Carry the sold outcome forward
+
+Before the handoff, demonstrate **My Deals -> Submit a deal**: enter the business outcome, model actual
+commercials, attest the sample evidence, review and explicitly submit. In **Commercial Desk**, select
+the same request, choose the assigned simulated role, enter a rationale, and explicitly approve the
+stage. Show the next authority, final status and decision trail. An evidence-incomplete request cannot
+be approved; return it for changes instead. These are separate demo requests, not CRM opportunity writes.
 
 Use `PlanCustomerSuccessHandoff` to connect sold outcomes, stakeholder continuity, milestones, risks, and first-value ownership. State explicitly that creating a handoff does not close the opportunity or write to a production system.
 
@@ -105,6 +113,8 @@ Copilot interprets intent and selects a bounded experience. The component suppli
 - Do not claim model routing is proven by local screenshots; validate it in the tenant.
 - Use the current publication screenshots when preview-host routing, CSP, or display mode is unavailable.
 - Use Reset to restore invocation defaults. Passive rerenders, full-screen and theme changes preserve
-  the draft; changed arguments or a fresh tool instance reset it. Reload/cross-tool propagation is absent.
+  the draft; changed arguments or a fresh tool instance reset it. Specialist drafts are not persisted.
+  Only confirmed full-screen request-center actions survive a browser-session reload; Reset demo data
+  restores that separate baseline.
 - Known alternate IDs (`ACC-002`, `MTG-2043`, `PROP-2043`, `EX-2043`) resolve their own records; unknown
   or conflicting IDs show no-match instead of silently loading Contoso.

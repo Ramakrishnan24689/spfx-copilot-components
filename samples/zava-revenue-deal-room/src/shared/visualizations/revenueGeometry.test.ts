@@ -56,4 +56,16 @@ describe('D3 revenue geometry', () => {
     expect(relationships[0].x).not.toBe(relationships[1].x);
     expect(relationships[0].radius).not.toBe(relationships[1].radius);
   });
+
+  it('keeps monetary map areas comparable across periods and hides zero-value bubbles', () => {
+    const signal = { id: 'na', label: 'North America', longitude: -100, latitude: 42, risk: 18 };
+    const current = buildRegionMarks([{ ...signal, value: 8 }], 10)[0];
+    const next = buildRegionMarks([{ ...signal, value: 2 }], 10)[0];
+    const empty = buildRegionMarks([{ ...signal, value: 0 }], 10)[0];
+    expect(current.radius * current.radius / (next.radius * next.radius)).toBeCloseTo(4);
+    expect(current.radius).toBeGreaterThan(next.radius);
+    expect(empty.radius).toBe(0);
+    expect(current.x).toBe(next.x);
+    expect(current.y).toBe(next.y);
+  });
 });

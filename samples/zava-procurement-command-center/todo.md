@@ -1,5 +1,81 @@
 # Zava Procurement Command Center - Creation Plan
 
+## ZavaCore modernization - approved October 26, 2026
+
+The user approved retaining the procurement scenario, 22 immutable component identities and four
+workspaces, with **ZavaCore Procurement Command Center** as the product/agent identity. No new
+generated components, GUID changes, external writes, or dependency upgrades are in scope.
+
+### Approved visual contract
+
+- Orange-to-magenta ZavaCore identity from the supplied ZavaCore asset library; warm neutral light
+  surfaces, charcoal dark surfaces, readable brand foregrounds, restrained elevation and strong type.
+- Branded navigation and a photographic field-operations hero rather than a generic KPI-card shell.
+  Use the supplied ZavaCore team portraits for their named fictional sample roles, not as photos of
+  unrelated Microsoft demo personas. Public redistribution remains subject to publisher approval.
+- Adapt the Revenue Deal Room reference's hierarchy, meaningful portraits, evidence rows and clear
+  next actions, not its green palette, sales composition or business semantics. The existing
+  procurement screenshots expose excessive whitespace and duplicate landscape charts; eliminate both.
+- D3-derived supplier evaluation, reconciled value charts and a real offline Natural Earth world
+  projection. Exact values, keyboard alternatives, semantic statuses and honest denominators accompany
+  every visualization. Region filters change records and calculations, not just captions.
+- Guided intake, explicit evidence review, authority safeguards, human rationale, confirmation,
+  connected session queues and receipts. No real awards, payments or ERP writes are implied.
+- Distinct mobile layouts, light/dark states, reduced-motion and 200% zoom evidence. Inline remains
+  focused on one question; coordinated dashboards belong only in full screen.
+
+### Workspace purpose and competitive benchmark
+
+| Workspace | Persona / benchmark | Decision and dominant surface | Data grain / operations | Must not become |
+| --- | --- | --- | --- | --- |
+| My Requests | Requester / Zip guided intake | What needs my attention? Outcome journey and approval inbox | Canonical request, budget evidence, submit and review | A second generic analytics dashboard |
+| Sourcing Workbench | Category lead / GEP sourcing optimization | Which award balances cost, delivery and continuity? Criteria and award readiness | One sourcing event, bids, scenario, explicit award review | Duplicate copies of the inline bid chart |
+| Supplier 360 | Risk lead / JAGGAER supplier intelligence | Which obligation threatens continuity? Relationship scorecard and owned mitigation | Selected supplier, contract and dependency evidence | A global investment dashboard |
+| Spend Command | CPO / Ivalua connected source-to-pay | Where are investments producing verified value? Regional world map, delivery and value bridge | EUR-reporting programs, region drill-down, interventions | Unreconciled currencies or opportunity presented as savings |
+
+Primary-source benchmark reviewed October 26, 2026 (capability descriptions, not independent rankings):
+[Zip](https://zip.com/) emphasizes intake-to-pay orchestration;
+[Ivalua](https://www.ivalua.com/solutions/process/source-to-pay-platform/) joins intake, suppliers,
+sourcing, contracts and invoices on one data model;
+[GEP](https://www.gep.com/software/gep-quantum-intelligence) describes bid optimization, risk,
+obligations and invoice matching;
+[JAGGAER](https://www.jaggaer.com/solutions/source-to-pay) connects sourcing, procurement and supplier
+intelligence. SAP and Coupa pages were access-blocked during research, so no unverified comparison
+claims are made. The sample's sweet spot is a bounded conversational task that expands into a
+decision workspace with transparent evidence and human authority, not a replica of an enterprise suite.
+
+### Delivery gates
+
+- [x] Approve scope, branding, visual contract, workspace purposes and preserved identities.
+- [x] Stage optimized local brand/portrait assets and public-domain geography with hash provenance.
+- [x] Prove the premium shell and sourcing slice; inspect representative light/dark/mobile pixels.
+- [x] Connect purchase submission to its exact review record, status queue and session timeline.
+- [x] Complete distinct role workspaces, regional investments, charts and approval journeys.
+- [x] Validate controls, calculations, bridge context, workflow safeguards and responsive evidence.
+- [x] Refresh demo scripts, screenshots, agent branding and audited production package.
+- [ ] **External gate:** authenticated tenant validation and final publisher/media-rights approval.
+
+**Validated result:** `npm run build` passed with 111 tests in both development and production,
+zero lint warnings/errors, generated-plugin validation, package audit and publication validation.
+`npm run capture:visual` produced 84 current gallery states; `npm run check:keynote` produced 24
+additional responsive/200%-page-scale and business-journey checkpoints. VS Code reports no source
+diagnostics and `git diff --check` passes. Temporary capture servers are stopped.
+
+The current `.sppkg` is **856,731 bytes**, with one shared **520,420-byte** JavaScript asset
+(154,537 compressed bytes), one ZavaCore agent ZIP, seven unique runtime brand/portrait files, and
+two declared publication screenshots. The three portraits and both embedded agent icons match
+provenance; duplicate runtime media count is zero. The package increase from the historical
+441,766-byte baseline is intentional: approved photography/portraits, real geographic geometry,
+new connected workspaces/charts and substantially richer packaged publication screenshots. It
+remains below the existing 2 MB package gate and 1 MiB JavaScript investigation threshold.
+Exact current hashes and versions are generated in [release evidence](assets/release-evidence.json);
+the additional journey matrix is [saved here](ux-review/evidence/zavacore-modernization.json).
+
+The new-intake approval flow and curated 600-device sourcing-to-value flow are separate, explicit
+rehearsal slices. New requests do not fabricate bids or orders. A confirmed curated award updates
+its modeled investment commitment but not delivery or savings. Historical completion statements
+below describe earlier releases, not evidence for this modernization.
+
 ## RC0 update - October 20, 2026
 
 The current application baseline is SPFx 1.24.0-rc.0, React/ReactDOM 18.3.1, React types 18.3.31/18.3.7, and Heft 1.3.2. Current validation, exact packages, starter targets, findings, and external release gates are recorded in the [repository RC0 readiness report](../../RC0-updates.md). The local creation guide is synchronized byte-for-byte with the assets golden guide.

@@ -108,6 +108,7 @@ export default function RevenueExperiences(props: IRevenueAppProps & { readonly 
     workflowStage: scopeErrors.length || noSelection ? 'no-match' : workflow ? stage : 'analysis',
     summary: scopeErrors.length ? scopeErrors.join('; ') : `${definition.title} · ${definition.operation === 'education' ? 'Catalog' : definition.key === 'ExplorePipelineQuality' ? `Portfolio ${period} ${region}` : scope.account?.name} · ${workflow ? stage : 'analysis'}${selectedRow ? ` · ${selectedRow.title}: ${selectedRow.detail}` : ''}${noSelection ? ` · No visible record matches ${selected}` : ''}`,
     availableActions: scopeErrors.length ? ['Invoke with a known, consistent scope'] : availableActions,
+    workspaceState: props.workspaceState,
     referenceWorkspace: props.visibleWorkspaceLens && !scopeErrors.length ? {
       lens: props.visibleWorkspaceLens, selectedRegion: props.referenceRegion,
       selectedEvidence: HERO_EVIDENCE.find(item => item.id === props.referenceEvidenceId),
@@ -187,7 +188,8 @@ export default function RevenueExperiences(props: IRevenueAppProps & { readonly 
           {selectionList()}
         </> : definition.operation === 'education' ? <>
           <h2 className={styles.heading}>Find the right revenue action</h2><Input aria-label="Search revenue scenarios" value={query} onChange={(_, data) => { setQuery(data.value); }} />
-          <p>{rows.length} matching scenarios. Preview explains outcomes and routing boundaries; it does not execute the selected tool.</p>{selectionList()}
+          <p>{rows.length} matching scenarios. Preview explains outcomes and routing boundaries; it does not execute the selected tool.</p>
+          <p className={styles.muted}>Connected full-screen journeys: open an operational experience, choose View in full screen, then My Deals / Submit a deal for guided intake, Commercial Desk for simulated approval and audit receipts, or Revenue Command for worldwide revenue and GTM investment analytics. No live system is changed.</p>{selectionList()}
         </> : <>
           <h2 className={styles.heading}>{titles[definition.key]}</h2>
           {definition.key === 'MapBuyingCommittee' && scope.opportunity?.id === 'ZDR-2042' && props.committeeVisual && <><p>Illustrative orbit; authoritative roles and stance are listed from the relationship graph below.</p>{props.committeeVisual}</>}

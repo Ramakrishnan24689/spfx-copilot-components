@@ -1,4 +1,4 @@
-# Zava Revenue Deal Room - 4-minute keynote
+# ZavaMesh Revenue Deal Room - 4-minute keynote
 
 ## Audience and promise
 
@@ -6,7 +6,7 @@ For Microsoft customers, partners, sellers, and product leaders. The promise is 
 
 ## Setup and reset
 
-- Deploy the ready-made `.sppkg` and add **Zava Revenue Deal Room** in Microsoft Copilot.
+- Deploy the ready-made `.sppkg` and add **ZavaMesh Revenue Deal Room** in Microsoft Copilot.
 - Start a fresh conversation as Megan Bowen.
 - Keep the local screenshot sequence open as the fallback: `inline-buying-committee.png`, `inline-commercial-scenario.png`, `fullscreen-deal-room.png`, and `fullscreen-revenue-command.png`.
 - State once: all records are deterministic mock data and no CRM, customer, quote, contract, or forecast is changed.
@@ -51,7 +51,10 @@ Expected component: `InspectForecastCommit`.
 
 Show missing buyer proof and the blocked retain-commit choice. Choose best case or remove from the
 period, review actual values, then explicitly confirm a session-only recommendation. Expand to the
-labeled Revenue Command reference workspace. A forecast decision is not an opaque AI score or CRM write.
+Revenue Command workspace. Select a region and switch the projected world map to GTM investment:
+opportunity KPIs come from the catalog; budgets are illustrative. A forecast decision is not an opaque
+AI score or CRM write. For a longer rehearsal, show My Deals intake and the Commercial Desk decision
+trail; all approvals remain explicit simulations.
 
 ## 3:35-4:00 - Close on the architecture of trust
 

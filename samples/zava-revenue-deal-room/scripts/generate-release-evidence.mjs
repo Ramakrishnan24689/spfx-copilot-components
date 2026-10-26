@@ -9,11 +9,12 @@ const packageConfig = JSON.parse(fs.readFileSync(path.join(root, 'config', 'pack
 const config = JSON.parse(fs.readFileSync(path.join(root, 'config', 'config.json'), 'utf8'));
 const gallery = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'gallery-evidence.json'), 'utf8'));
 const matrix = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'business-matrix-evidence.json'), 'utf8'));
+const journeys = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'zavamesh-journey-evidence.json'), 'utf8'));
 const testReport = fs.readFileSync(path.join(root, 'jest-output', 'JUnit.xml'), 'utf8');
 const testSummary = testReport.match(/<testsuites\b[^>]*tests="(\d+)"[^>]*failures="(\d+)"[^>]*errors="(\d+)"/);
 if (!testSummary || Number(testSummary[1]) === 0 || Number(testSummary[2]) !== 0 || Number(testSummary[3]) !== 0) throw new Error('A passing current Jest report is required for release evidence.');
 const packagePath = path.join(root, 'sharepoint', packageConfig.paths.zippedPackage);
-const agentPath = path.join(root, 'teams', 'zava-revenue-deal-room.zip');
+const agentPath = path.join(root, 'teams', 'zavamesh-revenue-deal-room.zip');
 const agentArchive = await unzipper.Open.file(agentPath);
 const agentManifestEntry = agentArchive.files.find(entry => entry.path === 'manifest.json');
 if (!agentManifestEntry) throw new Error('Packaged Teams manifest is missing');
@@ -31,7 +32,7 @@ const evidence = {
   package: 'sharepoint/solution/zava-revenue-deal-room.sppkg',
   packageBytes: packageBytes.length,
   packageSha256: hash(packageBytes),
-  agentPackage: 'teams/zava-revenue-deal-room.zip',
+  agentPackage: 'teams/zavamesh-revenue-deal-room.zip',
   agentPackageBytes: fs.statSync(agentPath).size,
   agentPackageSha256: hash(fs.readFileSync(agentPath)),
   configuredBundles: Object.keys(config.bundles).length,
@@ -46,6 +47,10 @@ const evidence = {
   visualSourceSha256: matrix.sourceSha256,
   businessMatrixCaptures: matrix.totalCaptures,
   businessMatrixFailures: matrix.failureCount,
+  connectedJourneyCaptures: journeys.captures.length,
+  connectedJourneyFailures: journeys.failureCount,
+  responsiveWorkspaceVariants: journeys.workspaceVariants,
+  totalVisualCaptures: gallery.totalCaptures + matrix.totalCaptures + journeys.captures.length,
   businessMatrixInlineIntents: matrix.inlineMatrixCount / 3,
   workflowReviewCaptures: matrix.workflowReviewCount,
   workflowReceiptCaptures: matrix.workflowReceiptCount,

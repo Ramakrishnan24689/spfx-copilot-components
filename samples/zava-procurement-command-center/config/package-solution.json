@@ -18,7 +18,7 @@
         "default": "Evidence-led procurement agent experiences"
       },
       "longDescription": {
-        "default": "Zava Procurement turns business intent into governed buying, sourcing, supplier, invoice, and spend decisions."
+        "default": "ZavaCore Procurement connects business cases, governed awards, supplier resilience and global investment outcomes."
       },
       "screenshotPaths": [
         "../assets/ux-sourcing-workbench.png",
@@ -31,7 +31,7 @@
     },
     "features": [
       {
-        "title": "Zava Procurement Command Center",
+        "title": "ZavaCore Procurement Command Center",
         "description": "Activates 22 evidence-led procurement Copilot Components and four connected workspaces.",
         "id": "e4a0bf92-46e0-490b-b837-506a9de5d492",
         "version": "1.0.0.2"

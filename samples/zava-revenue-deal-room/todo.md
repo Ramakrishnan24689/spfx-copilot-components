@@ -1,5 +1,52 @@
 # Zava Revenue Deal Room - Creation Plan
 
+## ZavaMesh redesign - October 26, 2026
+
+**Approved:** offline global revenue scenario, all 21 immutable tool identities, and the written
+ZavaMesh visual contract. No new Copilot Component scaffolds or live integrations.
+
+**Visual contract:** supplied woven wordmark/mark, forest-green navigation, green/lime mesh imagery,
+bright editorial surfaces, restrained elevation, stronger numeric hierarchy, existing approved persona
+portraits, real projected geography, D3-scaled charts with exact values, distinct role workspaces,
+mobile reflow, dark theme, keyboard operation, reduced motion and explicit session-only decisions.
+
+| Workspace | Persona / benchmark | Decision / unique surface | Grain / entry | Must not become |
+| --- | --- | --- | --- | --- |
+| My Deals | Megan / Dynamics seller workflow | Guided intake, live economics, submission receipt | Deal request / existing seller intents | A fake CRM write |
+| Deal Room | Megan / evidence-led mutual plans | Buyer access, proof, dependencies, close progress | Pursuit / buying committee | Another executive dashboard |
+| Commercial Desk | Miriam / Salesforce and DealHub governance | Routed approval inbox, independent reviewers, evidence gates, audit trail | Submitted request / commercial intents | Automatic approval or duplicate queue |
+| Revenue Command | Joni / Clari forecasting | Linked period/region KPIs, pipeline, projected world investment map | Portfolio / forecast intents | Unlabeled illustrative financial claims |
+
+Primary-source benchmark (retrieved October 26, 2026): [Salesforce Revenue Cloud](https://www.salesforce.com/sales/revenue-lifecycle-management/),
+[DealHub](https://dealhub.io/platform/), [Clari / Salesloft Forecast](https://www.salesloft.com/platform/sales-forecasting-software),
+and [Dynamics 365 Sales](https://www.microsoft.com/en-us/dynamics-365/products/sales), supplemented by
+[Zoho CRM](https://www.zoho.com/crm/) team spaces and
+[Pipedrive reporting](https://www.pipedrive.com/en/features/sales-reporting) KPI/action patterns.
+The sweet spot is evidence -> economics -> human decision -> visible receipt, rather than a copy of
+any competitor's visual identity. Product pages are vendor descriptions, not independent rankings.
+
+- [x] Approve scenario, offline scope, retained identities and visual/workflow contract.
+- [x] Inspect supplied ZavaMesh wordmark, mesh background and imagery; inspect existing host and audits.
+- [x] Apply branding to shared UX, agent identity, packaged icons and metadata; media audit passed.
+- [x] Implement linked portfolio/investment analytics and guided intake/approval lifecycle.
+- [x] Prove validation, policy thresholds, independent authority, confirmation, receipts and reset.
+- [x] Capture and inspect representative inline/full-screen/mobile/dark pixels and interaction evidence.
+- [x] Run complete `npm run build`: all catalog/media/gallery/matrix/journey/publication gates,
+  clean production compilation/lint, 97 passing Jest tests, packaging, generated-plugin validation
+  and final package/media/archive audits passed with zero warnings.
+- [x] Regenerate both deployable packages and [release evidence](assets/release-evidence.json):
+  157 current visual captures, including 32 workspace/width/theme combinations, with zero failures.
+- [x] Verify monetary map bubble areas use a stable cross-period domain, zero values have no bubble,
+  and investment period changes visibly resize geometry rather than only replacing labels.
+- [x] Inspect final desktop, narrow, dark, 200% page-scale, intake, approval, receipt and investment
+  screenshots; run `git diff --check` successfully. Temporary capture servers/browsers are stopped.
+- [ ] **BLOCKED (external):** authenticated tenant routing/CSP/focus/screen-reader checks and final
+  public redistribution approval for supplied brand assets and existing persona media.
+
+Confirmed requests are a separate demo overlay, not additions to the CRM opportunity baseline.
+Unconfirmed drafts remain instance-local; approved demo requests never alter the production forecast.
+Historical completion counts below describe earlier releases, not this redesign.
+
 ## RC0 update - October 20, 2026
 
 The current application baseline is SPFx 1.24.0-rc.0, React/ReactDOM 18.3.1, React types 18.3.31/18.3.7, and Heft 1.3.2. Current validation, exact packages, starter targets, findings, and external release gates are recorded in the [repository RC0 readiness report](../../RC0-updates.md). The local creation guide is synchronized byte-for-byte with the assets golden guide.

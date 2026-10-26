@@ -4,7 +4,7 @@ import { createRoot, type Root } from 'react-dom/client';
 import ProcurementApp, { type IModelContextSnapshot } from './ProcurementApp';
 import ProcurementThemeProvider from './ProcurementThemeProvider';
 import { getIntent, INTENTS, type IProcurementProperties, type ProcurementIntentKey } from './catalog';
-import { getReceipts, resetProcurementSession } from './operations';
+import { getPurchaseDecision, getPurchaseQueue, getReceipts, resetProcurementSession } from './operations';
 
 const anchors: Record<ProcurementIntentKey, string> = {
   CreatePurchaseIntent: 'Business outcome', CompareBuyingOptions: 'Fulfillment alternatives',
@@ -32,15 +32,15 @@ describe('intent-specific procurement experiences', () => {
     return found;
   };
   const click = (text: string): void => { act(() => button(text).click()); };
-  const field = (label: string): HTMLInputElement | HTMLSelectElement => {
+  const field = (label: string): HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement => {
     const owner = Array.from(container.querySelectorAll('label')).find(element => element.textContent?.startsWith(label));
-    const input = owner?.querySelector('input,select');
-    if (!(input instanceof HTMLInputElement) && !(input instanceof HTMLSelectElement)) throw new Error(`Missing field: ${label}`);
+    const input = owner?.control || owner?.querySelector('input,select,textarea');
+    if (!(input instanceof HTMLInputElement) && !(input instanceof HTMLSelectElement) && !(input instanceof HTMLTextAreaElement)) throw new Error(`Missing field: ${label}`);
     return input;
   };
   const change = (label: string, value: string): void => {
     const input = field(label);
-    const prototype = input instanceof HTMLSelectElement ? HTMLSelectElement.prototype : HTMLInputElement.prototype;
+    const prototype = input instanceof HTMLSelectElement ? HTMLSelectElement.prototype : input instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
     act(() => {
       const setter = Object.getOwnPropertyDescriptor(prototype, 'value')?.set;
       if (!setter) throw new Error(`Missing native value setter: ${label}`);
@@ -254,5 +254,71 @@ describe('intent-specific procurement experiences', () => {
     click('Review request corrected invoice');
     expect(button('Confirm session-only request corrected invoice').disabled).toBe(true);
     expect(getReceipts()).toHaveLength(0);
+  });
+  test('submits a business case then reviews the exact submitted currency and evidence', () => {
+    render('CreatePurchaseIntent', { outcome: 'Equip the Austin service team', quantity: 120, budget: 230000, currency: 'USD', locations: ['Austin'], constraints: ['Local support required'] }, 'fullscreen');
+    click('Review create purchase intent');
+    click('Confirm session-only create purchase intent');
+    const id = getPurchaseQueue()[0].id;
+    expect(container.textContent).toContain(id);
+    click(`Review ${id}`);
+    expect(container.textContent).toContain('$230,000');
+    expect(container.textContent).toContain('Local support required');
+    change('Decision rationale', 'Local support and budget evidence verified');
+    click('Review approve request');
+    expect(container.querySelector('[data-workflow-stage="review"]')?.textContent).toContain('Equip the Austin service team');
+    click('Confirm session-only approve request');
+    expect(getPurchaseDecision(id)?.result).toBe('approved');
+    change('Request status', 'Approved');
+    expect(container.querySelector('[aria-label="My Requests dashboard"]')?.textContent).toContain(id);
+    expect(getReceipts()).toHaveLength(2);
+  });
+  test('regional selection changes investment data, chart paths and model context together', () => {
+    const publish = jest.fn<Promise<void>, [IModelContextSnapshot]>(() => Promise.resolve());
+    render('ExploreSpendPerformance', {}, 'fullscreen', 'light', publish);
+    const initial = container.querySelector('[data-chart="commitment-trend"]')?.innerHTML;
+    const scope = container.querySelector('[data-workspace="spend-command"]');
+    expect(scope?.textContent).toContain('€7,800,000');
+    click('APAC');
+    expect(scope?.textContent).toContain('€1,520,000');
+    expect(scope?.textContent).toContain('No verified savings evidence');
+    expect(container.querySelector('[data-chart="commitment-trend"]')?.innerHTML).not.toBe(initial);
+    const snapshot = publish.mock.calls[publish.mock.calls.length - 1][0];
+    expect(snapshot).toMatchObject({ workspace: 'spend-command', filters: { region: 'APAC' }, selectedId: 'APAC' });
+    expect(snapshot.visibleIds).toEqual(['ZPC-INV-03', 'ZPC-INV-07']);
+  });
+  test('an approved custom split updates the investment commitment but not delivery', () => {
+    render('ReviewSupplierAward', { splitPercent: 60, conditionText: 'Continuity capacity and authority verified' }, 'fullscreen');
+    click('Review approve split award');
+    click('Confirm session-only approve split award');
+    expect(getReceipts()[0].commitment).toBe(1059600);
+    click('Spend Command');
+    const scope = container.querySelector('[data-workspace="spend-command"]');
+    expect(scope?.textContent).toContain('€6,295,600');
+    expect(scope?.textContent).toContain('Award approved / not delivered');
+  });
+  test('draft snapshots do not expose unreviewed business text', () => {
+    const publish = jest.fn<Promise<void>, [IModelContextSnapshot]>(() => Promise.resolve());
+    render('CreatePurchaseIntent', { outcome: 'Private business text awaiting human review' }, 'inline', 'light', publish);
+    expect(JSON.stringify(publish.mock.calls)).not.toContain('Private business text');
+    click('Review create purchase intent');
+    expect(JSON.stringify(publish.mock.calls)).toContain('Private business text');
+  });
+  test('a changed split redraws the award geometry and invalid input shows no healthy chart', () => {
+    render('ReviewSupplierAward', { conditionText: 'Evidence and authority have been reviewed' });
+    const before = container.querySelector('[data-chart="award-allocation"] path')?.getAttribute('d');
+    change('Primary award share', '60');
+    expect(container.querySelector('[data-chart="award-allocation"] path')?.getAttribute('d')).not.toBe(before);
+    change('Primary award share', '49');
+    expect(container.querySelector('[data-chart="award-allocation"]')).toBeNull();
+    expect(button('Review approve split award').disabled).toBe(true);
+    expect(container.textContent).toContain('Primary share must be between 50% and 85%');
+  });
+  test('initial investment scope honors prompt regions and exposes unsupported regions', () => {
+    render('ExploreSpendPerformance', { region: 'APAC' }, 'fullscreen');
+    expect(container.querySelector('[data-workspace="spend-command"]')?.textContent).toContain('€1,520,000');
+    render('ExploreSpendPerformance', { region: 'Mars' }, 'fullscreen');
+    expect(container.textContent).toContain('No investment region matches Mars');
+    expect(container.querySelector('[data-chart="global-investment-map"]')).toBeNull();
   });
 });

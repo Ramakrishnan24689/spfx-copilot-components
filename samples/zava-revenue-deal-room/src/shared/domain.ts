@@ -32,10 +32,10 @@ export const OPPORTUNITIES: readonly IOpportunity[] = Array.from({ length: 120 }
   id: index === 0 ? 'ZDR-2042' : `ZDR-${2042 + index}`,
   accountId: ACCOUNTS[index % ACCOUNTS.length].id,
   name: index === 0 ? 'Contoso Global Expansion' : `${ACCOUNTS[index % ACCOUNTS.length].name} Growth Program`,
-  stage: index === 0 ? 'Propose' : ['Qualify', 'Develop', 'Propose', 'Commit'][index % 4],
+  stage: index === 0 ? 'Propose' : ['Qualify', 'Develop', 'Propose', 'Commit'][(Math.floor(index / 4) + index) % 4],
   value: index === 0 ? 3637260 : 240000 + ((index * 137000) % 4200000),
   probability: index === 0 ? 0.72 : 0.3 + ((index % 7) * 0.1),
-  quarterOffset: index === 0 ? 0 : (index % 8) - 2
+  quarterOffset: index === 0 ? 0 : Math.floor(index / 16) % 6 - 1
 }));
 
 export const HERO_EVIDENCE: readonly IEvidence[] = [

@@ -1,4 +1,4 @@
-# Zava Revenue Deal Room - 5-minute technical demo
+# ZavaMesh Revenue Deal Room - 5-minute technical demo
 
 ## 0:00-0:40 - Immutable component catalog
 

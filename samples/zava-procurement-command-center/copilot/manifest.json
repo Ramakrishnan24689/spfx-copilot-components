@@ -14,14 +14,14 @@
     "outline": "outline.png"
   },
   "name": {
-    "short": "Zava Procurement",
-    "full": "Zava Procurement Command Center"
+    "short": "ZavaCore Procurement",
+    "full": "ZavaCore Procurement Command Center"
   },
   "description": {
     "short": "Govern buying and supplier decisions with evidence.",
-    "full": "Turn business intent into governed buying, sourcing, supplier, invoice, and spend decisions."
+    "full": "ZavaCore connects guided business-case intake, human approvals, resilient sourcing, global investment visibility and verified procurement value."
   },
-  "accentColor": "#173F35",
+  "accentColor": "#F17826",
   "copilotAgents": {
     "declarativeAgents": [
       {
