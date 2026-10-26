@@ -1,4 +1,4 @@
-# Zava Procurement Command Center - Routing Matrix
+# ZavaCore Procurement Command Center - Routing Matrix
 
 Generated from `src/shared/catalog.ts` and `config/conversation-starters.json`. Tool names retain the registered `Tool` suffix; component/view keys do not.
 

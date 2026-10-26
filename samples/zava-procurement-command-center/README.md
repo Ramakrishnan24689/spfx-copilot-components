@@ -1,4 +1,4 @@
-# Zava Procurement Command Center
+# ZavaCore Procurement Command Center
 
 This release targets **SPFx 1.24.0-rc.0 with React 18.3.1**. Use Node.js 22 (22.14 or later), 24, or
 26. See the [RC0 readiness report](../../RC0-updates.md) and
@@ -17,6 +17,10 @@ This release targets **SPFx 1.24.0-rc.0 with React 18.3.1**. Use Node.js 22 (22.
 > [agentic creation rules](../zava-innovation-portfolio/agentic-creation-rules.md)
 
 ## Screenshots
+
+### Global investment command
+
+![ZavaCore Spend Command showing a real projected world map, regional EUR investments, commitment trends, delivery progress and verified value](assets/ux-spend-command.png)
 
 ### Sourcing Workbench
 
@@ -37,6 +41,52 @@ comparison, invoice reconciliation, 390 px mobile, and dark mode. Machine-readab
 runtime, overflow, label, chart, and focus results are in
 [assets/gallery-evidence.json](assets/gallery-evidence.json). Gallery publication metadata is in
 [assets/sample.json](assets/sample.json).
+
+## ZavaCore keynote experience
+
+This modernization preserves all 22 generated component identities and the four-workspace topology.
+The supplied **ZavaCore** logos, orange-to-magenta brand colors, field-operations photography and
+named team portraits replace the earlier green identity, including the packaged agent and its icons.
+
+- **My Requests:** outcome-led intake, explicit validation, exact-value review and confirmation,
+  source-backed approval evidence, searchable status queues and a connected human-handoff timeline.
+  A submitted business case becomes a real session record with its original currency, locations,
+  constraints and quantity; its approval consumes that same record.
+- **Sourcing Workbench:** curated `ZPC-RFP-31`, budget and award-readiness context, an interactive
+  D3 supplier landscape, and a D3 split-allocation visual. Primary shares above 70% cannot be approved;
+  returning a proposal for evidence remains available.
+- **Supplier 360:** selected-supplier scorecard, owned continuity interventions, contract notice windows,
+  qualification and renewal decisions. Missing contracts and unknown suppliers remain explicit.
+- **Spend Command:** a bundled Natural Earth / Equal Earth world map, eight fictional operating sites,
+  region-driven investment totals, commitment trends, unit-delivery progress and linked value evidence.
+  The baseline is EUR 7.8m planned, EUR 5.236m committed, 2,050 / 3,370 units delivered and EUR 186k
+  verified value. A confirmed **60/40** award changes the curated launch commitment to **EUR 1,059,600**
+  and global commitments to **EUR 6,295,600**, without changing delivery or verified savings.
+
+The fresh-intake approval journey and the seeded 600-device sourcing-to-value journey are separate
+rehearsal slices. Approving a new request does not fabricate bids, attach it to the curated sourcing
+event, create a purchase order or imply delivery. Global programs use authored **EUR reporting
+budgets**; source request currencies are never silently aggregated or converted.
+
+Confirmed actions survive reload in browser session storage. Drafts remain transient. If storage is
+denied, the app explicitly announces the in-memory limitation. Reset clears the overlay and restores the
+seeded records. Draft model context reports field presence/validation, not unreviewed business text.
+
+The [approved design and worldwide capability benchmark](todo.md#workspace-purpose-and-competitive-benchmark)
+draw on official Zip, Ivalua, GEP and JAGGAER product descriptions: guided intake, connected evidence,
+supplier resilience, clear human authority and analytics that lead to action. This is a differentiated
+offline Copilot UX showcase, not an enterprise-suite implementation or a vendor-ranking claim.
+
+[Brand/geography provenance](assets/brand-provenance.json) records source and optimized hashes.
+Natural Earth geography is public domain. Supplied ZavaCore artwork and portraits remain **pending
+final publisher/redistribution approval**. No stock CDN, live geocoding or external data requests run
+in the application.
+
+The [keynote journey evidence](ux-review/evidence/zavacore-modernization.json) adds 24 checkpoints:
+all four workspaces at 340, 760 and 1920 px, actual Chromium 200% page-scale emulation, invalid inputs,
+edit/review/confirm, reload restoration, approval queues, authority limits, award-to-investment
+consequences, regional geometry, keyboard map selection and Reset. Native browser zoom and
+authenticated host accessibility remain separate checks.
 
 ## Implementation status
 
@@ -90,7 +140,7 @@ unconfirmed draft. Exact current test totals and archive hashes are in the
 
 1. Upload [sharepoint/solution/zava-procurement-command-center.sppkg](sharepoint/solution/zava-procurement-command-center.sppkg)
    to a SharePoint app catalog and deploy it tenant-wide.
-2. Enable the packaged **Zava Procurement Command Center** agent in the target Microsoft Copilot
+2. Enable the packaged **ZavaCore Procurement Command Center** agent in the target Microsoft Copilot
    environment.
 3. Start with: **“Compare the final rugged-device bids and show how risk changes the award.”**
 4. Expand to Sourcing Workbench, change the risk weight, inspect the exact table, and open the reviewed
@@ -104,6 +154,8 @@ Use a supported Node.js version and run:
 ```bash
 npm ci
 npm run capture:visual
+npm run check:keynote
+npm run generate:assets
 npm run build
 ```
 
@@ -302,7 +354,7 @@ evidence, and receipts remain one connected graph.
 
 ## Dynamic inline UX contract
 
-- Header: **Zava Procurement** + literal action + responsive **Expand** control.
+- Header: **ZavaCore Procurement** + literal action + responsive **Expand** control.
 - Inline starts with the business need, supplier, event, contract, or invoice, never prompt echo or a
   generic “AI procurement insight.”
 - Intake and sourcing forms use domain controls, visible validation, policy-in-context, review,
@@ -321,9 +373,10 @@ evidence, and receipts remain one connected graph.
 This product should feel like a global trade atelier: structured, material, transparent, and grounded
 in movement of value. It must not resemble the service studio, sales editorial room, or Innovation Hub.
 
-- **Brand:** “Zava Procurement”; planned mark is an interlocking path/ledger symbol.
-- **Palette:** forest `#173F35`, mineral `#EDF0E8`, cobalt `#2855C5`, saffron `#E1A52B`, berry
-  `#B64B5A`, and ink `#1C2925`; semantic colors retain standard meaning.
+- **Brand:** ZavaCore Procurement, using the supplied ZavaCore logotype and interlocking core mark.
+- **Palette:** official orange `#F17826` through magenta `#D43B77`, warm neutrals and charcoal.
+  Accessible Fluent brand foregrounds/buttons use darker orange variants; status colors retain their
+  standard meaning. The theme boundary owns the colors; components consume semantic/brand tokens.
 - **Typography:** sturdy geometric headings with compact operational sans and tabular financial figures.
 - **Composition:** ledger lines, weighted landscapes, split-award geometry, and supply paths; cards only
   for requests, suppliers, bids, contracts, decisions, and bounded forms.

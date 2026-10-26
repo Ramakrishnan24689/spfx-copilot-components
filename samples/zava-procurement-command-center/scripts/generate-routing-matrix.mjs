@@ -10,7 +10,7 @@ if (JSON.stringify(declared) !== JSON.stringify(starters.map(({ title, text }) =
 const tools = new Set(rows.map(row => `${row[0]}Tool`));
 if (starters.length !== 6 || new Set(starters.map(starter => starter.tool)).size !== 6 || starters.some(starter => !tools.has(starter.tool))) throw new Error('Starters require six distinct registered tools.');
 const lines = [
-  '# Zava Procurement Command Center - Routing Matrix', '',
+  '# ZavaCore Procurement Command Center - Routing Matrix', '',
   'Generated from `src/shared/catalog.ts` and `config/conversation-starters.json`. Tool names retain the registered `Tool` suffix; component/view keys do not.', '',
   '| Tool | Operation | Lens and route | Role | Route when | Exclude when | Canonical prompt |',
   '| --- | --- | --- | --- | --- | --- | --- |',

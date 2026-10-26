@@ -1,5 +1,6 @@
 import { HERO_BIDS, REQUESTS, SUPPLIERS } from './domain';
-import type { ProcurementIntentKey } from './catalog';
+import { INTENTS, type ProcurementIntentKey } from './catalog';
+import { z } from 'zod';
 
 export const supplierRecords = HERO_BIDS.map((bid, index) => ({
   ...bid,
@@ -8,7 +9,31 @@ export const supplierRecords = HERO_BIDS.map((bid, index) => ({
   label: bid.supplier,
   region: SUPPLIERS[index].region
 }));
-export const purchaseQueue = REQUESTS.filter(request => request.currency === 'EUR').slice(0, 4).map(request => ({
+export interface IPurchaseRecord {
+  readonly id: string;
+  readonly label: string;
+  readonly requesterId: string;
+  readonly category: string;
+  readonly quantity: number;
+  readonly currency: string;
+  readonly budget: number;
+  readonly region: string;
+  readonly outcome?: string;
+  readonly neededBy?: string;
+  readonly locations?: string;
+  readonly constraints?: string;
+}
+export interface IPurchaseDraft {
+  readonly outcome: string;
+  readonly quantity: number;
+  readonly budget: number;
+  readonly currency: string;
+  readonly neededBy: string;
+  readonly locations: string;
+  readonly constraints: string;
+  readonly category: string;
+}
+export const purchaseQueue: readonly IPurchaseRecord[] = REQUESTS.filter(request => request.currency === 'EUR').slice(0, 4).map(request => ({
   ...request, label: `${request.id} - ${request.category}`
 }));
 export const contracts = supplierRecords.slice(0, 3).map((supplier, index) => ({
@@ -68,23 +93,101 @@ export interface IProcurementReceipt {
   readonly recordId: string;
   readonly action: string;
   readonly summary: string;
+  readonly result: 'approved' | 'returned' | 'declined' | 'submitted' | 'recorded';
+  readonly timestamp: string;
+  readonly actor: string;
+  readonly commitment?: number;
 }
 
 let receipts: readonly IProcurementReceipt[] = [];
+let requests: readonly IPurchaseRecord[] = purchaseQueue;
+let sessionNotice = '';
+const storageKey = 'zavacore-procurement-session-v1';
+const storedSessionSchema = z.object({
+  version: z.literal(1),
+  receipts: z.array(z.object({
+    id: z.string(), intent: z.custom<ProcurementIntentKey>(value => INTENTS.some(intent => intent.key === value)),
+    recordId: z.string(), action: z.string(), summary: z.string(),
+    result: z.enum(['approved', 'returned', 'declined', 'submitted', 'recorded']),
+    timestamp: z.string().datetime(), actor: z.string(), commitment: z.number().finite().nonnegative().optional()
+  })).max(200),
+  requests: z.array(z.object({
+    id: z.string().regex(/^ZPC-REQ-SESSION-\d+$/), label: z.string(), requesterId: z.string(),
+    outcome: z.string(), quantity: z.number().int().positive(), budget: z.number().positive(),
+    currency: z.enum(['EUR', 'USD', 'GBP', 'JPY']), neededBy: z.string(),
+    locations: z.string(), constraints: z.string(), category: z.string(), region: z.string()
+  })).max(100)
+});
 const listeners = new Set<() => void>();
 export const getReceipts = (): readonly IProcurementReceipt[] => receipts;
+export const getPurchaseQueue = (): readonly IPurchaseRecord[] => requests;
+export const getSessionNotice = (): string => sessionNotice;
 export const subscribeReceipts = (listener: () => void): (() => void) => {
   listeners.add(listener);
   return () => { listeners.delete(listener); };
 };
-export function recordConfirmation(intent: ProcurementIntentKey, recordId: string, action: string, summary: string): IProcurementReceipt {
+function persistSession(): void {
+  try {
+    window.sessionStorage.setItem(storageKey, JSON.stringify({ version: 1, receipts, requests: requests.filter(request => request.id.indexOf('ZPC-REQ-SESSION-') === 0) }));
+    sessionNotice = '';
+  } catch (reason) {
+    sessionNotice = 'Browser session storage is unavailable. Confirmed actions remain in memory until this page is closed or refreshed.';
+    console.warn('ZavaCore procurement session persistence unavailable.', reason);
+  }
+}
+export function restoreProcurementSession(): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const raw = window.sessionStorage.getItem(storageKey);
+    if (!raw) return;
+    const stored = storedSessionSchema.safeParse(JSON.parse(raw));
+    if (!stored.success) throw new Error('Stored demo session does not match the current record contract.');
+    const approvedAwards = stored.data.receipts.filter(receipt => receipt.intent === 'ReviewSupplierAward' && receipt.result === 'approved');
+    if (approvedAwards.some(receipt => receipt.commitment === undefined)) throw new Error('Stored award lacks reviewed commitment evidence.');
+    receipts = stored.data.receipts;
+    requests = [...stored.data.requests, ...purchaseQueue];
+    sessionNotice = '';
+  } catch (reason) {
+    sessionNotice = 'The saved demo session could not be restored. Current in-memory data is unchanged; use Reset demo session to clear the saved state.';
+    console.warn('ZavaCore procurement session restoration failed.', reason);
+  }
+  listeners.forEach(listener => listener());
+}
+export function recordConfirmation(intent: ProcurementIntentKey, recordId: string, action: string, summary: string, actor = 'Demo reviewer', commitment?: number): IProcurementReceipt {
   const suffix = String(receipts.length + 1);
-  const receipt = { id: `ZPC-SESSION-${'0000'.slice(suffix.length)}${suffix}`, intent, recordId, action, summary };
+  const result: IProcurementReceipt['result'] = /^approve|^qualify|^accept|^renew/i.test(action) ? 'approved' :
+    /^return|^request corrected/i.test(action) ? 'returned' : /^decline|^reject|^exit/i.test(action) ? 'declined' :
+    /^create|^submit/i.test(action) ? 'submitted' : 'recorded';
+  const receipt: IProcurementReceipt = { id: `ZPC-SESSION-${'0000'.slice(suffix.length)}${suffix}`, intent, recordId, action, summary, result, timestamp: new Date().toISOString(), actor, commitment };
   receipts = [...receipts, receipt];
+  persistSession();
   listeners.forEach(listener => listener());
   return receipt;
 }
+export function submitPurchaseIntent(draft: IPurchaseDraft, actor = 'Demo requester'): IProcurementReceipt {
+  if (draft.outcome.trim().length < 12 || !Number.isInteger(draft.quantity) || !validNumber(draft.quantity, 1, 100000) ||
+    !validNumber(draft.budget, 1, 10000000) || !validDate(draft.neededBy) || !draft.locations.trim() ||
+    ['EUR', 'USD', 'GBP', 'JPY'].indexOf(draft.currency) < 0 || !REQUESTS.some(request => request.category === draft.category)) {
+    throw new Error('The purchase intent needs a valid outcome, quantity, budget, currency, category, date and location.');
+  }
+  const id = `ZPC-REQ-SESSION-${String(requests.length - purchaseQueue.length + 1)}`;
+  requests = [{ ...draft, id, label: `${id} - ${draft.outcome}`, requesterId: actor, region: 'New intake' }, ...requests];
+  return recordConfirmation('CreatePurchaseIntent', id, 'Create purchase intent',
+    `Outcome: ${draft.outcome}; Quantity: ${draft.quantity}; Budget: ${draft.currency} ${draft.budget}; Needed by: ${draft.neededBy}; Locations: ${draft.locations}; Category: ${draft.category}; Constraints: ${draft.constraints}`, actor);
+}
+export function getPurchaseDecision(recordId: string): IProcurementReceipt | undefined {
+  return [...receipts].reverse().find(receipt => receipt.intent === 'ReviewPurchaseRequest' && receipt.recordId === recordId);
+}
 export function resetProcurementSession(): void {
   receipts = [];
+  requests = purchaseQueue;
+  try {
+    window.sessionStorage.removeItem(storageKey);
+    sessionNotice = '';
+  } catch (reason) {
+    sessionNotice = 'In-memory demo data was reset, but browser session storage could not be cleared. Refresh may restore the previous saved session.';
+    console.warn('ZavaCore procurement session reset could not clear storage.', reason);
+  }
   listeners.forEach(listener => listener());
 }
+restoreProcurementSession();

@@ -2,17 +2,17 @@
   {
     "name": "pnp-sp-dev-spfx-copilot-components-zava-procurement-command-center",
     "source": "pnp",
-    "title": "Zava Procurement Command Center",
-    "shortDescription": "An evidence-led procurement Copilot App with 22 routed components and four connected workspaces.",
+    "title": "ZavaCore Procurement Command Center",
+    "shortDescription": "Guided intake, human approvals, resilient sourcing and global investment insights in 22 Copilot experiences.",
     "url": "https://github.com/pnp/spfx-copilot-components/tree/main/samples/zava-procurement-command-center",
     "downloadUrl": "https://pnp.github.io/download-partial/?url=https://github.com/pnp/spfx-copilot-components/tree/main/samples/zava-procurement-command-center",
     "longDescription": [
-      "Zava Procurement Command Center turns natural-language buying intent into focused, inspectable work across guided intake, policy, demand aggregation, sourcing, supplier evaluation, risk, award, contracts, invoices, leakage, and realized value.",
+      "ZavaCore Procurement Command Center connects natural-language business cases to human review, supplier deal evaluation, governed awards, global investment maps, delivery progress and verified procurement value.",
       "Twenty-one operational components and one capability explorer continue into My Requests, Sourcing Workbench, Supplier 360, and Spend Command. The connected rugged-device story preserves request, event, supplier, policy, award, invoice, and value context across roles.",
       "The sample is deterministic, offline, responsive, and explicit that confirmed actions are session-only demonstrations. D3-derived decision visuals include keyboard interaction, accessible summaries, and exact-value alternatives."
     ],
     "creationDateTime": "2026-08-31",
-    "updateDateTime": "2026-10-20",
+    "updateDateTime": "2026-10-26",
     "products": [
       "SharePoint",
       "Copilot"

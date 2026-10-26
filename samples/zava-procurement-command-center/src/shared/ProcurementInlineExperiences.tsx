@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Button, makeStyles, tokens } from '@fluentui/react-components';
+import { Button, makeStyles, mergeClasses, tokens } from '@fluentui/react-components';
 import { getIntent, INTENTS, type IIntentDefinition, type IProcurementProperties, type ProcurementIntentKey } from './catalog';
 import { CATEGORIES, DEFAULT_WEIGHTS, EVENTS, INVOCATION_DATE, money, normalizeScore, POLICY_RULES, REGIONS, splitAward } from './domain';
-import { SupplierLandscape } from './ProcurementCharts';
+import { AwardAllocation, SupplierLandscape } from './ProcurementCharts';
 import {
   buyingOptions, contracts, demandCohort, diversification, getReceipts, initialSelection, invoices,
-  leakageOpportunities, purchaseOrders, purchaseQueue, recordConfirmation, subscribeReceipts,
+  leakageOpportunities, purchaseOrders, getPurchaseQueue, recordConfirmation, subscribeReceipts, submitPurchaseIntent,
   supplierRecords, validDate, validNumber, type IProcurementReceipt
 } from './operations';
 
@@ -22,6 +22,7 @@ export interface IProcurementViewProps {
   readonly preview?: boolean;
   readonly onContext?: (snapshot: IProcurementSnapshot) => void;
   readonly onSendFollowUp?: (message: string) => Promise<boolean>;
+  readonly actor?: string;
 }
 type Row = readonly [string, React.ReactNode];
 type Choice = { readonly id: string; readonly label: string };
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
   body: { display: 'grid', gap: '14px', minWidth: 0 },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,180px),1fr))', gap: '12px' },
   field: { display: 'grid', gap: '5px', minWidth: 0, fontWeight: tokens.fontWeightSemibold },
-  input: { boxSizing: 'border-box', width: '100%', minWidth: 0, padding: '8px', border: `1px solid ${tokens.colorNeutralStroke1}`, borderRadius: tokens.borderRadiusMedium, color: tokens.colorNeutralForeground1, backgroundColor: tokens.colorNeutralBackground1, font: 'inherit' },
+  input: { boxSizing: 'border-box', width: '100%', minWidth: 0, padding: '10px 12px', minHeight: '42px', border: `1px solid ${tokens.colorNeutralStroke1}`, borderRadius: tokens.borderRadiusMedium, color: tokens.colorNeutralForeground1, backgroundColor: tokens.colorNeutralBackground1, font: 'inherit', ':focus-visible': { outline: `2px solid ${tokens.colorStrokeFocus2}`, outlineOffset: '2px' } },
   section: { minWidth: 0, padding: '14px', border: `1px solid ${tokens.colorNeutralStroke2}`, borderRadius: tokens.borderRadiusMedium, backgroundColor: tokens.colorNeutralBackground1 },
   heading: { margin: '0 0 8px', fontSize: tokens.fontSizeBase400 },
   metric: { padding: '12px', borderLeft: `3px solid ${tokens.colorBrandStroke1}`, backgroundColor: tokens.colorNeutralBackground3 },
@@ -41,9 +42,15 @@ const useStyles = makeStyles({
   table: { width: '100%', borderCollapse: 'collapse', fontSize: tokens.fontSizeBase200 },
   cell: { textAlign: 'left', padding: '8px', borderBottom: `1px solid ${tokens.colorNeutralStroke2}`, verticalAlign: 'top' },
   alert: { padding: '10px', borderLeft: `3px solid ${tokens.colorPaletteMarigoldBorderActive}`, backgroundColor: tokens.colorNeutralBackground3 },
-  receipt: { padding: '14px', borderLeft: `4px solid ${tokens.colorPaletteGreenBorderActive}`, backgroundColor: tokens.colorNeutralBackground3 },
+  receipt: { padding: '24px', borderLeft: `4px solid ${tokens.colorBrandStroke1}`, backgroundColor: tokens.colorBrandBackground2, borderRadius: tokens.borderRadiusLarge },
+  approved: { borderLeftColor: tokens.colorPaletteGreenBorderActive, backgroundColor: tokens.colorPaletteGreenBackground1 },
+  returned: { borderLeftColor: tokens.colorPaletteRedBorderActive, backgroundColor: tokens.colorPaletteRedBackground1 },
+  steps: { listStyleType: 'none', padding: 0, margin: '0 0 10px', display: 'grid', gridTemplateColumns: 'repeat(3,minmax(0,1fr))', gap: '8px', fontSize: '12px' },
+  step: { padding: '10px 8px', borderBottom: `3px solid ${tokens.colorNeutralStroke2}`, color: tokens.colorNeutralForeground3 },
+  currentStep: { color: tokens.colorBrandForeground1, borderBottomColor: tokens.colorBrandStroke1, fontWeight: 700 },
+  reviewList: { margin: '18px 0', display: 'grid', gridTemplateColumns: 'minmax(100px,1fr) minmax(0,2fr)', gap: '12px 20px', '& dd': { margin: 0, overflowWrap: 'anywhere' }, '@media(max-width:480px)': { gridTemplateColumns: '1fr', gap: '6px', '& dd': { marginBottom: '10px' } } },
   list: { margin: 0, paddingLeft: '20px', display: 'grid', gap: '6px' },
-  progress: { width: '100%', height: '16px' }
+  progress: { width: '100%', height: '8px', accentColor: tokens.colorBrandBackground }
 });
 
 function Section({ title, children }: { title: string; children?: React.ReactNode }): React.ReactElement {
@@ -58,9 +65,10 @@ function Table({ title, columns, rows }: { title: string; columns: readonly stri
   const s = useStyles();
   return <div className={s.scroll}><table className={s.table}><caption>{title}</caption><thead><tr>{columns.map(column => <th className={s.cell} scope="col" key={column}>{column}</th>)}</tr></thead><tbody>{rows.map(row => <tr key={String(row[0])}>{row.map((cell, index) => <td className={s.cell} key={columns[index]}>{cell}</td>)}</tr>)}</tbody></table>{rows.length === 0 && <p role="status">No matching records. Change the filters to continue.</p>}</div>;
 }
-function TextField({ label, value, onChange, type = 'text' }: { label: string; value: string; onChange: (value: string) => void; type?: 'text' | 'date' }): React.ReactElement {
+function TextField({ label, value, onChange, type = 'text', multiline = false }: { label: string; value: string; onChange: (value: string) => void; type?: 'text' | 'date'; multiline?: boolean }): React.ReactElement {
   const s = useStyles();
-  return <label className={s.field}>{label}<input className={s.input} type={type} value={value} onChange={event => onChange(event.target.value)} /></label>;
+  const id = React.useId();
+  return <div className={s.field}><label htmlFor={id}>{label}</label>{multiline ? <textarea id={id} className={s.input} rows={3} value={value} onChange={event => onChange(event.target.value)} /> : <input id={id} className={s.input} type={type} value={value} onChange={event => onChange(event.target.value)} />}</div>;
 }
 function NumberField({ label, value, onChange, min = 0, max = 10000000 }: { label: string; value: number; onChange: (value: number) => void; min?: number; max?: number }): React.ReactElement {
   const s = useStyles();
@@ -68,14 +76,16 @@ function NumberField({ label, value, onChange, min = 0, max = 10000000 }: { labe
 }
 function Select({ label, value, options, onChange }: { label: string; value: string; options: readonly string[]; onChange: (value: string) => void }): React.ReactElement {
   const s = useStyles();
+  const id = React.useId();
   const supported = options.indexOf(value) >= 0;
-  return <label className={s.field}>{label}<select className={s.input} value={value} onChange={event => onChange(event.target.value)}>{!supported && <option value={value}>Choose a supported value ({value})</option>}{options.map(option => <option key={option}>{option}</option>)}</select>{!supported && <span role="alert">This value is not supported by the offline scenario. Choose an available option.</span>}</label>;
+  return <div className={s.field}><label htmlFor={id}>{label}</label><select id={id} className={s.input} value={value} onChange={event => onChange(event.target.value)}>{!supported && <option value={value}>Choose a supported value ({value})</option>}{options.map(option => <option key={option}>{option}</option>)}</select>{!supported && <span role="alert">This value is not supported by the offline scenario. Choose an available option.</span>}</div>;
 }
 function RecordPicker({ label, value, options, onChange }: { label: string; value: string; options: readonly Choice[]; onChange: (value: string) => void }): React.ReactElement {
   const s = useStyles();
+  const id = React.useId();
   const owner = React.useContext(ViewContext);
   const found = options.some(option => option.id === value);
-  return <label className={s.field}>{label}<select className={s.input} value={value} onChange={event => onChange(event.target.value)}>{!found && <option value={value}>{value}</option>}{options.map(option => <option value={option.id} key={option.id}>{option.label}</option>)}</select>{!found && <span role="alert">No record matches &quot;{value}&quot;. Choose a sample record; no record was substituted.</span>}{!found && owner && <MissingRecordSnapshot view={owner} value={value} label={label} />}</label>;
+  return <div className={s.field}><label htmlFor={id}>{label}</label><select id={id} className={s.input} value={value} onChange={event => onChange(event.target.value)}>{!found && <option value={value}>{value}</option>}{options.map(option => <option value={option.id} key={option.id}>{option.label}</option>)}</select>{!found && <span role="alert">No record matches &quot;{value}&quot;. Choose a sample record; no record was substituted.</span>}{!found && owner && <MissingRecordSnapshot view={owner} value={value} label={label} />}</div>;
 }
 function MissingRecordSnapshot({ view, value, label }: { view: IProcurementViewProps; value: string; label: string }): React.ReactElement {
   useSnapshot(view, value, `${label}: no record matches ${value}; no record was substituted or evaluated.`, 'no-match');
@@ -98,31 +108,41 @@ function useSnapshot(props: IProcurementViewProps, selectedId: string, summary: 
   }, [props.onContext, props.definition.key, props.definition.route, selectedId, summary, stage]);
 }
 
-function Workflow({ view, recordId, action, rows, error, onReset, children }: {
+function Workflow({ view, recordId, action, rows, error, onReset, onConfirm, commitment, children }: {
   view: IProcurementViewProps; recordId: string; action: string; rows: readonly Row[];
-  error?: string; onReset: () => void; children?: React.ReactNode;
+  error?: string; onReset: () => void; onConfirm?: () => IProcurementReceipt; commitment?: number; children?: React.ReactNode;
 }): React.ReactElement {
   const s = useStyles();
   const [stage, setStage] = React.useState<'draft' | 'review' | 'receipt'>('draft');
   const [receipt, setReceipt] = React.useState<IProcurementReceipt>();
+  const [confirmationError, setConfirmationError] = React.useState('');
   const confirmed = React.useRef(false);
   const summary = rows.map(([label, value]) => `${label}: ${String(value)}`).join('; ');
-  useSnapshot(view, recordId, stage === 'draft' && error ? `Unconfirmed draft needs correction: ${error} Proposed values: ${summary}` : summary, stage);
+  const initialSummary = React.useRef(summary);
+  useSnapshot(view, receipt?.recordId || recordId, stage === 'draft' ?
+    `Unconfirmed draft; fields: ${rows.map(row => row[0]).join(', ')}; ${error ? `needs correction: ${error}` : 'ready for review'}; edited: ${summary !== initialSummary.current}` :
+    stage === 'receipt' ? `${receipt?.id}; ${receipt?.action}; ${receipt?.summary}; session-only` : summary, stage);
   const confirm = (): void => {
     if (confirmed.current || error || view.preview) return;
-    confirmed.current = true;
-    setReceipt(recordConfirmation(view.definition.key, recordId, action, summary));
-    setStage('receipt');
+    try {
+      const result = onConfirm ? onConfirm() : recordConfirmation(view.definition.key, recordId, action, summary, view.actor, commitment);
+      confirmed.current = true;
+      setReceipt(result);
+      setStage('receipt');
+    } catch (reason) {
+      setConfirmationError(`The session action could not be recorded: ${reason instanceof Error ? reason.message : String(reason)}`);
+    }
   };
   return <div className={s.body} data-workflow-stage={stage}>
     {view.preview && <p className={s.alert}>Safe preview: edit and review are available; confirmation is disabled.</p>}
-    <p className={s.muted}>Draft → Review → Explicit confirmation → Session receipt</p>
-    {stage === 'draft' ? <>{children}{error && <p className={s.alert} role="alert">{error}</p>}<div className={s.actions}><Button appearance="primary" disabled={Boolean(error)} onClick={() => setStage('review')}>Review {action.toLowerCase()}</Button></div></> : stage === 'review' ? <Section title={`Review: ${action}`}><dl>{rows.map(([label, value]) => <React.Fragment key={label}><dt><strong>{label}</strong></dt><dd>{value}</dd></React.Fragment>)}</dl><p>No purchase order, supplier award, invoice posting, or external message will be created.</p><div className={s.actions}><Button onClick={() => setStage('draft')}>Edit draft</Button><Button appearance="primary" disabled={Boolean(error) || view.preview} onClick={confirm}>Confirm session-only {action.toLowerCase()}</Button></div></Section> : <section className={s.receipt} role="status" aria-label="Session receipt"><h2 className={s.heading}>{action} recorded for this session</h2><p><strong>{receipt?.id}</strong> · {recordId}</p><p>{receipt?.summary}</p><p>No external system was changed.</p><Button onClick={() => { onReset(); confirmed.current = false; setReceipt(undefined); setStage('draft'); }}>Reset draft</Button></section>}
+    <ol className={s.steps} aria-label="Approval workflow">{(['draft', 'review', 'receipt'] as const).map((item, index) => <li key={item} className={mergeClasses(s.step, stage === item && s.currentStep)} aria-current={stage === item ? 'step' : undefined}>0{index + 1} / {item === 'draft' ? 'Prepare' : item === 'review' ? 'Review & confirm' : 'Session receipt'}</li>)}</ol>
+    {confirmationError && <p role="alert" className={s.alert}>{confirmationError}</p>}
+    {stage === 'draft' ? <>{children}{error && <p className={s.alert} role="alert">{error}</p>}<div className={s.actions}><Button appearance="primary" disabled={Boolean(error)} onClick={() => setStage('review')}>Review {action.toLowerCase()}</Button></div></> : stage === 'review' ? <Section title={`Review: ${action}`}><p className={s.muted}>Human checkpoint / verify the evidence and exact values before confirming.</p><dl className={s.reviewList}>{rows.map(([label, value]) => <React.Fragment key={label}><dt><strong>{label}</strong></dt><dd>{value}</dd></React.Fragment>)}</dl><p>No purchase order, supplier award, invoice posting, or external message will be created.</p><div className={s.actions}><Button onClick={() => { setConfirmationError(''); setStage('draft'); }}>Edit draft</Button><Button appearance="primary" disabled={Boolean(error) || view.preview} onClick={confirm}>Confirm session-only {action.toLowerCase()}</Button></div></Section> : <section className={mergeClasses(s.receipt, receipt?.result === 'approved' && s.approved, (receipt?.result === 'returned' || receipt?.result === 'declined') && s.returned)} role="status" aria-label="Session receipt"><h2 className={s.heading}>{action} recorded for this session</h2><p><strong>{receipt?.id}</strong> · {receipt?.recordId}</p><p>{receipt?.summary}</p><p className={s.muted}>{receipt?.actor} / {receipt?.timestamp} / {receipt?.result}</p><p>No external system was changed.</p>{view.definition.key === 'CreatePurchaseIntent' && <p>Next: open My Requests to review this submitted business case.</p>}<Button onClick={() => { onReset(); confirmed.current = false; setReceipt(undefined); setConfirmationError(''); setStage('draft'); }}>Reset draft</Button></section>}
   </div>;
 }
-function Decision({ view, recordId, actions, evidence, blockingReason, approvalBlockReason, onReset, children }: {
+function Decision({ view, recordId, actions, evidence, blockingReason, approvalBlockReason, onReset, commitment, children }: {
   view: IProcurementViewProps; recordId: string; actions: readonly string[]; evidence: readonly Row[];
-  blockingReason?: string; approvalBlockReason?: string; onReset?: () => void; children?: React.ReactNode;
+  blockingReason?: string; approvalBlockReason?: string; onReset?: () => void; commitment?: number; children?: React.ReactNode;
 }): React.ReactElement {
   const receipts = React.useSyncExternalStore(subscribeReceipts, getReceipts, getReceipts);
   const requested = view.properties.proposedDecision;
@@ -132,9 +152,9 @@ function Decision({ view, recordId, actions, evidence, blockingReason, approvalB
   const processed = receipts.some(receipt => receipt.intent === view.definition.key && receipt.recordId === recordId);
   const error = blockingReason || (draft.decision === actions[0] ? approvalBlockReason : undefined) || (processed ? 'This record was already processed in this session. Choose another record or reset the demo session.' : actions.indexOf(draft.decision) < 0 ? 'Choose a supported decision.' :
     draft.rationale.trim().length < 12 ? 'Explain the decision in at least 12 characters before review.' : undefined);
-  return <Workflow view={view} recordId={recordId} action={draft.decision} rows={[...evidence, ['Decision', draft.decision], ['Rationale / conditions', draft.rationale]]} error={error} onReset={() => { reset(); onReset?.(); }}>
+  return <Workflow view={view} recordId={recordId} action={draft.decision} rows={[...evidence, ['Decision', draft.decision], ['Rationale / conditions', draft.rationale]]} error={error} commitment={commitment} onReset={() => { reset(); onReset?.(); }}>
     {children}<Select label="Decision" value={draft.decision} options={actions} onChange={decision => setDraft({ ...draft, decision })} />
-    <TextField label="Decision rationale / conditions (minimum 12 characters)" value={draft.rationale} onChange={rationale => setDraft({ ...draft, rationale })} />
+    <TextField label="Decision rationale / conditions (minimum 12 characters)" multiline value={draft.rationale} onChange={rationale => setDraft({ ...draft, rationale })} />
   </Workflow>;
 }
 
@@ -146,13 +166,14 @@ function CreatePurchaseIntent(view: IProcurementViewProps): React.ReactElement {
     !validNumber(draft.budget, 1, 10000000) ? 'Budget must be between 1 and 10,000,000.' :
     ['EUR', 'USD', 'GBP', 'JPY'].indexOf(draft.currency) < 0 || !CATEGORIES.some(category => category === draft.category) ? 'Choose a supported currency and category.' :
     !validDate(draft.neededBy) || !draft.locations.trim() ? 'Provide a valid needed-by date and delivery location.' : undefined;
-  return <Workflow view={view} recordId="New purchase intent" action="Create purchase intent" rows={[['Outcome', draft.outcome], ['Quantity', draft.quantity], ['Budget', error ? String(draft.budget) : money(draft.budget, draft.currency)], ['Needed by', draft.neededBy], ['Locations', draft.locations], ['Category', draft.category], ['Constraints', draft.constraints]]} error={error} onReset={reset}>
-    <TextField label="Business outcome" value={draft.outcome} onChange={outcome => setDraft({ ...draft, outcome })} />
+  return <Workflow view={view} recordId="New purchase intent" action="Create purchase intent" rows={[['Outcome', draft.outcome], ['Quantity', draft.quantity], ['Budget', error ? String(draft.budget) : money(draft.budget, draft.currency)], ['Needed by', draft.neededBy], ['Locations', draft.locations], ['Category', draft.category], ['Constraints', draft.constraints]]} error={error} onReset={reset} onConfirm={() => submitPurchaseIntent(draft, view.actor)}>
+    <TextField label="Business outcome" multiline value={draft.outcome} onChange={outcome => setDraft({ ...draft, outcome })} />
     <div className={s.grid}><Select label="Purchase category" value={draft.category} options={CATEGORIES} onChange={category => setDraft({ ...draft, category })} /><NumberField label="Quantity" value={draft.quantity} min={1} max={100000} onChange={quantity => setDraft({ ...draft, quantity })} /><NumberField label="Authorized budget" value={draft.budget} min={1} onChange={budget => setDraft({ ...draft, budget })} /><Select label="Currency" value={draft.currency} options={['EUR', 'USD', 'GBP', 'JPY']} onChange={currency => setDraft({ ...draft, currency })} /><TextField label="Needed by" type="date" value={draft.neededBy} onChange={neededBy => setDraft({ ...draft, neededBy })} /></div>
     <TextField label="Delivery locations" value={draft.locations} onChange={locations => setDraft({ ...draft, locations })} /><TextField label="Purchase constraints" value={draft.constraints} onChange={constraints => setDraft({ ...draft, constraints })} />
   </Workflow>;
 }
 function CompareBuyingOptions(view: IProcurementViewProps): React.ReactElement {
+  const purchaseQueue = React.useSyncExternalStore(subscribeReceipts, getPurchaseQueue, getPurchaseQueue);
   const [selected, setSelected] = React.useState(initialSelection(purchaseQueue, view.properties.requestId));
   const request = purchaseQueue.find(item => item.id === selected);
   const [quantity, setQuantity] = React.useState(view.properties.quantity ?? request?.quantity ?? 600);
@@ -167,6 +188,7 @@ function CompareBuyingOptions(view: IProcurementViewProps): React.ReactElement {
   return <><RecordPicker label="Route comparison request" value={selected} options={purchaseQueue} onChange={id => { setSelected(id); const next = purchaseQueue.find(item => item.id === id); if (next) setQuantity(next.quantity); }} /><NumberField label="Units needed" value={quantity} min={1} max={100000} onChange={setQuantity} /><TextField label="Route needed by" type="date" value={neededBy} onChange={setNeededBy} /><Select label="Optimize route for" value={priority} options={['Speed', 'Total cost']} onChange={setPriority} />{!valid && <p role="alert">Choose a known request, whole positive quantity, valid date and budget. The offline prices are EUR only; no conversion is implied.</p>}<Table title={`Fulfillment alternatives - budget ${valid ? money(budget) : 'requires correction'}`} columns={['Buying route', 'Estimated cost', 'Lead / deadline', 'Budget / evidence']} rows={options.map(option => [option.route, money(option.cost), `${option.days} days; ${option.days <= daysAvailable ? 'meets target' : 'misses target'}`, `${option.cost <= budget ? 'Within budget' : 'Over budget'}; ${option.evidence}`])} /><p>Timing is measured from the fixed sample date {INVOCATION_DATE}. Supplier award and purchase approval are separate tools.</p></>;
 }
 function CheckPurchasePolicy(view: IProcurementViewProps): React.ReactElement {
+  const purchaseQueue = React.useSyncExternalStore(subscribeReceipts, getPurchaseQueue, getPurchaseQueue);
   const [requestId, setRequestId] = React.useState(initialSelection(purchaseQueue, view.properties.requestId));
   const request = purchaseQueue.find(item => item.id === requestId);
   const [qualifiedBids, setQualifiedBids] = React.useState(4);
@@ -185,11 +207,12 @@ function CheckPurchasePolicy(view: IProcurementViewProps): React.ReactElement {
   </>}</>;
 }
 function ReviewPurchaseRequest(view: IProcurementViewProps): React.ReactElement {
+  const purchaseQueue = React.useSyncExternalStore(subscribeReceipts, getPurchaseQueue, getPurchaseQueue);
   const receipts = React.useSyncExternalStore(subscribeReceipts, getReceipts, getReceipts);
   const [selected, setSelected] = React.useState(initialSelection(purchaseQueue, view.properties.requestId));
   const request = purchaseQueue.find(item => item.id === selected);
   const processed = receipts.some(receipt => receipt.intent === view.definition.key && receipt.recordId === selected);
-  return <><RecordPicker label="Pending purchase request" value={selected} options={purchaseQueue.map(item => ({ ...item, label: `${item.label}${receipts.some(receipt => receipt.intent === view.definition.key && receipt.recordId === item.id) ? ' (processed in session)' : ''}` }))} onChange={setSelected} />{request && <Decision key={selected} view={view} recordId={selected} actions={['Approve request', 'Return for evidence', 'Decline request']} evidence={[['Category', request.category], ['Quantity', request.quantity], ['Budget commitment', money(request.budget)], ['Requester', request.requesterId]]} blockingReason={processed ? 'This request was already processed in this session. Choose another request.' : undefined}><Section title="Demand and commitment evidence"><Metrics rows={[['Requested units', request.quantity], ['Authorized amount', money(request.budget)], ['Policy', 'Evidence reviewed; human authority required']]} /></Section></Decision>}</>;
+  return <><RecordPicker label="Pending purchase request" value={selected} options={purchaseQueue.map(item => ({ ...item, label: `${item.label}${receipts.some(receipt => receipt.intent === view.definition.key && receipt.recordId === item.id) ? ' (processed in session)' : ''}` }))} onChange={setSelected} />{request && <Decision key={selected} view={view} recordId={selected} actions={['Approve request', 'Return for evidence', 'Decline request']} evidence={[['Outcome', request.outcome || `${request.category} / ${request.quantity} units`], ['Category', request.category], ['Quantity', request.quantity], ['Budget commitment', money(request.budget, request.currency)], ['Requester', request.requesterId], ['Needed by', request.neededBy || 'Source request delivery window'], ['Delivery locations', request.locations || request.region], ['Constraints', request.constraints || 'Source policy applies']]} blockingReason={processed ? 'This request was already processed in this session. Choose another request.' : undefined}><Section title="Demand and commitment evidence"><Metrics rows={[['Requested units', request.quantity], ['Authorized amount', money(request.budget, request.currency)], ['Policy', 'Evidence reviewed; human authority required']]} /><p>{request.outcome || request.category}</p>{request.locations && <p>Delivery: {request.locations} / {request.neededBy}</p>}{request.constraints && <p>Constraints: {request.constraints}</p>}</Section></Decision>}</>;
 }
 function AggregateDemand(view: IProcurementViewProps): React.ReactElement {
   const [category, setCategory] = React.useState(view.properties.category || 'IT hardware');
@@ -208,6 +231,7 @@ function BuildSourcingEvent(view: IProcurementViewProps): React.ReactElement {
   return <Workflow view={view} recordId={p.eventId || 'New sourcing event'} action="Create sourcing event draft" rows={[['Source cohort', draft.cohort], ['Scope', draft.scope], ['Category', draft.category], ['Bid deadline', draft.deadline], ['Invited supplier', supplier?.supplier || draft.supplier], ['Evaluation model', 'Price 28%; delivery 22%; quality 20%; risk 20%; sustainability 10%']]} error={error} onReset={reset}><TextField label="Source demand cohort" value={draft.cohort} onChange={cohort => setDraft({ ...draft, cohort })} /><TextField label="Sourcing scope" value={draft.scope} onChange={scope => setDraft({ ...draft, scope })} /><Select label="Sourcing category" value={draft.category} options={CATEGORIES} onChange={category => setDraft({ ...draft, category })} /><TextField label="Bid deadline" type="date" value={draft.deadline} onChange={deadline => setDraft({ ...draft, deadline })} /><RecordPicker label="Qualified supplier to invite" value={draft.supplier} options={supplierRecords} onChange={supplier => setDraft({ ...draft, supplier })} /><p>The review creates a session draft, not supplier communication or a live sourcing event.</p></Workflow>;
 }
 function CompareSupplierBids(view: IProcurementViewProps): React.ReactElement {
+  const s = useStyles();
   const [eventId, setEventId] = React.useState(initialSelection([{ id: EVENTS[0].id, label: EVENTS[0].id }], view.properties.eventId));
   const [riskWeight, setRiskWeight] = React.useState(view.properties.riskWeight ?? 20);
   const [supplierId, setSupplierId] = React.useState(initialSelection(supplierRecords, view.properties.supplierId));
@@ -219,22 +243,29 @@ function CompareSupplierBids(view: IProcurementViewProps): React.ReactElement {
     ? `${eventId}; ${supplier.supplier}; risk weight ${riskWeight}%; weighted score ${normalizeScore(supplier, weights).toFixed(1)}; bid ${money(supplier.price)}; lead ${supplier.lead} days; quality ${supplier.quality}/100; risk ${supplier.risk}/100; sustainability ${supplier.sustainability}/100; confidence ${supplier.confidence}%`
     : 'No supported event, supplier, or weighting; no bid evidence was evaluated.';
   useSnapshot(view, validEvent ? supplierId : eventId, summary, !validEvent || !supplier ? 'no-match' : valid ? 'inspect' : 'input-error');
-  return <><RecordPicker label="Sourcing event" value={eventId} options={[{ id: EVENTS[0].id, label: EVENTS[0].id }]} onChange={setEventId} />{eventId === EVENTS[0].id && <><NumberField label="Risk weight (%)" value={riskWeight} min={5} max={45} onChange={setRiskWeight} /><RecordPicker label="Inspect supplier evidence" value={supplierId} options={supplierRecords} onChange={setSupplierId} />{valid ? <SupplierLandscape weights={{ ...DEFAULT_WEIGHTS, risk: riskWeight, price: 48 - riskWeight }} onSelect={bidId => { const selected = supplierRecords.find(item => item.bidId === bidId); if (selected) setSupplierId(selected.id); }} /> : <p role="alert">Risk weight must be between 5% and 45%; other weights retain a total of 100%.</p>}{supplier && <Metrics rows={[['Selected supplier', supplier.supplier], ['Evidence confidence', `${supplier.confidence}%`], ['Lead time', `${supplier.lead} days`]]} />}</>}</>;
+  return <>
+    <div className={s.grid}>
+      <RecordPicker label="Sourcing event" value={eventId} options={[{ id: EVENTS[0].id, label: EVENTS[0].id }]} onChange={setEventId} />
+      {validEvent && <><NumberField label="Risk weight (%)" value={riskWeight} min={5} max={45} onChange={setRiskWeight} /><RecordPicker label="Inspect supplier evidence" value={supplierId} options={supplierRecords} onChange={setSupplierId} /></>}
+    </div>
+    {validEvent && <>{valid ? <SupplierLandscape weights={weights} onSelect={bidId => { const selected = supplierRecords.find(item => item.bidId === bidId); if (selected) setSupplierId(selected.id); }} /> : <p role="alert">Risk weight must be between 5% and 45%; other weights retain a total of 100%.</p>}{supplier && <Metrics rows={[['Selected supplier', supplier.supplier], ['Evidence confidence', `${supplier.confidence}%`], ['Lead time', `${supplier.lead} days`]]} />}</>}
+  </>;
 }
 function ReviewSupplierAward(view: IProcurementViewProps): React.ReactElement {
   const eventOptions = [{ id: EVENTS[0].id, label: EVENTS[0].id }];
   const [eventId, setEventId] = React.useState(initialSelection(eventOptions, view.properties.eventId));
   const [split, setSplit] = React.useState(view.properties.splitPercent ?? 65);
   const valid = validNumber(split, 50, 85);
-  const scenario = splitAward(valid ? split : 65);
+  const scenario = valid ? splitAward(split) : undefined;
   return <><RecordPicker label="Award event" value={eventId} options={eventOptions} onChange={setEventId} />{eventId === EVENTS[0].id && <Decision
     key={eventId} view={view} recordId={eventId}
+    commitment={scenario?.cost}
     actions={['Approve split award', 'Return award for evidence', 'Decline award']}
     blockingReason={!valid ? 'Primary share must be between 50% and 85%.' : undefined}
     approvalBlockReason={split > 70 ? 'Corridor concentration exceeds this sample authority. Reduce the primary share to 70% or below before approval.' : undefined}
-    evidence={[['Primary supplier', `Fabrikam Devices ${split}%`], ['Resilient supplier', `Contoso Mobility ${100 - split}%`], ['Total award', money(scenario.cost)], ['Blended risk', `${scenario.risk}/100`], ['On-time confidence', `${scenario.onTime}%`]]}>
+    evidence={[['Primary supplier', `Fabrikam Devices ${split}%`], ['Resilient supplier', `Contoso Mobility ${100 - split}%`], ['Total award', scenario ? money(scenario.cost) : 'Requires valid allocation'], ['Blended risk', scenario ? `${scenario.risk}/100` : 'Requires valid allocation'], ['On-time confidence', scenario ? `${scenario.onTime}%` : 'Requires valid allocation']]}>
     <NumberField label="Primary award share (%)" value={split} min={50} max={85} onChange={setSplit} />
-    <Metrics rows={[['Award cost', money(scenario.cost)], ['Blended risk', `${scenario.risk}/100`], ['Resilient share', `${100 - split}%`]]} />
+    {scenario && <><AwardAllocation primaryPercent={split} /><Metrics rows={[['Award cost', money(scenario.cost)], ['Blended risk', `${scenario.risk}/100`], ['Resilient share', `${100 - split}%`]]} /></>}
     <p>Approval safeguard: primary share cannot exceed 70%. Returning or declining an otherwise valid proposal remains available.</p>
   </Decision>}</>;
 }

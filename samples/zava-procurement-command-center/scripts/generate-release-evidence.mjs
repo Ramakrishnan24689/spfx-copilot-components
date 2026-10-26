@@ -22,6 +22,8 @@ assert(agentBytes.equals(currentAgent), 'The packaged agent differs from the gen
 const junit = fs.readFileSync(path.join(root, 'jest-output', 'JUnit.xml'), 'utf8').match(/<testsuites\b[^>]*>/)?.[0];
 assert(junit && /\bfailures="0"/.test(junit) && /\berrors="0"/.test(junit), 'All Jest tests must pass.');
 const gallery = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'gallery-evidence.json'), 'utf8'));
+const keynote = JSON.parse(fs.readFileSync(path.join(root, 'ux-review', 'evidence', 'zavacore-modernization.json'), 'utf8'));
+const brand = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'brand-provenance.json'), 'utf8'));
 const hash = buffer => crypto.createHash('sha256').update(buffer).digest('hex');
 const evidence = {
   generatedAt: new Date().toISOString(),
@@ -36,6 +38,8 @@ const evidence = {
   javascriptAssets: archive.files.filter(entry => /ClientSideAssets\/.*\.js$/i.test(entry.path)).length,
   agentArchives: agents.length,
   visualCaptures: gallery.captureCount,
+  keynoteCaptures: keynote.captureCount,
+  sharedBrandMedia: brand.items.filter(item => item.file.startsWith('src/shared/assets/brand/')).length,
   componentCount: 22,
   testCount: Number(junit.match(/\btests="(\d+)"/)?.[1]),
   externalGate: 'Authenticated routing, host CSP/focus/accessibility and public media-rights approval remain separate.'
