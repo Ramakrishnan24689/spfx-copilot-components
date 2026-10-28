@@ -1,6 +1,12 @@
 # My Day - Personalized Intranet Copilot UX Component
 
-![SPFx](https://img.shields.io/badge/version-1.24.0--rc.0-yellow.svg) ![Node](https://img.shields.io/badge/Node.js-22.x-339933.svg) ![React](https://img.shields.io/badge/React-18.3.1-61DAFB.svg) ![Data](https://img.shields.io/badge/Data-Mockup-2D9CDB.svg) ![Modes](https://img.shields.io/badge/Modes-inline%20%2B%20fullscreen-5B3EE8.svg)
+> **SPFx 1.24.0 GA upgrade (October 28, 2026):** Build dependencies target GA.
+> React/ReactDOM use 18.3.1. Earlier readiness reports, screenshots, test counts,
+> and tenant evidence remain historical, not fresh GA host certification.
+> Restore was validated using the configured Microsoft npm proxy; npmjs.org did not yet expose
+> all required GA packages. Use an approved registry with 1.24.0 available; do not commit credentials.
+
+![SPFx](https://img.shields.io/badge/version-1.24.0-green.svg) ![Node](https://img.shields.io/badge/Node.js-22.x-339933.svg) ![React](https://img.shields.io/badge/React-18.3.1-61DAFB.svg) ![Data](https://img.shields.io/badge/Data-Mockup-2D9CDB.svg) ![Modes](https://img.shields.io/badge/Modes-inline%20%2B%20fullscreen-5B3EE8.svg)
 
 ## Summary
 
@@ -48,7 +54,7 @@ _Inline (left) + full-screen (right)._
 
 ## Used SharePoint Framework Version
 
-![version](https://img.shields.io/badge/version-1.24.0--rc.0-yellow.svg)
+![version](https://img.shields.io/badge/version-1.24.0-green.svg)
 
 ## Applies to
 
@@ -61,19 +67,18 @@ _Inline (left) + full-screen (right)._
 ## Prerequisites
 
 - Node.js 22 (22.14 or later), 24, or 26
-- A Microsoft 365 tenant supporting SPFx 1.24.0-rc.0 Copilot Components
+- A Microsoft 365 tenant supporting SPFx 1.24.0 Copilot Components
 - SharePoint App Catalog site
 - The project-local [Heft](https://heft.rushstack.io/) toolchain restored by npm
 - Yeoman + `@microsoft/generator-sharepoint` (only needed to scaffold additional components)
 
-> This solution uses **SPFx 1.24.0-rc.0**, **React/ReactDOM 18.3.1**, React types **18.3.31 / 18.3.7**,
-> and **Heft 1.3.2**. RC0 is a prerelease, not a production/GA certification.
+> This solution uses **SPFx 1.24.0**, **React/ReactDOM 18.3.1**, React types **18.3.31 / 18.3.7**,
+> and **Heft 1.3.2**. Dependencies use an approved registry that provides GA packages.
 >
-> **Prerelease registry:** npmjs.org did not provide the RC0 SDK when this update was validated.
-> Source builds need an approved Microsoft RC0 registry in the developer's npm configuration, as used
-> for the Zava updates. This sample inherits that configuration and never stores credentials.
-> The registry checker allows only public npm and the explicitly approved Microsoft proxy/backing
-> hosts. Ready-made packages do not require a local npm restore.
+> This update was restored through the configured Microsoft npm proxy because npmjs.org
+> did not yet expose all required GA packages. The registry checker verifies approved hosts
+> throughout the lockfile. No credentials are stored in the repository. Ready-made packages
+> do not require a local npm restore. Tenant installation and host accessibility still require validation.
 
 ## Solution
 
@@ -85,6 +90,7 @@ _Inline (left) + full-screen (right)._
 
 | Version | Date     | Comments        |
 | ------- | -------- | --------------- |
+| Unreleased | October 28, 2026 | Upgrade to SPFx 1.24.0 GA; React/ReactDOM 18.3.1 and Heft 1.3.2. |
 | 1.1     | October 20, 2026 | SPFx 1.24 RC0, React 18 roots/types, visible starter focus, retained state, fresh visuals and package audits |
 | 1.0     | 7.2.2026 | Initial version |
 
@@ -138,11 +144,11 @@ display mode or performs an external action.
 - **30 browser states pass** at 340/760/1440 px, light/dark, all six inline focuses, full workspaces,
   focus briefing and settings. [Visual evidence](assets/rc0-visual-evidence.json) is regenerated with
   `npm run capture:visual`.
-- Production build audits RC0 dynamic MCP discovery, canonical and packaged starters/instructions,
+- Production build audits GA dynamic MCP discovery, canonical and packaged starters/instructions,
   current hashed JavaScript and the exact embedded/Teams agent ZIP.
 - Task checks are local demo state; settings remain browser-session-only. Neither writes to Graph.
-- Authenticated routing, CSP, focus restoration and host accessibility remain external checks in the
-  [repository readiness report](../../RC0-updates.md).
+- Authenticated routing, CSP, focus restoration and host accessibility remain external checks;
+  local build and package validation do not certify tenant behavior.
 
 ## 60-second demo script
 

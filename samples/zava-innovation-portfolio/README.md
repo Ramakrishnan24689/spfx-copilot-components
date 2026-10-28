@@ -1,10 +1,16 @@
 # Zava Innovation Hub — Copilot Components
 
+> **SPFx 1.24.0 GA upgrade (October 28, 2026):** Build dependencies target GA.
+> React/ReactDOM use 18.3.1. Earlier readiness reports, screenshots, test counts,
+> and tenant evidence remain historical, not fresh GA host certification.
+> Restore was validated using the configured Microsoft npm proxy; npmjs.org did not yet expose
+> all required GA packages. Use an approved registry with 1.24.0 available; do not commit credentials.
+
 An offline innovation-management showcase with **17 registered tools**, one shared SPFx bundle,
 five role workspaces, and intent-specific inline experiences. Copilot selects the business job;
 controlled React UX owns evidence, calculations, validation, review, and explicit human confirmation.
 
-**Runtime:** SPFx **1.24.0-rc.0**, React/ReactDOM **18.3.1**, React types **18.3.31/18.3.7**,
+**Runtime:** SPFx **1.24.0**, React/ReactDOM **18.3.1**, React types **18.3.31/18.3.7**,
 Heft **1.3.2**. Node.js 22.14+ within 22.x, 24.x, or 26.x is supported by the manifest;
 this release was validated with Node **22.23.2**. Preserve the pinned versions and `fast-uri` 3.1.8 override.
 
@@ -164,6 +170,12 @@ current-source gallery evidence, production audit, and diff whitespace; runs pro
 lint, and all discovered Jest tests; packages the solution and agent; audits generated plugin schemas
 and package bytes. The production audit must pass, not be bypassed.
 
+The GA upgrade passed 64 Jest tests, compilation, lint, packaging, generated-plugin validation,
+and package-output validation. The full `npm run build` command currently fails at the production
+dependency audit on existing `fast-uri@3.1.8`, `zod@3.24.1`, and `zod-to-json-schema@3.24.1`
+advisories. These findings still require a separately scoped dependency/schema migration;
+the audit gate remains enabled.
+
 DOM tests use `act` from React and one retained root per test host. Coverage includes each distinct
 operation, measured thresholds, actual input-to-receipt values, no-match, information property effects,
 human gate choices, fresh invocations, teardown, and theme/mode retention.
@@ -193,10 +205,10 @@ case-sensitive paths are in `src/shared/media.ts` and `assets/asset-provenance.j
 use initials. No profile-photo request is made. The four original design-reference PNGs are not
 implementation evidence. Public portrait redistribution rights still require approval.
 
-Local deterministic/browser tests do not certify a Microsoft 365 tenant. RC0 tenant installation,
+Local deterministic/browser tests do not certify a Microsoft 365 tenant. GA tenant installation,
 actual natural-language routing and extraction, host CSP/bridge support, iframe focus, screen readers,
 and full accessibility rehearsal remain external release gates. Previous Workbench evidence must not
-be presented as fresh RC0 proof. Production identity/permissions, live data, finance, notifications,
+be presented as fresh GA proof. Production identity/permissions, live data, finance, notifications,
 durable workflow, independent evidence verification, and media rights are intentionally outside this
 offline sample.
 
@@ -204,6 +216,7 @@ offline sample.
 
 | Version | Date | Comments |
 | --- | --- | --- |
+| Unreleased | October 28, 2026 | Upgrade to SPFx 1.24.0 GA; React/ReactDOM 18.3.1 and Heft 1.3.2. |
 | 1.0.1 | October 22, 2026 | Restore the sample-specific README view tracker required by gallery validation. |
 | 1.0 | October 20, 2026 | SPFx 1.24 RC0 showcase and validation update. |
 

@@ -20,7 +20,7 @@ assert(manifest.version==='1.0.3',`Expected agent version 1.0.3, received ${mani
 assert(plugin.name_for_human.length<=20,'name_for_human exceeds 20 characters.');
 assert(plugin.description_for_human.length<=100,'description_for_human exceeds 100 characters.');
 assert(plugin.description_for_model.length<=2048,'description_for_model exceeds 2,048 characters.');
-assert(Array.isArray(plugin.functions)&&functions.length===0,'RC0 must use dynamic discovery, not static functions.');
+assert(Array.isArray(plugin.functions)&&functions.length===0,'GA must use dynamic discovery, not static functions.');
 assert(plugin.runtimes?.length===1&&plugin.runtimes[0].type==='RemoteMCPServer','Expected one RemoteMCPServer runtime.');
 assert(JSON.stringify(plugin.runtimes[0].run_for_functions)==='["*"]','Dynamic discovery must route all tools.');
 assert(JSON.stringify(Object.keys(plugin.runtimes[0].spec))==='["url"]','Dynamic discovery spec must contain only the URL.');

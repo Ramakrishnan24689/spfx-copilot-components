@@ -76,7 +76,7 @@ delete pluginWithoutPreviewRuntime.runtimes;
 const schemaErrors = await AppManifestUtils.validateAgainstSchema(pluginWithoutPreviewRuntime);
 assert(schemaErrors.length === 0, `Generated API plugin metadata/functions fail Microsoft v2.4 schema validation:\n${schemaErrors.join('\n')}`);
 
-assert(Array.isArray(plugin.functions) && plugin.functions.length === 0, 'SPFx 1.24 RC0 dynamic discovery must not embed static functions.');
+assert(Array.isArray(plugin.functions) && plugin.functions.length === 0, 'SPFx 1.24 GA dynamic discovery must not embed static functions.');
 
 const remoteRuntimes = (plugin.runtimes || []).filter((runtime) => runtime.type === 'RemoteMCPServer');
 assert(remoteRuntimes.length === 1, `Expected one RemoteMCPServer runtime, found ${remoteRuntimes.length}.`);

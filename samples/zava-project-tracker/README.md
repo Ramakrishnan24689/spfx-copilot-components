@@ -1,5 +1,11 @@
 # Zava AI Project Portfolio Agent
 
+> **SPFx 1.24.0 GA upgrade (October 28, 2026):** Build dependencies target GA.
+> React/ReactDOM use 18.3.1. Earlier readiness reports, screenshots, test counts,
+> and tenant evidence remain historical, not fresh GA host certification.
+> Restore was validated using the configured Microsoft npm proxy; npmjs.org did not yet expose
+> all required GA packages. Use an approved registry with 1.24.0 available; do not commit credentials.
+
 ## Summary
 
 Zava demonstrates intent-driven UX inside Microsoft Copilot. Thirty independently routed
@@ -27,9 +33,9 @@ testing, use the complete [31-component prompt catalog](Zava-Project-Tracker-Dem
 
 ## Used SharePoint Framework Version
 
-![version](https://img.shields.io/badge/version-1.24.0--rc.0-yellow.svg)
+![version](https://img.shields.io/badge/version-1.24.0-green.svg)
 
-This sample targets SPFx `1.24.0-rc.0` with React `18.3.1`. Confirm
+This sample targets SPFx `1.24.0` with React `18.3.1`. Confirm
 the supported SPFx Copilot component version in your target tenant before production adoption.
 
 ## Applies to
@@ -57,6 +63,7 @@ the supported SPFx Copilot component version in your target tenant before produc
 
 | Version | Date | Comments |
 | --- | --- | --- |
+| Unreleased | October 28, 2026 | Upgrade to SPFx 1.24.0 GA; React/ReactDOM 18.3.1 and Heft 1.3.2. |
 | 1.1 | October 19, 2026 | Upgrade to SPFx 1.24 RC0 and React 18.3.1, including root lifecycle, explicit children props, and React 18 UI tests |
 | 1.0 | August 20, 2026 | Public sample baseline with 31 Copilot Components |
 
@@ -156,7 +163,7 @@ Other build commands can be listed using `heft --help`.
 
 - `172/172` tests pass with zero build warnings, including root reuse, independent instances, and teardown.
 - All 31 manifests, tools, schemas, registrations, and 188 optional prompt properties validate.
-- The generated API plugin uses SPFx 1.24 RC0 dynamic MCP tool discovery; it and the final `.sppkg`
+- The generated API plugin uses SPFx 1.24 GA dynamic MCP tool discovery; it and the final `.sppkg`
   pass automated output audits.
 - All 39 unified-gallery screenshots are validated against `assets/sample.json`.
 - A local React 18 browser smoke test covers all 31 inline layouts, state retention across width and

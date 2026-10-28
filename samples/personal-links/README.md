@@ -1,5 +1,11 @@
 # Personal Links
 
+> **SPFx 1.24.0 GA upgrade (October 28, 2026):** Build dependencies target GA.
+> React/ReactDOM use 18.3.1. Earlier readiness reports, screenshots, test counts,
+> and tenant evidence remain historical, not fresh GA host certification.
+> Restore was validated using the configured Microsoft npm proxy; npmjs.org did not yet expose
+> all required GA packages. Use an approved registry with 1.24.0 available; do not commit credentials.
+
 ## Summary
 
 Personal Links demonstrates two patterns together:
@@ -26,7 +32,7 @@ For a presenter-ready setup, UX walkthrough, failure demonstration, and code tou
 
 ## Compatibility
 
-![SPFx 1.24.0 RC](https://img.shields.io/badge/SPFx-1.24.0--rc.0-yellow.svg)
+![SPFx 1.24.0 GA](https://img.shields.io/badge/SPFx-1.24.0-green.svg)
 ![Node.js v22](https://img.shields.io/badge/Node.js-v22-green.svg)
 ![React 18.3.1](https://img.shields.io/badge/React-18.3.1-61DAFB.svg)
 ![Fluent UI v9](https://img.shields.io/badge/Fluent_UI-v9-0078D4.svg)
@@ -34,7 +40,7 @@ For a presenter-ready setup, UX walkthrough, failure demonstration, and code tou
 ![Compatible with Microsoft Copilot](https://img.shields.io/badge/Microsoft%20Copilot-Compatible-yellow.svg)
 ![Compatible with Microsoft Teams](https://img.shields.io/badge/Microsoft%20Teams-Personal%20app-6264A7.svg)
 
-Microsoft 365 Copilot compatibility depends on the SPFx 1.24 Copilot Component preview being enabled in
+Microsoft 365 Copilot compatibility depends on the SPFx 1.24.0 GA Copilot Component support being available in
 the target tenant.
 
 ## Applies to
@@ -56,6 +62,7 @@ the target tenant.
 
 | Version | Date            | Comments |
 | ------- | --------------- | -------- |
+| Unreleased | October 28, 2026 | Upgrade to SPFx 1.24.0 GA; React/ReactDOM 18.3.1 and Heft 1.3.2. |
 | 1.0.3   | October 9, 2026 | Added the resolved App Folder action and finalized the agent provider |
 | 1.0.2   | October 9, 2026 | Added Compact pagination and configurable SharePoint links per page |
 | 1.0.1   | October 9, 2026 | Polished branding, isolated Teams package, demo script, and finalized host behavior |
@@ -66,7 +73,7 @@ the target tenant.
 - Node.js supported by this SPFx release. The primary development range is `>=22.14.0 <23.0.0`; see
   `package.json` for all supported ranges.
 - A Microsoft 365 tenant with a SharePoint App Catalog.
-- The SPFx 1.24 Copilot Component preview enabled for Copilot use.
+- The SPFx 1.24.0 GA Copilot Component support available for Copilot use.
 - A tenant administrator who can approve the delegated Microsoft Graph
   `Files.ReadWrite.AppFolder` permission.
 - A provisioned OneDrive for every user of the sample.

@@ -1,5 +1,11 @@
 # Zava Customer Resolution Center
 
+> **SPFx 1.24.0 GA upgrade (October 28, 2026):** Build dependencies target GA.
+> React/ReactDOM use 18.3.1. Earlier readiness reports, screenshots, test counts,
+> and tenant evidence remain historical, not fresh GA host certification.
+> Restore was validated using the configured Microsoft npm proxy; npmjs.org did not yet expose
+> all required GA packages. Use an approved registry with 1.24.0 available; do not commit credentials.
+
 > [!IMPORTANT]
 > **Status: OFFLINE SHOWCASE IMPLEMENTED - EXTERNAL GATES REMAIN.** All 22 operational Copilot
 > Components plus the capability explorer have immutable Yeoman-generated identities and one shared
@@ -65,9 +71,8 @@ screen-reader validation.
 
 ## Build and deploy
 
-This sample targets **SPFx 1.24.0-rc.0 with React 18.3.1**. Use Node.js 22 (22.14 or later), 24,
-or 26 and an RC0-compatible tenant. See the repository [RC0 readiness report](../../RC0-updates.md)
-for current validation and external release gates.
+This sample targets **SPFx 1.24.0 with React 18.3.1**. Use Node.js 22 (22.14 or later), 24,
+or 26 and a GA-compatible tenant. Review the local validation and external release gates below.
 
 ```powershell
 npm ci
@@ -587,5 +592,12 @@ Implementation status and validation evidence are tracked in [todo.md](todo.md) 
 [assets/release-evidence.json](assets/release-evidence.json). The local gate currently reports 41 tests,
 zero warnings, 81 visual captures, zero visual failures, 36 unique layout identities, one production
 bundle, and zero duplicate media. Local evidence does not claim authenticated host behavior.
+
+
+## Version history
+
+| Version | Date | Comments |
+| --- | --- | --- |
+| Unreleased | October 28, 2026 | Upgrade to SPFx 1.24.0 GA; React/ReactDOM 18.3.1 and Heft 1.3.2. |
 
 <img src="https://m365-visitor-stats.azurewebsites.net/spfx-copilot-components/samples/zava-customer-resolution-center" />

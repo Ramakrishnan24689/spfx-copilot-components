@@ -1,5 +1,11 @@
 # ZavaMesh Revenue Deal Room
 
+> **SPFx 1.24.0 GA upgrade (October 28, 2026):** Build dependencies target GA.
+> React/ReactDOM use 18.3.1. Earlier readiness reports, screenshots, test counts,
+> and tenant evidence remain historical, not fresh GA host certification.
+> Restore was validated using the configured Microsoft npm proxy; npmjs.org did not yet expose
+> all required GA packages. Use an approved registry with 1.24.0 available; do not commit credentials.
+
 ## ZavaMesh experience
 
 The sample uses the supplied ZavaMesh woven identity, green/lime visual language and locally bundled
@@ -43,9 +49,8 @@ runtime images and source hashes are recorded in [brand-provenance.json](assets/
 To reimport approved originals, run
 `.\scripts\import-zavamesh-brand.ps1 -Source '<local ZavaMesh asset folder>'`.
 
-This release targets **SPFx 1.24.0-rc.0 and React 18.3.1**. Current validation and package hashes are
-recorded in the [RC0 readiness report](../../RC0-updates.md) and generated
-[release evidence](assets/release-evidence.json). Starter ownership is defined in
+This release targets **SPFx 1.24.0 and React 18.3.1**. Current local validation and package hashes
+are recorded in the generated [release evidence](assets/release-evidence.json). Starter ownership is defined in
 [conversation-starters.json](config/conversation-starters.json).
 
 > [!IMPORTANT]
@@ -88,7 +93,7 @@ different throughout the journey.
 
 ## Applies to
 
-- SharePoint Framework `1.24.0-rc.0`
+- SharePoint Framework `1.24.0`
 - Microsoft Copilot declarative agents and Copilot Components preview
 - React `18.3.1`, Fluent UI v9 `9.74.6`, and Griffel `1.7.7`
 - Node.js 22 (22.14 or later), 24, or 26
@@ -322,6 +327,7 @@ mode; never use inferred sentiment or relationship strength as employee-performa
 
 | Version | Date | Notes |
 | --- | --- | --- |
+| Unreleased | October 28, 2026 | Upgrade to SPFx 1.24.0 GA; React/ReactDOM 18.3.1 and Heft 1.3.2. |
 | 1.0.0.3 / agent 1.0.3 | 2026-10-26 | ZavaMesh branding, linked worldwide revenue/investment analytics, guided deal intake, sequential demo approvals and session audit receipts. Current test/visual totals are generated in release evidence. |
 | 1.0.0.1 / agent 1.0.1 | 2026-10-20 | RC0 specialist completion: 21 scoped experiences, 10 guarded workflows, 87 tests, 118 current visual captures. The SDK may append a fourth agent hotfix segment. |
 | 1.0.0 | 2026-08-31 | Initial GitHub candidate with 21 tools, four visualization-led workspaces, D3 charts/map, persona media, demo scripts, publication evidence, and audited `.sppkg`. |

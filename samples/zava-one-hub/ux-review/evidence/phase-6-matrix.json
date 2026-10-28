@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T17:26:13.003Z",
+  "generatedAt": "2026-10-28T19:01:15.413Z",
   "profile": {
     "spfx": "1.24.0-beta.5",
     "react": "18.3.1",
@@ -254,13 +254,13 @@
   "artifacts": [
     {
       "path": "sharepoint/solution/zava-one-hub.sppkg",
-      "bytes": 6205975,
-      "sha256": "01f01087eceb24e4152458ace15dcd7af12b6b6f237a539817589a7701f4ebec"
+      "bytes": 6205983,
+      "sha256": "17b4a0bdab95d085570a0454f9cd4a9e360489b2e1ec45828cbe66ed7199fde9"
     },
     {
       "path": "teams/zava-one.zip",
-      "bytes": 5260,
-      "sha256": "5f3964a186cad28ceabf8197fcf7edac2124ffd03e6f9d021ba05b88a938aeeb"
+      "bytes": 5265,
+      "sha256": "575723f2e8503d83cad6e15dff1d3d065b63709f6c4c9da1699f74c1e3842aa4"
     },
     {
       "path": "teams/zavaOneWorkspace/TeamsSPFxApp.zip",

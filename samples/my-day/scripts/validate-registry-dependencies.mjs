@@ -38,7 +38,7 @@ for (const [name, specifier] of Object.entries(directDependencies)) {
   const resolvedUrl = new URL(lockEntry.resolved);
   assert(
     resolvedUrl.protocol === 'https:' && approvedRegistryHosts.has(resolvedUrl.hostname) && !resolvedUrl.username && !resolvedUrl.password && !resolvedUrl.search,
-    `${name} resolves outside the approved public/Microsoft RC0 registries: ${resolvedUrl.hostname}`
+    `${name} resolves outside the approved npm registries: ${resolvedUrl.hostname}`
   );
 }
 
@@ -50,7 +50,7 @@ for (const [packageLocation, lockEntry] of Object.entries(packageLock.packages ?
   const resolvedUrl = new URL(lockEntry.resolved);
   assert(
     resolvedUrl.protocol === 'https:' && approvedRegistryHosts.has(resolvedUrl.hostname) && !resolvedUrl.username && !resolvedUrl.password && !resolvedUrl.search,
-    `${packageLocation} resolves outside the approved public/Microsoft RC0 registries: ${resolvedUrl.hostname}`
+    `${packageLocation} resolves outside the approved npm registries: ${resolvedUrl.hostname}`
   );
 }
 
@@ -66,5 +66,5 @@ const microsoftPackages = Object.keys(directDependencies).filter((name) =>
   name.startsWith('@microsoft/')
 );
 console.log(
-  `Verified ${Object.keys(directDependencies).length} direct dependencies and the full lockfile against approved public/Microsoft RC0 registries; ${microsoftPackages.length} direct @microsoft packages use approved tarballs.`
+  `Verified ${Object.keys(directDependencies).length} direct dependencies and the full lockfile against approved npm registries; ${microsoftPackages.length} direct @microsoft packages use approved tarballs.`
 );

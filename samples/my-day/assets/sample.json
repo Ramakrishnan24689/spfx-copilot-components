@@ -12,7 +12,7 @@
       "Settings are intentionally persisted to the browser session (sessionStorage) to demonstrate how configuration can shape the dashboard live without server-side storage; the layout re-flows dynamically to the number of visible panels. The sample ships with mocked, Microsoft Graph-shaped data behind a swappable IMyDayDataService interface, so a live Graph / SharePoint implementation is a drop-in replacement. Built with the Heft build system, React 18.3.1 and Fluent UI v9 with host-driven light/dark theming."
     ],
     "creationDateTime": "2026-07-02",
-    "updateDateTime": "2026-10-20",
+    "updateDateTime": "2026-10-28",
     "products": [
       "SharePoint",
       "Copilot"
@@ -28,7 +28,7 @@
       },
       {
         "key": "SPFX-VERSION",
-        "value": "1.24.0-rc.0"
+        "value": "1.24.0"
       }
     ],
     "thumbnails": [

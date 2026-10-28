@@ -1,6 +1,12 @@
 # Zava One
 
-![SPFx](https://img.shields.io/badge/SPFx-1.24.0--rc.0-yellow.svg)
+> **SPFx 1.24.0 GA upgrade (October 28, 2026):** Build dependencies target GA.
+> React/ReactDOM use 18.3.1. Earlier readiness reports, screenshots, test counts,
+> and tenant evidence remain historical, not fresh GA host certification.
+> Restore was validated using the configured Microsoft npm proxy; npmjs.org did not yet expose
+> all required GA packages. Use an approved registry with 1.24.0 available; do not commit credentials.
+
+![SPFx](https://img.shields.io/badge/SPFx-1.24.0-green.svg)
 ![React](https://img.shields.io/badge/React-18.3.1-149eca.svg)
 ![Fluent UI](https://img.shields.io/badge/Fluent_UI-9.74.9-0f6cbd.svg)
 ![Data](https://img.shields.io/badge/data-offline_fixtures-008272.svg)
@@ -8,7 +14,7 @@
 
 ## Applies To
 
-- SharePoint Framework `1.24.0-rc.0` Copilot Components
+- SharePoint Framework `1.24.0` Copilot Components
 - Microsoft Copilot declarative agents
 - SharePoint Online and Microsoft Teams
 - React `18.3.1`, Fluent UI React v9, and Node.js 22
@@ -28,17 +34,16 @@ The same shared React capability powers:
 
 ![Explore Zava One capability explorer](./assets/preview.png)
 
-> **Current status:** the demo has a passing local test suite (exact RC0 totals are in the
-> [readiness report](../../RC0-updates.md)), 4,080 responsive browser states, 39 captured engineering
+> **Historical RC0 status:** the demo had a passing local test suite,
+> 4,080 responsive browser states, 39 captured engineering
 > screenshots, 15 reviewed publication images, and a committed production SPPKG. The sample author
 > confirmed all three Teams personal apps work and supplied authenticated screenshots.
 > Modern SharePoint host checks and complete host accessibility validation remain open.
-> SPFx 1.24 RC0 Copilot Components remain prerelease technology and are not presented
-> as production-ready.
+> This historical evidence does not certify the upgraded package in a GA tenant.
 
-This release uses React/ReactDOM **18.3.1**, React types **18.3.31 / 18.3.7**, and SPFx **1.24.0-rc.0**.
-Use Node.js 22 (22.14 or later), 24, or 26. The [RC0 readiness report](../../RC0-updates.md) records
-current build/package checks separately from historical authenticated screenshots.
+This release uses React/ReactDOM **18.3.1**, React types **18.3.31 / 18.3.7**, and SPFx **1.24.0**.
+Use Node.js 22 (22.14 or later), 24, or 26. Current local build and package checks remain
+separate from historical authenticated screenshots.
 The six starters have explicit [component targets](config/conversation-starters.json); policy lookup,
 news, praise, sales, office discovery, and capability exploration remain independent tools.
 
@@ -226,7 +231,7 @@ page picker. Existing pages can be converted with PnP PowerShell using
 `Set-PnPPage -Identity "Page" -LayoutType SingleWebPartAppPage` after adding the selected workspace.
 
 The combined workspace can choose its Company or Personal start tab; fixed Company and Personal
-workspaces deliberately omit that setting. Top Actions use `@microsoft/sp-top-actions@1.24.0-rc.0`
+workspaces deliberately omit that setting. Top Actions use `@microsoft/sp-top-actions@1.24.0`
 and require a live modern SharePoint page for host-level verification because they do not render in
 the hosted Workbench. Copilot Components bypass this publisher configuration entirely and continue to
 accept only intent-specific tool parameters.
@@ -256,7 +261,7 @@ embedded module so keynote rendering remains offline.
 | Copilot Workbench | 37/37 Ready baseline; 8/8 changed Personal workflows revalidated |
 | Complete screenshot gallery | 39 PNGs |
 | Bundled media | 28 provenance-checked assets |
-| Production package | `1.0.0.18` / `6,205,975` bytes / 110 entries |
+| Production package | `1.0.0.18` / `6,205,983` bytes / 110 entries |
 | Responsive regression | 4,080 passing states; phone/tablet/desktop, narrow desktop columns, dark mode, and submission journeys |
 | Publication gallery | `assets/sample.json` / 15 reviewed PNGs, including three authenticated Teams views |
 
@@ -329,7 +334,7 @@ Prerequisites:
 
 - Node.js `>=22.14.0 <23.0.0`
 - npm and the repository lockfile
-- Yeoman `5.1.0` plus `@microsoft/generator-sharepoint@1.24.0-rc.0` only when generating components
+- Yeoman `5.1.0` plus `@microsoft/generator-sharepoint@1.24.0` only when generating components
 
 ```bash
 npm ci
@@ -379,6 +384,7 @@ Open `http://127.0.0.1:4322`. Query parameters select an experience:
 
 | Version | Date | Comments |
 | --- | --- | --- |
+| Unreleased | October 28, 2026 | Upgrade to SPFx 1.24.0 GA; React/ReactDOM 18.3.1 and Heft 1.3.2. |
 | 1.0.0.16 | October 14, 2026 | Evergreen relative demo dates for news, mail, recent files, events, learning, leave, approvals, and freshness metadata |
 | 1.0.0.15 | October 2, 2026 | Container-responsive layouts, 4,080 browser-state checks, polished shared submission receipts, and balanced workspace defaults |
 | 1.0.0.14 | October 1, 2026 | Separate Teams personal apps, host-aware workspace header, verified screenshot crops, and finalized demo evidence |

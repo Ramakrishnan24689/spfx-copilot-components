@@ -1,8 +1,13 @@
 # ZavaCore Procurement Command Center
 
-This release targets **SPFx 1.24.0-rc.0 with React 18.3.1**. Use Node.js 22 (22.14 or later), 24, or
-26. See the [RC0 readiness report](../../RC0-updates.md) and
-[canonical starter targets](config/conversation-starters.json).
+> **SPFx 1.24.0 GA upgrade (October 28, 2026):** Build dependencies target GA.
+> React/ReactDOM use 18.3.1. Earlier readiness reports, screenshots, test counts,
+> and tenant evidence remain historical, not fresh GA host certification.
+> Restore was validated using the configured Microsoft npm proxy; npmjs.org did not yet expose
+> all required GA packages. Use an approved registry with 1.24.0 available; do not commit credentials.
+
+This release targets **SPFx 1.24.0 with React 18.3.1**. Use Node.js 22 (22.14 or later), 24, or
+26. See the [canonical starter targets](config/conversation-starters.json).
 
 > [!IMPORTANT]
 > **Status: IMPLEMENTED OFFLINE SHOWCASE.** The solution contains 21 operational Copilot Components,
@@ -104,7 +109,7 @@ authenticated host accessibility remain separate checks.
   Runtime errors, overflow, labels, broken images, ownership, and focus are checked.
 - Audited [zava-procurement-command-center.sppkg](sharepoint/solution/zava-procurement-command-center.sppkg):
   one shared JavaScript asset, one current agent ZIP, and 22 source tools discovered dynamically by MCP.
-  Current package sizes and hashes are recorded in the [RC0 readiness report](../../RC0-updates.md).
+  Current package sizes and hashes are recorded in the [release evidence](assets/release-evidence.json).
 
 Authenticated tenant validation remains required for Workbench CSP, iframe focus restoration,
 screen-reader host behavior, actual model routing, and Copilot bridge behavior. Public redistribution
@@ -134,7 +139,7 @@ receipt. Decisions require at least 12 characters of rationale. Default draft in
 action. Processed records remain marked in session; **Reset demo session** restores the invocation.
 Edits survive passive theme/display changes, and opening a different task warns before discarding an
 unconfirmed draft. Exact current test totals and archive hashes are in the
-[RC0 readiness report](../../RC0-updates.md).
+[release evidence](assets/release-evidence.json).
 
 ## Minimal path to awesome
 
@@ -520,5 +525,12 @@ met by the current package and evidence files.
 
 GA publication still requires the external authenticated-tenant and publisher/media approvals listed
 under **Implementation status** and in [todo.md](todo.md).
+
+
+## Version history
+
+| Version | Date | Comments |
+| --- | --- | --- |
+| Unreleased | October 28, 2026 | Upgrade to SPFx 1.24.0 GA; React/ReactDOM 18.3.1 and Heft 1.3.2. |
 
 <img src="https://m365-visitor-stats.azurewebsites.net/spfx-copilot-components/samples/zava-procurement-command-center" />

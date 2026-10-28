@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-10-20T13:56:25.281Z",
+  "capturedAt": "2026-10-28T18:37:53.476Z",
   "sourceFiles": [
     "src/shared/InnovationApp.tsx",
     "src/shared/InnovationContext.tsx",
@@ -19,7 +19,7 @@
     "src/shared/sessionStore.ts",
     "package-lock.json"
   ],
-  "sourceSha256": "49729713b20040866b59322094eb198fcf0e33c3f5edce5332d035526b3da8b5",
+  "sourceSha256": "00334f150558b4b5a7d74d43095068f7e012f7a6d185c29e2043f8f5919770ca",
   "totalCaptures": 11,
   "failureCount": 0,
   "captures": [

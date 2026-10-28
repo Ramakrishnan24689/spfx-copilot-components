@@ -12,7 +12,7 @@
       "The sample is deterministic, offline, and safe for demonstrations. Prompt values filter or prefill the experience but never submit, approve, decline, delegate, declare, or apply a plan without visible review and confirmation. Production validation covers the generated 31-function plugin, all catalog entries, local media, gallery evidence, tests, and the final package."
     ],
     "creationDateTime": "2026-08-22",
-    "updateDateTime": "2026-10-20",
+    "updateDateTime": "2026-10-28",
     "products": [
       "SharePoint",
       "Copilot"
@@ -28,7 +28,7 @@
       },
       {
         "key": "SPFX-VERSION",
-        "value": "1.24.0-rc.0"
+        "value": "1.24.0"
       }
     ],
     "thumbnails": [

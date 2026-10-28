@@ -1,5 +1,11 @@
 # Zava Employee Agent
 
+> **SPFx 1.24.0 GA upgrade (October 28, 2026):** Build dependencies target GA.
+> React/ReactDOM use 18.3.1. Earlier readiness reports, screenshots, test counts,
+> and tenant evidence remain historical, not fresh GA host certification.
+> Restore was validated using the configured Microsoft npm proxy; npmjs.org did not yet expose
+> all required GA packages. Use an approved registry with 1.24.0 available; do not commit credentials.
+
 Powered by SPFx Copilot Components
 
 ## Summary
@@ -19,9 +25,8 @@ mocked Zava HR data so it can be deployed and demonstrated without a live line-o
 
 > [!IMPORTANT]
 > All 20 operational Copilot Components, the dedicated feature explorer, and all 50 internal full-screen routes are implemented.
-> The production gate runs all behavior tests, validates RC0 dynamic MCP discovery, validates 33 gallery
-> screenshots, and packages all components into one shared `.sppkg`. Current RC0 validation evidence is
-> recorded in the repository [readiness report](../../RC0-updates.md).
+> The production gate runs all behavior tests, validates GA dynamic MCP discovery, validates 33 gallery
+> screenshots, and packages all components into one shared `.sppkg`.
 > Authenticated Copilot prompt routing and the final manual accessibility/host matrix remain
 > explicit pre-publication evidence gates in `todo.md`.
 
@@ -39,7 +44,7 @@ launch, use the [ten-video global social campaign](Copilot-Apps-Social-Campaign.
 
 ## Applies To
 
-- SharePoint Framework 1.24.0-rc.0 Copilot Components
+- SharePoint Framework 1.24.0 Copilot Components
 - Microsoft Copilot declarative agents
 - React 18 and Fluent UI React v9
 
@@ -347,7 +352,7 @@ focus, high contrast, or screen-reader output.
 ## Validation Status
 
 - 178 tests pass with zero failures, including independent Home/family root lifecycle coverage.
-- All 20 manifests, component entries, registrations, compiled schemas, and RC0 dynamic MCP discovery validate.
+- All 20 manifests, component entries, registrations, compiled schemas, and GA dynamic MCP discovery validate.
 - All 32 implementation screenshots validate against [assets/sample.json](assets/sample.json).
 - The final package contains one shared hashed JavaScript bundle and no stale JavaScript,
   duplicate cross-bundle media, or Fluent icon-font payload.
@@ -392,6 +397,7 @@ definition in its component manifest.
 
 | Version | Date | Comments |
 | --- | --- | --- |
+| Unreleased | October 28, 2026 | Upgrade to SPFx 1.24.0 GA; React/ReactDOM 18.3.1 and Heft 1.3.2. |
 | 1.0 | August 10, 2026 | Initial scaffold |
 | 1.1 | August 11, 2026 | Updated Zava naming and ten-component implementation plan |
 | 1.2 | August 11, 2026 | Added canonical UX, action-plan, and prompt-parameter contracts |

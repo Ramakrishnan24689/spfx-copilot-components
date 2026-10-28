@@ -12,7 +12,7 @@
       "The sample is deterministic, offline, responsive, and explicit that confirmed actions are session-only demonstrations. D3-derived decision visuals include keyboard interaction, accessible summaries, and exact-value alternatives."
     ],
     "creationDateTime": "2026-08-31",
-    "updateDateTime": "2026-10-26",
+    "updateDateTime": "2026-10-28",
     "products": [
       "SharePoint",
       "Copilot"
@@ -28,7 +28,7 @@
       },
       {
         "key": "SPFX-VERSION",
-        "value": "1.24.0-rc.0"
+        "value": "1.24.0"
       }
     ],
     "thumbnails": [

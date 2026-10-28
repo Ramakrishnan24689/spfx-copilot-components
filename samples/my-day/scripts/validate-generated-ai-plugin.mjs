@@ -50,4 +50,4 @@ assert.equal(new Set(canonical.map(starter => starter.properties.focus)).size, c
 const instructions = fs.readFileSync(path.join(root, 'copilot', 'instruction.txt'), 'utf8').replace(/\r\n/g, '\n').trim();
 assert(instructions.includes('MyDayTool'));
 assert(agent.instructions.replace(/\r\n/g, '\n').includes(instructions), 'Packaged instructions are stale.');
-console.log('Verified RC0 dynamic MCP discovery and four distinct visible starter focuses owned by MyDayTool.');
+console.log('Verified GA dynamic MCP discovery and four distinct visible starter focuses owned by MyDayTool.');

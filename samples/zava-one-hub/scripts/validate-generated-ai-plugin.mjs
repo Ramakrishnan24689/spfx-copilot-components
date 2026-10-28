@@ -57,7 +57,7 @@ if (!plugin.name_for_human || plugin.name_for_human.length > 20) errors.push('na
 if (!plugin.description_for_human || plugin.description_for_human.length > 100) errors.push('description_for_human must be 1-100 characters.');
 if (!plugin.description_for_model || plugin.description_for_model.length > 2048) errors.push('description_for_model must be 1-2048 characters.');
 if (functions.length !== 37) errors.push(`Expected 37 source tools, found ${functions.length}.`);
-if (!Array.isArray(plugin.functions) || plugin.functions.length !== 0) errors.push('RC0 must discover tools dynamically.');
+if (!Array.isArray(plugin.functions) || plugin.functions.length !== 0) errors.push('GA must discover tools dynamically.');
 if (plugin.runtimes?.length !== 1 || plugin.runtimes[0].type !== 'RemoteMCPServer') errors.push('Expected one RemoteMCPServer runtime.');
 const runtime = plugin.runtimes?.[0];
 if (JSON.stringify(runtime?.run_for_functions) !== '["*"]') errors.push('Dynamic discovery must route every tool.');

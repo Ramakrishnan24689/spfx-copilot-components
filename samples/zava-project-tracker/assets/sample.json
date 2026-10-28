@@ -12,7 +12,7 @@
       "The sample is deterministic, offline, and safe for worldwide demonstrations. Prompt values prefill or filter UX but never submit or decide automatically. Confirmed sample actions create browser-session receipts and never write to an external system. The production package uses one optimized shared bundle, bundled personas, Fluent UI v9, React 18, Griffel owner-document styling, focused D3 visualizations, and automated plugin/package-output validation."
     ],
     "creationDateTime": "2026-08-21",
-    "updateDateTime": "2026-10-20",
+    "updateDateTime": "2026-10-28",
     "products": [
       "SharePoint",
       "Copilot"
@@ -28,7 +28,7 @@
       },
       {
         "key": "SPFX-VERSION",
-        "value": "1.24.0-rc.0"
+        "value": "1.24.0"
       }
     ],
     "thumbnails": [

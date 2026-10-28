@@ -27,7 +27,7 @@ by [agentic-creation-rules.md](agentic-creation-rules.md).
 > publication images referenced by `assets/sample.json`. Forty-six Jest tests, 4,080 responsive browser
 > states, 28-media provenance,
 > six conversation starters with Capability Explorer last, plugin validation, and the final
-> version `1.0.0.18`, 6,205,975-byte `.sppkg` audit pass. Evidence is in
+> version `1.0.0.18`, 6,205,983-byte `.sppkg` audit pass. Evidence is in
 > `ux-review/evidence/phase-6-matrix.json`. All 37
 > Workbench components reached Ready in the earlier host baseline. The sample author confirmed all
 > three separately packaged Teams personal apps work and supplied authenticated screenshots with no

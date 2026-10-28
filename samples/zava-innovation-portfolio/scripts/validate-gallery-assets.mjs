@@ -18,7 +18,7 @@ assert(entry.authors?.length>0&&entry.references?.length>0,'Authors and referenc
 const metadata=new Map((entry.metadata||[]).map(item=>[item.key,item.value]));
 assert(metadata.get('SAMPLE-TYPE')==='SPFx-CopilotComponent','SAMPLE-TYPE metadata is invalid.');
 assert(metadata.get('CLIENT-SIDE-DEV')==='React','CLIENT-SIDE-DEV metadata is invalid.');
-assert(metadata.get('SPFX-VERSION')==='1.24.0-rc.0','SPFX-VERSION metadata is invalid.');
+assert(metadata.get('SPFX-VERSION')==='1.24.0','SPFX-VERSION metadata is invalid.');
 assert(evidence.schemaVersion===1&&evidence.failureCount===0,'Gallery evidence is invalid or contains failures.');
 const currentSourceHash=hash(Buffer.concat(evidence.sourceFiles.map(file=>fs.readFileSync(path.join(root,file)))));
 assert(currentSourceHash===evidence.sourceSha256,'Gallery screenshots are stale relative to current UX source. Run npm run capture:visual.');

@@ -10,7 +10,7 @@
       "Personal Links demonstrates two reusable patterns together: render one shared Fluent UI experience in Copilot and SharePoint, and store each user's component state in the least-privilege OneDrive App Folder so the same personal link collection follows them across hosts and devices."
     ],
     "creationDateTime": "2026-10-08",
-    "updateDateTime": "2026-10-09",
+    "updateDateTime": "2026-10-28",
     "products": [
       "SharePoint",
       "Microsoft Copilot",
@@ -27,7 +27,7 @@
       },
       {
         "key": "SPFX-VERSION",
-        "value": "1.24.0-rc.0"
+        "value": "1.24.0"
       }
     ],
     "thumbnails": [
