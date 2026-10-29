@@ -18,7 +18,7 @@ Everything on the card follows the story's language: the labels, the reading dir
 
 ## Compatibility
 
-![SPFx 1.24.0-rc.0](https://img.shields.io/badge/SPFx-1.24.0--rc.0-green.svg)
+![SPFx 1.24.0](https://img.shields.io/badge/SPFx-1.24.0-green.svg)
 ![Node.js v22 | v24](https://img.shields.io/badge/Node.js-v22%20%7C%20v24-green.svg)
 ![Compatible with SharePoint Online](https://img.shields.io/badge/SharePoint%20Online-Compatible-green.svg)
 ![Compatible with Microsoft Copilot](https://img.shields.io/badge/Microsoft%20Copilot-Compatible-green.svg)
@@ -39,11 +39,12 @@ Everything on the card follows the story's language: the labels, the reading dir
 
 | Version | Date             | Comments        |
 | ------- | ---------------- | --------------- |
+| 1.1     | October 29, 2026 | Upgrade to SPFx 1.24.0 |
 | 1.0     | October 18, 2026 | Initial release |
 
 ## Prerequisites
 
-- A Microsoft 365 tenant with SPFx 1.24 (preview) Copilot Components available, and Microsoft 365 Copilot licences for the users. Use a sandbox or developer tenant while the feature is in preview.
+- A Microsoft 365 tenant with SPFx 1.24 Copilot Components available, and Microsoft 365 Copilot licences for the users.
 - A tenant app catalog, and the rights to upload a custom agent (Teams app) in your tenant.
 - No API permissions to approve: the component calls no Microsoft Graph or SharePoint API.
 - The browser must be allowed to reach the open image collections listed under [Privacy and external services](#privacy-and-external-services). If they are blocked, the card shows the story without a photo.
@@ -278,7 +279,6 @@ The chosen look is stored in the browser's local and session storage. See [PRIVA
 
 ### Limitations
 
-- Built on SPFx **1.24.0-rc.0**: Copilot UX components are in preview, and hosts and APIs can change.
 - **Voices depend on the host.** See [Read aloud: where it works best](#read-aloud-where-it-works-best). In testing, the Microsoft 365 Copilot app on Windows offered no voices to the component, so the read-aloud buttons stay hidden there.
 - **Photos are found live.** Results depend on the open collections and can occasionally miss the subject. The card then shows the next candidate or no photo. Wikimedia Commons has no safe search, so every Commons and Openverse result is checked by its title, categories and tags (`lib/images/safety.ts`): special-effects make-up, injuries, gore, nudity and similar subjects are never shown. The filter errs on the side of caution, so a harmless photo is occasionally skipped. Flickr is not used: its photos (via Openverse) were too often of low quality.
 - **Long non-Latin stories can fail to load.** Copilot passes the tool arguments to the component in the page URL, where non-Latin text grows six to nine times when encoded. When SharePoint's sign-in then takes an extra round trip, the request can fail with a 401 and the card stays blank. Reported as [SharePoint/sp-dev-docs#11064](https://github.com/SharePoint/sp-dev-docs/issues/11064); retrying usually works.
