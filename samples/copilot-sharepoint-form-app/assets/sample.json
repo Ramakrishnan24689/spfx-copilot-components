@@ -8,7 +8,7 @@
     "downloadUrl": "https://pnp.github.io/download-partial/?url=https://github.com/pnp/spfx-copilot-components/tree/main/samples/copilot-sharepoint-form-app",
     "longDescription": [
       "SharePoint Document Submission Form renders an interactive document-intake form inline in Microsoft 365 Copilot chat (via BaseCopilotComponent) and on modern SharePoint pages (via BaseClientSideWebPart). When a user asks to upload or submit a document, the declarative agent calls OpenDocumentSubmissionForm and opens the SPFx form inline.",
-      "The component verifies the target SharePoint document library (BaseTemplate 101), dynamically loads its required and optional editable columns via SharePoint REST, and uploads files up to 50 MB (direct upload up to 10 MB, chunked StartUpload/ContinueUpload/FinishUpload above 10 MB) followed by ValidateUpdateListItem under the signed-in user's delegated SharePoint permissions\u2014without ever placing file bytes into the Copilot prompt or requesting Microsoft Graph admin consent.",
+      "The component verifies the target SharePoint document library (BaseTemplate 101), dynamically loads its required and optional editable columns via SharePoint REST, and uploads files up to 50 MB (direct upload up to 10 MB, chunked StartUpload/ContinueUpload/FinishUpload above 10 MB) followed by ValidateUpdateListItem under the signed-in user's delegated SharePoint permissions—without ever placing file bytes into the Copilot prompt or requesting Microsoft Graph admin consent.",
       "Built-in security hardening locks siteUrl overrides to HTTPS on the active SharePoint Online tenant origin and enforces a strict file extension allowlist (.pdf, .docx, .xlsx, .pptx, .md, .png, .jpg)."
     ],
     "creationDateTime": "2026-10-28",
@@ -59,6 +59,12 @@
         "name": "copilot-sharepoint-form-page-4-embedded-masked.png",
         "url": "https://github.com/pnp/spfx-copilot-components/raw/main/samples/copilot-sharepoint-form-app/assets/copilot-sharepoint-form-page-4-embedded-masked.png",
         "alt": "Copilot SharePoint Form web part embedded on a two-column modern SharePoint page"
+      },
+      {
+        "type": "video",
+        "order": 200,
+        "url": "https://www.youtube.com/embed/HNiq6eZ6itc",
+        "alt": "Video walkthrough: submitting a document to a SharePoint Knowledge Base from Copilot Chat"
       }
     ],
     "authors": [

@@ -16,6 +16,12 @@ The same React form is also exposed as a SharePoint web part (`CopilotSharePoint
 
 ![Copilot SharePoint Form web part embedded on a two-column modern SharePoint page](assets/copilot-sharepoint-form-page-4-embedded-masked.png)
 
+### Video walkthrough
+
+[![Video walkthrough of the SharePoint Document Submission Form in Copilot Chat and on a SharePoint page](https://i.ytimg.com/vi/HNiq6eZ6itc/hqdefault.jpg)](https://www.youtube.com/watch?v=HNiq6eZ6itc)
+
+[Watch the walkthrough on YouTube](https://www.youtube.com/watch?v=HNiq6eZ6itc)
+
 ## Compatibility
 
 ![SPFx 1.24.0-rc.0](https://img.shields.io/badge/SPFx-1.24.0--rc.0-green.svg)
