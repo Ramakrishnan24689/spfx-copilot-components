@@ -3,7 +3,7 @@
   "solution": {
     "name": "CosmoPolite",
     "id": "234b686d-e430-4d4d-a57f-2268d127f655",
-    "version": "1.0.48.0",
+    "version": "1.0.49.0",
     "iconPath": "images/AppIcon.png",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
@@ -12,7 +12,7 @@
       "websiteUrl": "https://n8d.at",
       "privacyUrl": "https://github.com/pnp/spfx-copilot-components/blob/main/samples/multilingual-story-card/PRIVACY.md",
       "termsOfUseUrl": "https://github.com/pnp/spfx-copilot-components/blob/main/samples/multilingual-story-card/TERMS.md",
-      "mpnId": "Undefined-1.24.0-rc.0"
+      "mpnId": "Undefined-1.24.0"
     },
     "metadata": {
       "shortDescription": {
@@ -32,7 +32,7 @@
         "title": "CosmoPolite",
         "description": "The CosmoPolite Copilot UX component.",
         "id": "1a99ccbd-9e93-41dd-8959-ea4c7d58fd1b",
-        "version": "1.0.48.0"
+        "version": "1.0.49.0"
       }
     ]
   },
